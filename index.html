@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Placement AI Platform</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    header {
+      background: #1e3a8a;
+      color: white;
+      padding: 25px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+    }
+
+    header p {
+      margin: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      padding: 15px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 15px;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    button:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 18px;
+      background: #f8fafc;
+      border-radius: 8px;
+    }
+
+    .job {
+      border: 1px solid #e2e8f0;
+      padding: 15px;
+      margin-top: 12px;
+      border-radius: 8px;
+      background: white;
+    }
+
+    .score {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    .error {
+      color: #dc2626;
+      font-weight: bold;
+    }
+
+    .loading {
+      color: #475569;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Placement AI Platform</h1>
+  <p>AI-powered placement and job readiness platform</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>Resume Analysis</h2>
+
+    <p>Paste your resume text below:</p>
+
+    <textarea id="resumeText"
+      placeholder="Paste your resume here..."></textarea>
+
+    <button id="analyzeButton" onclick="analyzeResume()">
+      Analyze Resume
+    </button>
+
+    <div id="analysisResult"></div>
+  </div>
+
+
+  <div class="card">
+    <h2>Job Recommendations</h2>
+
+    <button id="recommendButton" onclick="getRecommendations()">
+      Find Suitable Jobs
+    </button>
+
+    <div id="jobResult"></div>
+  </div>
+
+</div>
+
+
+<script>
+
+const API_URL = "https://placement-ai-platform.onrender.com";
+
+
+async function analyzeResume() {
+
+  const resume = document.getElementById("resumeText").value.trim();
+  const result = document.getElementById("analysisResult");
+  const button = document.getElementById("analyzeButton");
+
+  if (!resume) {
+    result.innerHTML = '<p class="error">Please paste your resume first.</p>';
+    return;
+  }
+
+  button.disabled = true;
+  result.innerHTML = '<p class="loading">Analyzing resume...</p>';
+
+  try {
+
+    const response = await fetch(
+      API_URL + "/api/v1/resume-analyze",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          resume_text: resume
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.detail || "Analysis failed");
+    }
+
+    let skills = "";
+
+    if (data.skills_detected && data.skills_detected.length > 0) {
+      skills = data.skills_detected.join(", ");
+    } else {
+      skills = "No skills detected";
+    }
+
+    result.innerHTML = `
+      <div class="result">
+        <h3>Analysis Result</h3>
+
+        <p>
+          <strong>Skill Score:</strong>
+          <span class="score">${data.skill_score}%</span>
+        </p>
+
+        <p>
+          <strong>Skills detected:</strong>
+          ${skills}
+        </p>
+
+        <p>
+          <strong>Total skills:</strong>
+          ${data.total_skills_detected || 0}
+        </p>
+
+        ${
+          data.recommendations
+          ? `
+            <h4>Recommendations</h4>
+            <ul>
+              ${data.recommendations.map(r => `<li>${r}</li>`).join("")}
+            </ul>
+          `
+          : ""
+        }
+      </div>
+    `;
+
+  } catch (error) {
+
+    result.innerHTML =
+      `<p class="error">Error: ${error.message}</p>`;
+
+  } finally {
+
+    button.disabled = false;
+
+  }
+}
+
+
+async function getRecommendations() {
+
+  const resume = document.getElementById("resumeText").value.trim();
+  const result = document.getElementById("jobResult");
+  const button = document.getElementById("recommendButton");
+
+  if (!resume) {
+    result.innerHTML =
+      '<p class="error">Please paste your resume first.</p>';
+    return;
+  }
+
+  button.disabled = true;
+  result.innerHTML =
+    '<p class="loading">Finding suitable jobs...</p>';
+
+  try {
+
+    const response = await fetch(
+      API_URL + "/api/v1/job-recommendations",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          resume_text: resume
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.detail || "Job recommendation failed");
+    }
+
+    let jobs = "";
+
+    if (Array.isArray(data)) {
+
+      jobs = data.map(job => `
+        <div class="job">
+          <h3>${job.job_title || "Job"}</h3>
+
+          <p>
+            <strong>Match score:</strong>
+            ${job.match_score || 0}%
+          </p>
+
+          <p>
+            <strong>Matching skills:</strong>
+            ${(job.matching_skills || []).join(", ") || "None"}
+          </p>
+
+          <p>
+            <strong>Missing skills:</strong>
+            ${(job.missing_skills || []).join(", ") || "None"}
+          </p>
+        </div>
+      `).join("");
+
+    } else if (data.recommendations) {
+
+      jobs = data.recommendations.map(job => `
+        <div class="job">
+          <h3>${job.job_title || "Job"}</h3>
+          <p><strong>Match score:</strong> ${job.match_score || 0}%</p>
+          <p><strong>Matching skills:</strong> ${(job.matching_skills || []).join(", ")}</p>
+          <p><strong>Missing skills:</strong> ${(job.missing_skills || []).join(", ")}</p>
+        </div>
+      `).join("");
+
+    } else {
+
+      jobs = `
+        <div class="job">
+          <pre>${JSON.stringify(data, null, 2)}</pre>
+        </div>
+      `;
+
+    }
+
+    result.innerHTML = `
+      <div class="result">
+        <h3>Recommended Jobs</h3>
+        ${jobs}
+      </div>
+    `;
+
+  } catch (error) {
+
+    result.innerHTML =
+      `<p class="error">Error: ${error.message}</p>`;
+
+  } finally {
+
+    button.disabled = false;
+
+  }
+}
+
+</script>
+
+</body>
+</html>
