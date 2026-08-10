@@ -171,3 +171,111 @@ def resume_analyze(request: ResumeRequest):
         "total_skills_detected": len(detected_skills),
         "recommendations": recommendations
     }
+    # -------------------------
+# Job Recommendation Engine
+# -------------------------
+
+class JobRecommendationRequest(BaseModel):
+    resume_text: str
+
+
+JOB_PROFILES = {
+    "Python Backend Developer": {
+        "skills": [
+            "python",
+            "fastapi",
+            "django",
+            "sql",
+            "git",
+            "rest api",
+            "docker"
+        ]
+    },
+    "Data Analyst": {
+        "skills": [
+            "python",
+            "sql",
+            "pandas",
+            "numpy",
+            "data analysis",
+            "excel"
+        ]
+    },
+    "Frontend Developer": {
+        "skills": [
+            "html",
+            "css",
+            "javascript",
+            "typescript",
+            "react",
+            "git"
+        ]
+    },
+    "Full Stack Developer": {
+        "skills": [
+            "html",
+            "css",
+            "javascript",
+            "react",
+            "node.js",
+            "sql",
+            "git",
+            "docker"
+        ]
+    },
+    "Machine Learning Engineer": {
+        "skills": [
+            "python",
+            "machine learning",
+            "deep learning",
+            "tensorflow",
+            "pytorch",
+            "pandas",
+            "numpy"
+        ]
+    }
+}
+
+
+@app.post("/api/v1/job-recommendations")
+def job_recommendations(request: JobRecommendationRequest):
+
+    resume_skills = extract_skills(request.resume_text)
+
+    recommendations = []
+
+    for job_title, job_data in JOB_PROFILES.items():
+
+        job_skills = set(job_data["skills"])
+
+        matching_skills = sorted(
+            resume_skills.intersection(job_skills)
+        )
+
+        missing_skills = sorted(
+            job_skills.difference(resume_skills)
+        )
+
+        if job_skills:
+            match_score = round(
+                (len(matching_skills) / len(job_skills)) * 100
+            )
+        else:
+            match_score = 0
+
+        recommendations.append({
+            "job_title": job_title,
+            "match_score": match_score,
+            "matching_skills": matching_skills,
+            "missing_skills": missing_skills
+        })
+
+    recommendations.sort(
+        key=lambda x: x["match_score"],
+        reverse=True
+    )
+
+    return {
+        "resume_skills_detected": sorted(resume_skills),
+        "recommended_jobs": recommendations
+    }
