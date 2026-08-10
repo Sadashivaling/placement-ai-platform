@@ -240,108 +240,103 @@ async function analyzeResume() {
 
 
 async function getRecommendations() {
+    const resume = document.getElementById("resumeText").value.trim();
+    const result = document.getElementById("jobResult");
+    const button = document.getElementById("recommendButton");
 
-  const resume = document.getElementById("resumeText").value.trim();
-  const result = document.getElementById("jobResult");
-  const button = document.getElementById("recommendButton");
-
-  if (!resume) {
-    result.innerHTML =
-      '<p class="error">Please paste your resume first.</p>';
-    return;
-  }
-
-  button.disabled = true;
-  result.innerHTML =
-    '<p class="loading">Finding suitable jobs...</p>';
-
-  try {
-
-    const response = await fetch(
-      API_URL + "/api/v1/job-recommendations",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          resume_text: resume
-        })
-      }
-    );
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.detail || "Job recommendation failed");
+    if (!resume) {
+        result.innerHTML =
+            '<p class="error">Please paste your resume first.</p>';
+        return;
     }
 
-    let jobs = "";
-
-    if (Array.isArray(data)) {
-
-      jobs = data.map(job => `
-        <div class="job">
-          <h3>${job.job_title || "Job"}</h3>
-
-          <p>
-            <strong>Match score:</strong>
-            ${job.match_score || 0}%
-          </p>
-
-          <p>
-            <strong>Matching skills:</strong>
-            ${(job.matching_skills || []).join(", ") || "None"}
-          </p>
-
-          <p>
-            <strong>Missing skills:</strong>
-            ${(job.missing_skills || []).join(", ") || "None"}
-          </p>
-        </div>
-      `).join("");
-
-    } else if (data.recommendations) {
-
-      jobs = data.recommendations.map(job => `
-        <div class="job">
-          <h3>${job.job_title || "Job"}</h3>
-          <p><strong>Match score:</strong> ${job.match_score || 0}%</p>
-          <p><strong>Matching skills:</strong> ${(job.matching_skills || []).join(", ")}</p>
-          <p><strong>Missing skills:</strong> ${(job.missing_skills || []).join(", ")}</p>
-        </div>
-      `).join("");
-
-    } else {
-
-      jobs = `
-        <div class="job">
-          <pre>${JSON.stringify(data, null, 2)}</pre>
-        </div>
-      `;
-
-    }
-
-    result.innerHTML = `
-      <div class="result">
-        <h3>Recommended Jobs</h3>
-        ${jobs}
-      </div>
-    `;
-
-  } catch (error) {
+    button.disabled = true;
 
     result.innerHTML =
-      `<p class="error">Error: ${error.message}</p>`;
+        '<p class="loading">Finding suitable jobs...</p>';
 
-  } finally {
+    try {
+        const response = await fetch(
+            `${API_URL}/api/v1/job-recommendations`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    resume_text: resume
+                })
+            }
+        );
 
-    button.disabled = false;
+        const data = await response.json();
 
-  }
+        if (!response.ok) {
+            throw new Error(
+                data.detail || "Job recommendation failed"
+            );
+        }
+
+        const jobs = data.recommended_jobs || [];
+
+        if (jobs.length === 0) {
+            result.innerHTML =
+                '<p>No suitable jobs found.</p>';
+            return;
+        }
+
+        let jobsHTML = `
+            <div class="result">
+                <h3>Recommended Jobs</h3>
+        `;
+
+        jobs.forEach((job) => {
+            const matchingSkills =
+                job.matching_skills || [];
+
+            const missingSkills =
+                job.missing_skills || [];
+
+            jobsHTML += `
+                <div class="job">
+                    <h3>${job.job_title || "Job"}</h3>
+
+                    <p>
+                        <strong>Match Score:</strong>
+                        <span class="score">
+                            ${job.match_score || 0}%
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong>Matching Skills:</strong>
+                        ${
+                            matchingSkills.length
+                                ? matchingSkills.join(", ")
+                                : "None"
+                        }
+                    </p>
+
+                    <p>
+                        <strong>Missing Skills:</strong>
+                        ${
+                            missingSkills.length
+                                ? missingSkills.join(", ")
+                                : "None"
+                        }
+                    </p>
+                </div>
+            `;
+        });
+
+        jobsHTML += `</div>`;
+
+        result.innerHTML = jobsHTML;
+
+    } catch (error) {
+        result.innerHTML =
+            `<p class="error">Error: ${error.message}</p>`;
+    } finally {
+        button.disabled = false;
+    }
 }
-
-</script>
-
-</body>
-</html>
