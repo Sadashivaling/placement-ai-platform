@@ -124,3 +124,50 @@ def job_match(request: JobMatchRequest):
         "job_skills_detected": sorted(job_skills),
         "recommendation": recommendation
     }
+    # -------------------------
+# Resume Analyzer
+# -------------------------
+
+class ResumeRequest(BaseModel):
+    resume_text: str
+
+
+@app.post("/api/v1/resume-analyze")
+def resume_analyze(request: ResumeRequest):
+
+    resume_skills = extract_skills(request.resume_text)
+
+    total_skills = len(SKILLS)
+    detected_skills = sorted(resume_skills)
+
+    if total_skills > 0:
+        skill_score = round((len(resume_skills) / total_skills) * 100)
+    else:
+        skill_score = 0
+
+    recommendations = []
+
+    if "python" not in resume_skills:
+        recommendations.append("Consider adding Python skills.")
+
+    if "sql" not in resume_skills:
+        recommendations.append("Consider adding SQL/database experience.")
+
+    if "git" not in resume_skills:
+        recommendations.append("Consider adding Git/version control experience.")
+
+    if "rest api" not in resume_skills and "api" not in resume_skills:
+        recommendations.append("Consider adding REST API experience.")
+
+    if "docker" not in resume_skills:
+        recommendations.append("Consider learning Docker.")
+
+    if not recommendations:
+        recommendations.append("Your resume contains a strong set of technical skills.")
+
+    return {
+        "skill_score": skill_score,
+        "skills_detected": detected_skills,
+        "total_skills_detected": len(detected_skills),
+        "recommendations": recommendations
+    }
