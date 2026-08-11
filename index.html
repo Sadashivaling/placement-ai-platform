@@ -1088,7 +1088,249 @@ RECRUITER DASHBOARD
 
 
 </div>
+<!-- =====================================================
+OWNER LOGIN
+HIDDEN FROM PUBLIC USERS
+Access using: #/owner
+===================================================== -->
 
+<div
+    id="ownerLoginPage"
+    class="card hidden"
+>
+
+    <h2>
+        Owner Login
+    </h2>
+
+    <p>
+        Restricted access.
+    </p>
+
+    <form onsubmit="ownerLogin(event)">
+
+        <div class="form-group">
+
+            <label>
+                Owner Username
+            </label>
+
+            <input
+                id="ownerUsername"
+                type="text"
+                placeholder="Enter owner username"
+                autocomplete="username"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Owner Password
+            </label>
+
+            <input
+                id="ownerPassword"
+                type="password"
+                placeholder="Enter owner password"
+                autocomplete="current-password"
+                required
+            >
+
+        </div>
+
+
+        <button type="submit">
+            Owner Login
+        </button>
+
+    </form>
+
+
+    <div
+        id="ownerLoginMessage"
+        class="message"
+    ></div>
+
+</div>
+
+
+<!-- =====================================================
+OWNER DASHBOARD
+===================================================== -->
+
+<div
+    id="ownerDashboard"
+    class="hidden owner-dashboard"
+>
+
+    <div class="card">
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <h2>
+                    Owner Dashboard
+                </h2>
+
+                <p>
+                    Welcome,
+                    <span
+                        id="ownerDisplayName"
+                        class="username"
+                    ></span>
+                </p>
+
+            </div>
+
+
+            <button
+                onclick="ownerLogout()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- STATISTICS -->
+
+    <div class="card">
+
+        <h2>
+            Platform Statistics
+        </h2>
+
+        <div class="owner-stats">
+
+            <div class="owner-stat">
+
+                <h3>
+                    Total Users
+                </h3>
+
+                <div
+                    id="ownerTotalUsers"
+                    class="number"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="owner-stat">
+
+                <h3>
+                    Career Seekers
+                </h3>
+
+                <div
+                    id="ownerCareerSeekers"
+                    class="number"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="owner-stat">
+
+                <h3>
+                    Recruiters
+                </h3>
+
+                <div
+                    id="ownerRecruiters"
+                    class="number"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="owner-stat">
+
+                <h3>
+                    Jobs
+                </h3>
+
+                <div
+                    id="ownerJobs"
+                    class="number"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="owner-stat" style="margin-top:15px;">
+
+            <h3>
+                Applications
+            </h3>
+
+            <div
+                id="ownerApplications"
+                class="number"
+            >
+                0
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RECENT USERS -->
+
+    <div class="card">
+
+        <h2>
+            Recent Users
+        </h2>
+
+        <div id="ownerUsersResult">
+
+            <p class="loading">
+                Loading users...
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- RECENT JOBS -->
+
+    <div class="card">
+
+        <h2>
+            Recent Jobs
+        </h2>
+
+        <div id="ownerJobsResult">
+
+            <p class="loading">
+                Loading jobs...
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
 
 <!-- =====================================================
 PDF/DOCX LIBRARIES
