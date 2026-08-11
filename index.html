@@ -118,13 +118,16 @@
 
 <div class="container">
 
+  <!-- Resume Analysis -->
   <div class="card">
     <h2>Resume Analysis</h2>
 
     <p>Paste your resume text below:</p>
 
-    <textarea id="resumeText"
-      placeholder="Paste your resume here..."></textarea>
+    <textarea
+      id="resumeText"
+      placeholder="Paste your resume here..."
+    ></textarea>
 
     <button id="analyzeButton" onclick="analyzeResume()">
       Analyze Resume
@@ -134,7 +137,8 @@
   </div>
 
 
-   <div class="card">
+  <!-- Job Recommendations -->
+  <div class="card">
     <h2>Job Recommendations</h2>
 
     <button id="recommendButton" onclick="getRecommendations()">
@@ -145,13 +149,16 @@
   </div>
 
 
+  <!-- Job Match Analyzer -->
   <div class="card">
     <h2>Job Match Analyzer</h2>
 
     <p>Paste your job description below:</p>
 
-    <textarea id="jobDescription"
-      placeholder="Paste the job description here..."></textarea>
+    <textarea
+      id="jobDescription"
+      placeholder="Paste the job description here..."
+    ></textarea>
 
     <button id="matchButton" onclick="checkJobMatch()">
       Check Job Match
@@ -159,6 +166,7 @@
 
     <div id="matchResult"></div>
   </div>
+
 </div>
   
 <script>
