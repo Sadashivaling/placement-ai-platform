@@ -396,7 +396,67 @@ button:disabled {
     }
 
 }
+/* =====================================================
+OWNER DASHBOARD
+===================================================== */
 
+.owner-dashboard {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.owner-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.owner-stat {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+.owner-stat h3 {
+    margin: 0 0 10px;
+    color: #475569;
+    font-size: 14px;
+}
+
+.owner-stat .number {
+    font-size: 30px;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+.owner-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.owner-table th,
+.owner-table td {
+    border: 1px solid #e2e8f0;
+    padding: 10px;
+    text-align: left;
+}
+
+.owner-table th {
+    background: #f8fafc;
+}
+
+.owner-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: #e0e7ff;
+    font-size: 12px;
+    font-weight: bold;
+}
 </style>
 
 </head>
