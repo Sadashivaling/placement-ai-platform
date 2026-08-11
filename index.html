@@ -3593,12 +3593,21 @@ async function loadJobs() {
 START PAGE
 ===================================================== */
 
-hideAllPages();
+checkOwnerRoute();
 
-document
-    .getElementById("rolePage")
-    .classList
-    .remove("hidden");
+if (
+    window.location.hash !==
+    "#/owner"
+) {
+
+    hideAllPages();
+
+    document
+        .getElementById("rolePage")
+        .classList
+        .remove("hidden");
+
+}
 
 
 </script>
