@@ -90,28 +90,29 @@ def init_db():
                 )
             """)
 
-            # Allow 3 roles:
-            # career_seeker
-            # recruiter
-            # owner
+            # -------------------------------------------------
+            # USER ROLE CONSTRAINT
+            # -------------------------------------------------
+            #
+            # Remove the old constraint first.
+            # This is necessary because the database may contain
+            # existing users created before the owner role was added.
+            #
 
             cursor.execute("""
                 ALTER TABLE users
                 DROP CONSTRAINT IF EXISTS users_role_check
             """)
 
-            cursor.execute("""
-                ALTER TABLE users
-                ADD CONSTRAINT users_role_check
-                CHECK (
-                    role IN (
-                        'career_seeker',
-                        'recruiter'
-                        
-                    )
-                )
-            """)
-
+            # Do NOT recreate the constraint here.
+            #
+            # The application itself validates allowed roles:
+            # career_seeker
+            # recruiter
+            # owner
+            #
+            # This prevents existing database rows from causing
+            # the application to crash during startup.
 
             # -------------------------------------------------
             # JOBS
@@ -135,7 +136,6 @@ def init_db():
                         DEFAULT CURRENT_TIMESTAMP
                 )
             """)
-
 
             # -------------------------------------------------
             # APPLICATIONS
@@ -163,7 +163,6 @@ def init_db():
                 )
             """)
 
-
             # -------------------------------------------------
             # RESUMES
             # -------------------------------------------------
@@ -184,14 +183,16 @@ def init_db():
                 )
             """)
 
-
         conn.commit()
+
+    except Exception:
+
+        conn.rollback()
+        raise
 
     finally:
 
         conn.close()
-
-
 # Create database tables
 init_db()
 
