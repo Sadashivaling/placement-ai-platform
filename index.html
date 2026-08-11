@@ -937,6 +937,10 @@ async function loginAccount(event) {
    OPEN DASHBOARD
 ================================== */
 
+/* ==================================
+   OPEN DASHBOARD
+================================== */
+
 function openDashboard(data) {
 
   document.getElementById("rolePage")
@@ -949,27 +953,61 @@ function openDashboard(data) {
     .classList.add("hidden");
 
 
-  if (data.role === "career_seeker") {
+  // Backend returns user information inside data.user
+  const user = data.user;
+
+  if (!user) {
+    console.error("Login response does not contain user information:", data);
+
+    document.getElementById("loginPage")
+      .classList.remove("hidden");
+
+    document.getElementById("loginMessage").className =
+      "message error";
+
+    document.getElementById("loginMessage").textContent =
+      "Login succeeded, but user information was not returned.";
+
+    return;
+  }
+
+
+  // Career Seeker
+  if (user.role === "career_seeker") {
 
     document.getElementById("careerDashboard")
       .classList.remove("hidden");
 
     document.getElementById("careerUsername")
-      .textContent = data.username;
-
+      .textContent = user.username || user.name || "";
   }
 
 
-  if (data.role === "recruiter") {
+  // Recruiter
+  else if (user.role === "recruiter") {
 
     document.getElementById("recruiterDashboard")
       .classList.remove("hidden");
 
     document.getElementById("recruiterUsername")
-      .textContent = data.username;
-
+      .textContent = user.username || user.name || "";
   }
 
+
+  // Unknown role
+  else {
+
+    console.error("Unknown user role:", user.role);
+
+    document.getElementById("loginPage")
+      .classList.remove("hidden");
+
+    document.getElementById("loginMessage").className =
+      "message error";
+
+    document.getElementById("loginMessage").textContent =
+      "Unknown account role.";
+  }
 }
 
 
