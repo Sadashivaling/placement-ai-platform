@@ -81,6 +81,23 @@ SKILLS = {
     "rest api",
     "api",
     "linux",
+    "excel",
+    "power bi",
+    "tableau",
+    "scikit-learn",
+    "seaborn",
+    "matplotlib",
+    "spring boot",
+    "c++",
+    "c",
+    "php",
+    "gitlab",
+    "bitbucket",
+    "redis",
+    "graphql",
+    "jenkins",
+    "terraform",
+}
 }
 
 
