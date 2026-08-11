@@ -97,7 +97,7 @@ SKILLS = {
     "graphql",
     "jenkins",
     "terraform",
-}
+
 }
 
 
