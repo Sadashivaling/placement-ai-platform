@@ -1,1463 +1,2113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Placement AI Platform</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>Placement AI Platform</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #1f2937;
-    }
+<style>
 
-    header {
-      background: #1e3a8a;
-      color: white;
-      padding: 28px;
-      text-align: center;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    header h1 {
-      margin: 0 0 8px;
-    }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+}
 
-    header p {
-      margin: 0;
-    }
+header {
+    background: #1e3a8a;
+    color: white;
+    padding: 28px;
+    text-align: center;
+}
 
-    .container {
-      max-width: 900px;
-      margin: 30px auto;
-      padding: 20px;
-    }
+header h1 {
+    margin: 0 0 8px;
+}
 
-    .card {
-      background: white;
-      padding: 25px;
-      margin-bottom: 20px;
-      border-radius: 12px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-    }
+header p {
+    margin: 0;
+}
 
-    .hidden {
-      display: none;
-    }
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.role-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.role-card {
+    flex: 1;
+    padding: 30px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    background: white;
+    transition: 0.2s;
+}
+
+.role-card:hover {
+    border-color: #2563eb;
+    transform: translateY(-2px);
+}
+
+.role-icon {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.role-card h3 {
+    color: #1e3a8a;
+}
+
+.role-card p {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 180px;
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+button {
+    margin-top: 10px;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+button.secondary {
+    background: #64748b;
+}
+
+button.secondary:hover {
+    background: #475569;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.message {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 7px;
+    display: none;
+}
+
+.message.error {
+    display: block;
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.message.success {
+    display: block;
+    background: #dcfce7;
+    color: #166534;
+}
+
+.link {
+    color: #2563eb;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.username {
+    color: #2563eb;
+    font-weight: bold;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 18px;
+    background: #f8fafc;
+    border-radius: 8px;
+}
+
+.job {
+    border: 1px solid #e2e8f0;
+    padding: 15px;
+    margin-top: 12px;
+    border-radius: 8px;
+    background: white;
+}
+
+.score {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2563eb;
+}
+
+.loading {
+    color: #475569;
+}
+
+@media (max-width: 700px) {
 
     .role-container {
-      display: flex;
-      gap: 20px;
-      margin-top: 25px;
-    }
-
-    .role-card {
-      flex: 1;
-      padding: 30px 20px;
-      border: 2px solid #e2e8f0;
-      border-radius: 12px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.2s;
-      background: white;
-    }
-
-    .role-card:hover {
-      border-color: #2563eb;
-      transform: translateY(-2px);
-    }
-
-    .role-card.selected {
-      border-color: #2563eb;
-      background: #eff6ff;
-    }
-
-    .role-icon {
-      font-size: 42px;
-      margin-bottom: 10px;
-    }
-
-    .role-card h3 {
-      color: #1e3a8a;
-      margin-bottom: 10px;
-    }
-
-    .role-card p {
-      font-size: 14px;
-      color: #64748b;
-      line-height: 1.5;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 7px;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 7px;
-      font-size: 15px;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: #2563eb;
-    }
-
-    button {
-      margin-top: 10px;
-      padding: 12px 22px;
-      border: none;
-      border-radius: 8px;
-      background: #2563eb;
-      color: white;
-      font-size: 15px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #1d4ed8;
-    }
-
-    button.secondary {
-      background: #64748b;
-    }
-
-    button.secondary:hover {
-      background: #475569;
-    }
-
-    .message {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 7px;
-      display: none;
-    }
-
-    .error {
-      background: #fee2e2;
-      color: #b91c1c;
-      display: block;
-    }
-
-    .success {
-      background: #dcfce7;
-      color: #166534;
-      display: block;
-    }
-
-    .link {
-      color: #2563eb;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .link:hover {
-      text-decoration: underline;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 180px;
-      padding: 15px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 15px;
-      resize: vertical;
-    }
-
-    .result {
-      margin-top: 20px;
-      padding: 18px;
-      background: #f8fafc;
-      border-radius: 8px;
-    }
-
-    .job {
-      border: 1px solid #e2e8f0;
-      padding: 15px;
-      margin-top: 12px;
-      border-radius: 8px;
-      background: white;
-    }
-
-    .score {
-      font-size: 24px;
-      font-weight: bold;
-      color: #2563eb;
-    }
-
-    .loading {
-      color: #475569;
+        flex-direction: column;
     }
 
     .dashboard-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .username {
-      color: #2563eb;
-      font-weight: bold;
-    }
-
-    @media (max-width: 700px) {
-      .role-container {
         flex-direction: column;
-      }
+        align-items: flex-start;
     }
-  </style>
+
+}
+
+</style>
 </head>
+
 
 <body>
 
 <header>
-  <h1>Placement AI Platform</h1>
-  <p>AI-powered placement and job readiness platform</p>
+
+    <h1>Placement AI Platform</h1>
+
+    <p>
+        AI-powered placement and job readiness platform
+    </p>
+
 </header>
 
 
 <div class="container">
 
-  <!-- ============================= -->
-  <!-- ROLE SELECTION PAGE -->
-  <!-- ============================= -->
 
-  <div id="rolePage" class="card">
+<!-- =====================================================
+     ROLE PAGE
+===================================================== -->
+
+<div id="rolePage" class="card">
 
     <h2>Welcome to Placement AI Platform</h2>
 
-    <p>Choose how you would like to continue.</p>
+    <p>
+        Choose how you would like to continue.
+    </p>
+
 
     <div class="role-container">
 
-      <div class="role-card" onclick="selectRole('career_seeker')">
-
-        <div class="role-icon">👨‍💼</div>
-
-        <h3>Career Seeker</h3>
-
-        <p>
-          Discover career opportunities, analyze your resume
-          and find jobs that match your skills.
-        </p>
-
-      </div>
-
-
-      <div class="role-card" onclick="selectRole('recruiter')">
-
-        <div class="role-icon">🏢</div>
-
-        <h3>Recruiter</h3>
-
-        <p>
-          Post job opportunities, define your requirements
-          and discover qualified candidates.
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- ============================= -->
-  <!-- CREATE ACCOUNT PAGE -->
-  <!-- ============================= -->
-
-  <div id="registerPage" class="card hidden">
-
-    <h2 id="registerTitle">Create Your Account</h2>
-
-    <p id="registerDescription">
-      Create an account to continue.
-    </p>
-
-    <form onsubmit="registerAccount(event)">
-
-      <div class="form-group">
-        <label>Username</label>
-
-        <input
-          type="text"
-          id="registerUsername"
-          placeholder="Choose a unique username"
-          required
+        <div
+            class="role-card"
+            onclick="selectRole('career_seeker')"
         >
 
-        <small>
-          Your username must be unique.
-        </small>
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Full Name</label>
-
-        <input
-          type="text"
-          id="registerName"
-          placeholder="Enter your full name"
-          required
-        >
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Email</label>
-
-        <input
-          type="email"
-          id="registerEmail"
-          placeholder="Enter your email"
-          required
-        >
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Password</label>
-
-        <input
-          type="password"
-          id="registerPassword"
-          placeholder="Create a password"
-          required
-        >
-
-      </div>
-
-
-      <button type="submit">
-        Create Account
-      </button>
-
-      <button
-        type="button"
-        class="secondary"
-        onclick="showRolePage()"
-      >
-        Back
-      </button>
-
-    </form>
-
-
-    <div id="registerMessage" class="message"></div>
-
-    <p style="margin-top:20px;">
-      Already have an account?
-      <span class="link" onclick="showLoginPage()">
-        Login here
-      </span>
-    </p>
-
-  </div>
-
-
-  <!-- ============================= -->
-  <!-- LOGIN PAGE -->
-  <!-- ============================= -->
-
-  <div id="loginPage" class="card hidden">
-
-    <h2 id="loginTitle">Login</h2>
-
-    <p id="loginDescription">
-      Login to continue.
-    </p>
-
-    <form onsubmit="loginAccount(event)">
-
-      <div class="form-group">
-
-        <label>Username</label>
-
-        <input
-          type="text"
-          id="loginUsername"
-          placeholder="Enter your username"
-          required
-        >
-
-      </div>
-
-
-      <div class="form-group">
-
-        <label>Password</label>
-
-        <input
-          type="password"
-          id="loginPassword"
-          placeholder="Enter your password"
-          required
-        >
-
-      </div>
-
-
-      <button type="submit">
-        Login
-      </button>
-
-      <button
-        type="button"
-        class="secondary"
-        onclick="showRegisterPage()"
-      >
-        Create Account
-      </button>
-
-    </form>
-
-
-    <div id="loginMessage" class="message"></div>
-
-    <p style="margin-top:20px;">
-      <span class="link" onclick="showRolePage()">
-        ← Choose another role
-      </span>
-    </p>
-
-  </div>
-
-
-  <!-- ============================= -->
-  <!-- CAREER SEEKER DASHBOARD -->
-  <!-- ============================= -->
-
-  <div id="careerDashboard" class="hidden">
-
-    <div class="card">
-
-      <div class="dashboard-header">
-
-        <div>
-          <h2>Career Seeker Dashboard</h2>
-
-          <p>
-            Welcome,
-            <span id="careerUsername" class="username"></span>
-          </p>
-        </div>
-
-        <button onclick="logout()">
-          Logout
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- Resume Analysis -->
-
-    <div class="card">
-
-      <h2>Resume Analysis</h2>
-
-      <p>Paste your resume text below:</p>
-
-      <textarea
-        id="resumeText"
-        placeholder="Paste your resume here..."
-      ></textarea>
-
-      <button
-        id="analyzeButton"
-        onclick="analyzeResume()"
-      >
-        Analyze Resume
-      </button>
-
-      <div id="analysisResult"></div>
-
-    </div>
-
-
-    <!-- Job Recommendations -->
-
-    <div class="card">
-
-      <h2>Job Recommendations</h2>
-
-      <button
-        id="recommendButton"
-        onclick="getRecommendations()"
-      >
-        Find Suitable Jobs
-      </button>
-
-      <div id="jobResult"></div>
-
-    </div>
-
-
-    <!-- Job Match -->
-
-    <div class="card">
-
-      <h2>Job Match Analyzer</h2>
-
-      <p>Paste the job description below:</p>
-
-      <textarea
-        id="jobDescription"
-        placeholder="Paste the job description here..."
-      ></textarea>
-
-      <button
-        onclick="checkJobMatch()"
-      >
-        Check Job Match
-      </button>
-
-      <div id="matchResult"></div>
-
-    </div>
-
-  </div>
-
-
-  <!-- ============================= -->
-  <!-- RECRUITER DASHBOARD -->
-  <!-- ============================= -->
-
-  <div id="recruiterDashboard" class="hidden">
-
-    <div class="card">
-
-      <div class="dashboard-header">
-
-        <div>
-
-          <h2>Recruiter Dashboard</h2>
-
-          <p>
-            Welcome,
-            <span id="recruiterUsername" class="username"></span>
-          </p>
+            <div class="role-icon">
+                👨‍💼
+            </div>
+
+            <h3>
+                Career Seeker
+            </h3>
+
+            <p>
+                Discover career opportunities,
+                analyze your resume and find jobs
+                that match your skills.
+            </p>
 
         </div>
 
-        <button onclick="logout()">
-          Logout
-        </button>
 
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <h2>Post a Job</h2>
-
-      <p>
-        Create job opportunities and find candidates
-        whose skills match your requirements.
-      </p>
-
-      <div class="form-group">
-
-        <label>Job Title</label>
-
-        <input
-          type="text"
-          id="jobTitle"
-          placeholder="Example: Python Backend Developer"
+        <div
+            class="role-card"
+            onclick="selectRole('recruiter')"
         >
 
-      </div>
+            <div class="role-icon">
+                🏢
+            </div>
 
+            <h3>
+                Recruiter
+            </h3>
 
-      <div class="form-group">
+            <p>
+                Post job opportunities and
+                find qualified candidates.
+            </p>
 
-        <label>Job Description</label>
-
-        <textarea
-          id="recruiterJobDescription"
-          placeholder="Enter the job requirements and skills..."
-        ></textarea>
-
-      </div>
-
-
-      <button onclick="postJob()">
-        Post Job
-      </button>
-
-      <div id="recruiterMessage" class="message"></div>
+        </div>
 
     </div>
-
-
-    <div class="card">
-
-      <h2>Recruiter Features</h2>
-
-      <p>
-        Candidate matching and job management will be
-        available here.
-      </p>
-
-    </div>
-
-  </div>
 
 </div>
 
 
-<script>
 
-const API_URL =
-  "https://placement-ai-platform.onrender.com";
+<!-- =====================================================
+     REGISTER PAGE
+===================================================== -->
 
+<div id="registerPage" class="card hidden">
 
-let selectedRole = null;
+    <h2 id="registerTitle">
+        Create Your Account
+    </h2>
 
+    <p id="registerDescription">
+        Create your account to continue.
+    </p>
 
-/* ==================================
-   ROLE SELECTION
-================================== */
 
-function selectRole(role) {
+    <form onsubmit="registerAccount(event)">
 
-  selectedRole = role;
 
-  document.getElementById("rolePage").classList.add("hidden");
+        <div class="form-group">
 
-  document.getElementById("registerPage").classList.remove("hidden");
+            <label>
+                Username
+            </label>
 
-  if (role === "career_seeker") {
-
-    document.getElementById("registerTitle").textContent =
-      "Create Your Career Seeker Account";
-
-    document.getElementById("registerDescription").textContent =
-      "Create your account to discover career opportunities.";
-
-  } else {
-
-    document.getElementById("registerTitle").textContent =
-      "Create Your Recruiter Account";
-
-    document.getElementById("registerDescription").textContent =
-      "Create your recruiter account to find qualified candidates.";
-
-  }
-}
-
-
-/* ==================================
-   SHOW ROLE PAGE
-================================== */
-
-function showRolePage() {
-
-  document.getElementById("rolePage").classList.remove("hidden");
-
-  document.getElementById("registerPage").classList.add("hidden");
-
-  document.getElementById("loginPage").classList.add("hidden");
-
-}
-
-
-/* ==================================
-   REGISTER PAGE
-================================== */
-
-function showRegisterPage() {
-
-  document.getElementById("loginPage").classList.add("hidden");
-
-  document.getElementById("registerPage").classList.remove("hidden");
-
-}
-
-
-/* ==================================
-   LOGIN PAGE
-================================== */
-
-function showLoginPage() {
-
-  document.getElementById("registerPage").classList.add("hidden");
-
-  document.getElementById("loginPage").classList.remove("hidden");
-
-  if (selectedRole === "career_seeker") {
-
-    document.getElementById("loginTitle").textContent =
-      "Career Seeker Login";
-
-    document.getElementById("loginDescription").textContent =
-      "Login to access your career dashboard.";
-
-  } else {
-
-    document.getElementById("loginTitle").textContent =
-      "Recruiter Login";
-
-    document.getElementById("loginDescription").textContent =
-      "Login to access your recruiter dashboard.";
-
-  }
-
-}
-
-
-/* ==================================
-   REGISTER ACCOUNT
-================================== */
-
-async function registerAccount(event) {
-
-  event.preventDefault();
-
-  const username =
-    document.getElementById("registerUsername").value.trim();
-
-  const name =
-    document.getElementById("registerName").value.trim();
-
-  const email =
-    document.getElementById("registerEmail").value.trim();
-
-  const password =
-    document.getElementById("registerPassword").value;
-
-  const message =
-    document.getElementById("registerMessage");
-
-
-  if (!selectedRole) {
-
-    message.className = "message error";
-
-    message.textContent =
-      "Please select Career Seeker or Recruiter.";
-
-    return;
-
-  }
-
-
-  message.className = "message";
-
-  message.style.display = "block";
-
-  message.textContent = "Creating account...";
-
-
-  try {
-
-    const response = await fetch(
-      API_URL + "/api/v1/auth/register",
-      {
-
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-
-          username: username,
-
-          name: name,
-
-          email: email,
-
-          password: password,
-
-          role: selectedRole
-
-        })
-
-      }
-    );
-
-
-    const data = await response.json();
-
-
-    if (!response.ok) {
-
-      throw new Error(
-        data.detail || "Account creation failed."
-      );
-
-    }
-
-
-    message.className = "message success";
-
-    message.textContent =
-      "Account created successfully! Please login.";
-
-
-    document.getElementById("registerPassword").value = "";
-
-
-    setTimeout(() => {
-
-      showLoginPage();
-
-    }, 1000);
-
-
-  } catch (error) {
-
-    message.className = "message error";
-
-    message.textContent =
-      error.message;
-
-  }
-
-}
-
-
-/* ==================================
-   LOGIN
-================================== */
-
-async function loginAccount(event) {
-
-  event.preventDefault();
-
-
-  const username =
-    document.getElementById("loginUsername").value.trim();
-
-  const password =
-    document.getElementById("loginPassword").value;
-
-
-  const message =
-    document.getElementById("loginMessage");
-
-
-  message.className = "message";
-
-  message.style.display = "block";
-
-  message.textContent = "Logging in...";
-
-
-  try {
-
-    const response = await fetch(
-      API_URL + "/api/v1/auth/login",
-      {
-
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-
-          username: username,
-
-          password: password,
-
-          role: selectedRole
-
-        })
-
-      }
-    );
-
-
-    const data = await response.json();
-
-
-    if (!response.ok) {
-
-      throw new Error(
-        data.detail || "Invalid username or password."
-      );
-
-    }
-
-
-    message.className = "message success";
-
-    message.textContent =
-      "Login successful.";
-
-
-    setTimeout(() => {
-
-      openDashboard(data);
-
-    }, 500);
-
-
-  } catch (error) {
-
-    message.className = "message error";
-
-    message.textContent =
-      "Invalid username or password.";
-
-  }
-
-}
-
-
-/* ==================================
-   OPEN DASHBOARD
-================================== */
-
-/* ==================================
-   OPEN DASHBOARD
-================================== */
-
-function openDashboard(data) {
-
-  document.getElementById("rolePage")
-    .classList.add("hidden");
-
-  document.getElementById("registerPage")
-    .classList.add("hidden");
-
-  document.getElementById("loginPage")
-    .classList.add("hidden");
-
-
-  // Backend returns user information inside data.user
-  const user = data.user;
-
-  if (!user) {
-    console.error("Login response does not contain user information:", data);
-
-    document.getElementById("loginPage")
-      .classList.remove("hidden");
-
-    document.getElementById("loginMessage").className =
-      "message error";
-
-    document.getElementById("loginMessage").textContent =
-      "Login succeeded, but user information was not returned.";
-
-    return;
-  }
-
-
-  // Career Seeker
-  if (user.role === "career_seeker") {
-
-    document.getElementById("careerDashboard")
-      .classList.remove("hidden");
-
-    document.getElementById("careerUsername")
-      .textContent = user.username || user.name || "";
-  }
-
-
-  // Recruiter
-  else if (user.role === "recruiter") {
-
-    document.getElementById("recruiterDashboard")
-      .classList.remove("hidden");
-
-    document.getElementById("recruiterUsername")
-      .textContent = user.username || user.name || "";
-  }
-
-
-  // Unknown role
-  else {
-
-    console.error("Unknown user role:", user.role);
-
-    document.getElementById("loginPage")
-      .classList.remove("hidden");
-
-    document.getElementById("loginMessage").className =
-      "message error";
-
-    document.getElementById("loginMessage").textContent =
-      "Unknown account role.";
-  }
-}
-
-
-/* ==================================
-   LOGOUT
-================================== */
-
-function logout() {
-
-  document.getElementById("careerDashboard")
-    .classList.add("hidden");
-
-  document.getElementById("recruiterDashboard")
-    .classList.add("hidden");
-
-  document.getElementById("loginPage")
-    .classList.add("hidden");
-
-  document.getElementById("registerPage")
-    .classList.add("hidden");
-
-  document.getElementById("rolePage")
-    .classList.remove("hidden");
-
-  selectedRole = null;
-
-}
-
-
-/* ==================================
-   RESUME ANALYSIS
-================================== */
-
-async function analyzeResume() {
-
-  const resume =
-    document.getElementById("resumeText")
-      .value.trim();
-
-  const result =
-    document.getElementById("analysisResult");
-
-  const button =
-    document.getElementById("analyzeButton");
-
-
-  if (!resume) {
-
-    result.innerHTML =
-      '<p class="message error">Please paste your resume first.</p>';
-
-    return;
-
-  }
-
-
-  button.disabled = true;
-
-  result.innerHTML =
-    '<p class="loading">Analyzing resume...</p>';
-
-
-  try {
-
-    const response = await fetch(
-      API_URL + "/api/v1/resume-analyze",
-      {
-
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-          resume_text: resume
-        })
-
-      }
-    );
-
-
-    const data = await response.json();
-
-
-    if (!response.ok) {
-
-      throw new Error(
-        data.detail || "Analysis failed"
-      );
-
-    }
-
-
-    const skills =
-      data.skills_detected &&
-      data.skills_detected.length > 0
-        ? data.skills_detected.join(", ")
-        : "No skills detected";
-
-
-    result.innerHTML = `
-
-      <div class="result">
-
-        <h3>Analysis Result</h3>
-
-        <p>
-          <strong>Skill Score:</strong>
-          <span class="score">
-            ${data.skill_score}%
-          </span>
-        </p>
-
-        <p>
-          <strong>Skills detected:</strong>
-          ${skills}
-        </p>
-
-        <p>
-          <strong>Total skills:</strong>
-          ${data.total_skills_detected || 0}
-        </p>
-
-        <h4>Recommendations</h4>
-
-        <ul>
-
-          ${
-            data.recommendations
-              ? data.recommendations
-                  .map(r => `<li>${r}</li>`)
-                  .join("")
-              : ""
-          }
-
-        </ul>
-
-      </div>
-
-    `;
-
-
-  } catch (error) {
-
-    result.innerHTML =
-      `<p class="message error">Error: ${error.message}</p>`;
-
-  } finally {
-
-    button.disabled = false;
-
-  }
-
-}
-
-
-/* ==================================
-   JOB RECOMMENDATIONS
-================================== */
-
-async function getRecommendations() {
-
-  const resume =
-    document.getElementById("resumeText")
-      .value.trim();
-
-  const result =
-    document.getElementById("jobResult");
-
-  const button =
-    document.getElementById("recommendButton");
-
-
-  if (!resume) {
-
-    result.innerHTML =
-      '<p class="message error">Please paste your resume first.</p>';
-
-    return;
-
-  }
-
-
-  button.disabled = true;
-
-  result.innerHTML =
-    '<p class="loading">Finding suitable jobs...</p>';
-
-
-  try {
-
-    const response = await fetch(
-      API_URL + "/api/v1/job-recommendations",
-      {
-
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-          resume_text: resume
-        })
-
-      }
-    );
-
-
-    const data = await response.json();
-
-
-    if (!response.ok) {
-
-      throw new Error(
-        data.detail || "Job recommendation failed"
-      );
-
-    }
-
-
-    const jobs =
-      data.recommended_jobs || [];
-
-
-    let jobsHTML = `
-      <div class="result">
-        <h3>Recommended Jobs</h3>
-    `;
-
-
-    jobs.forEach(job => {
-
-      jobsHTML += `
-
-        <div class="job">
-
-          <h3>${job.job_title}</h3>
-
-          <p>
-            <strong>Match Score:</strong>
-
-            <span class="score">
-              ${job.match_score}%
-            </span>
-          </p>
-
-          <p>
-            <strong>Matching Skills:</strong>
-            ${
-              job.matching_skills.length
-                ? job.matching_skills.join(", ")
-                : "None"
-            }
-          </p>
-
-          <p>
-            <strong>Missing Skills:</strong>
-            ${
-              job.missing_skills.length
-                ? job.missing_skills.join(", ")
-                : "None"
-            }
-          </p>
+            <input
+                id="registerUsername"
+                type="text"
+                placeholder="Choose a unique username"
+                required
+            >
 
         </div>
 
-      `;
 
-    });
+        <div class="form-group">
+
+            <label>
+                Full Name
+            </label>
+
+            <input
+                id="registerName"
+                type="text"
+                placeholder="Enter your full name"
+                required
+            >
+
+        </div>
 
 
-    jobsHTML += "</div>";
+        <div class="form-group">
 
-    result.innerHTML = jobsHTML;
+            <label>
+                Email
+            </label>
+
+            <input
+                id="registerEmail"
+                type="email"
+                placeholder="Enter your email"
+                required
+            >
+
+        </div>
 
 
-  } catch (error) {
+        <div class="form-group">
 
-    result.innerHTML =
-      `<p class="message error">Error: ${error.message}</p>`;
+            <label>
+                Password
+            </label>
 
-  } finally {
+            <input
+                id="registerPassword"
+                type="password"
+                placeholder="Create a password"
+                minlength="6"
+                required
+            >
 
-    button.disabled = false;
+        </div>
 
-  }
+
+        <button type="submit">
+            Create Account
+        </button>
+
+
+        <button
+            type="button"
+            class="secondary"
+            onclick="showRolePage()"
+        >
+            Back
+        </button>
+
+
+    </form>
+
+
+    <div
+        id="registerMessage"
+        class="message"
+    ></div>
+
+
+    <p>
+
+        Already have an account?
+
+        <span
+            class="link"
+            onclick="showLoginPage()"
+        >
+            Login here
+        </span>
+
+    </p>
+
+</div>
+
+
+
+<!-- =====================================================
+     LOGIN PAGE
+===================================================== -->
+
+<div id="loginPage" class="card hidden">
+
+    <h2 id="loginTitle">
+        Login
+    </h2>
+
+    <p id="loginDescription">
+        Login to continue.
+    </p>
+
+
+    <form onsubmit="loginAccount(event)">
+
+
+        <div class="form-group">
+
+            <label>
+                Username
+            </label>
+
+            <input
+                id="loginUsername"
+                type="text"
+                placeholder="Enter your username"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Password
+            </label>
+
+            <input
+                id="loginPassword"
+                type="password"
+                placeholder="Enter your password"
+                required
+            >
+
+        </div>
+
+
+        <button type="submit">
+            Login
+        </button>
+
+
+        <button
+            type="button"
+            class="secondary"
+            onclick="showRegisterPage()"
+        >
+            Create Account
+        </button>
+
+
+    </form>
+
+
+    <div
+        id="loginMessage"
+        class="message"
+    ></div>
+
+
+    <p>
+
+        <span
+            class="link"
+            onclick="showRolePage()"
+        >
+            Back to account type
+        </span>
+
+    </p>
+
+</div>
+
+
+
+<!-- =====================================================
+     CAREER SEEKER DASHBOARD
+===================================================== -->
+
+<div
+    id="careerDashboard"
+    class="hidden"
+>
+
+
+    <div class="card">
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <h2>
+                    Career Seeker Dashboard
+                </h2>
+
+                <p>
+
+                    Welcome,
+
+                    <span
+                        id="careerUsername"
+                        class="username"
+                    ></span>
+
+                </p>
+
+            </div>
+
+
+            <button onclick="logout()">
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- RESUME ANALYSIS -->
+
+    <div class="card">
+
+        <h2>
+            Resume Analysis
+        </h2>
+
+        <p>
+            Paste your resume below.
+        </p>
+
+
+        <textarea
+            id="resumeText"
+            placeholder="Paste your resume text here..."
+        ></textarea>
+
+
+        <button
+            id="analyzeButton"
+            onclick="analyzeResume()"
+        >
+            Analyze Resume
+        </button>
+
+
+        <div id="analysisResult"></div>
+
+    </div>
+
+
+
+    <!-- JOB RECOMMENDATIONS -->
+
+    <div class="card">
+
+        <h2>
+            Job Recommendations
+        </h2>
+
+        <p>
+            Find jobs that match your skills.
+        </p>
+
+
+        <button
+            id="recommendButton"
+            onclick="getRecommendations()"
+        >
+            Find Suitable Jobs
+        </button>
+
+
+        <div id="jobResult"></div>
+
+    </div>
+
+
+
+    <!-- JOB MATCH -->
+
+    <div class="card">
+
+        <h2>
+            Job Match Analyzer
+        </h2>
+
+        <p>
+            Compare your resume with a job description.
+        </p>
+
+
+        <textarea
+            id="jobDescription"
+            placeholder="Paste the job description here..."
+        ></textarea>
+
+
+        <button
+            onclick="checkJobMatch()"
+        >
+            Check Job Match
+        </button>
+
+
+        <div id="matchResult"></div>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     RECRUITER DASHBOARD
+===================================================== -->
+
+<div
+    id="recruiterDashboard"
+    class="hidden"
+>
+
+
+    <div class="card">
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <h2>
+                    Recruiter Dashboard
+                </h2>
+
+                <p>
+
+                    Welcome,
+
+                    <span
+                        id="recruiterUsername"
+                        class="username"
+                    ></span>
+
+                </p>
+
+            </div>
+
+
+            <button onclick="logout()">
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- POST JOB -->
+
+    <div class="card">
+
+        <h2>
+            Post a Job
+        </h2>
+
+
+        <div class="form-group">
+
+            <label>
+                Job Title
+            </label>
+
+            <input
+                id="jobTitle"
+                type="text"
+                placeholder="Example: Python Backend Developer"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Job Description
+            </label>
+
+            <textarea
+                id="recruiterJobDescription"
+                placeholder="Enter the job requirements and skills..."
+            ></textarea>
+
+        </div>
+
+
+        <button
+            onclick="postJob()"
+        >
+            Post Job
+        </button>
+
+
+        <div
+            id="recruiterMessage"
+            class="message"
+        ></div>
+
+    </div>
+
+
+
+    <!-- AVAILABLE JOBS -->
+
+    <div class="card">
+
+        <h2>
+            Posted Jobs
+        </h2>
+
+        <button
+            onclick="loadJobs()"
+        >
+            Refresh Jobs
+        </button>
+
+        <div id="recruiterJobs"></div>
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   API
+===================================================== */
+
+const API_URL =
+    "https://placement-ai-platform.onrender.com";
+
+
+let selectedRole = null;
+let currentUser = null;
+
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function hideAllPages() {
+
+    document
+        .getElementById("rolePage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("registerPage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("careerDashboard")
+        .classList.add("hidden");
+
+    document
+        .getElementById("recruiterDashboard")
+        .classList.add("hidden");
 
 }
 
 
-/* ==================================
-   JOB MATCH
-================================== */
+/* =====================================================
+   ROLE SELECTION
+===================================================== */
 
-async function checkJobMatch() {
+function selectRole(role) {
 
-  const resume =
-    document.getElementById("resumeText")
-      .value.trim();
+    selectedRole = role;
 
-  const jobDescription =
-    document.getElementById("jobDescription")
-      .value.trim();
+    hideAllPages();
 
-  const result =
-    document.getElementById("matchResult");
+    document
+        .getElementById("registerPage")
+        .classList.remove("hidden");
 
 
-  if (!resume || !jobDescription) {
+    if (role === "career_seeker") {
 
-    result.innerHTML =
-      '<p class="message error">Please enter both your resume and job description.</p>';
+        document
+            .getElementById("registerTitle")
+            .textContent =
+            "Create Your Career Seeker Account";
 
-    return;
+        document
+            .getElementById("registerDescription")
+            .textContent =
+            "Create your account to discover career opportunities.";
 
-  }
+    }
 
+    else {
 
-  result.innerHTML =
-    '<p class="loading">Checking job match...</p>';
+        document
+            .getElementById("registerTitle")
+            .textContent =
+            "Create Your Recruiter Account";
 
+        document
+            .getElementById("registerDescription")
+            .textContent =
+            "Create your recruiter account to find qualified candidates.";
 
-  try {
+    }
 
-    const response = await fetch(
-      API_URL + "/api/v1/job-match",
-      {
-
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-
-          resume_text: resume,
-
-          job_description: jobDescription
-
-        })
-
-      }
-    );
+}
 
 
-    const data = await response.json();
+/* =====================================================
+   ROLE PAGE
+===================================================== */
+
+function showRolePage() {
+
+    hideAllPages();
+
+    document
+        .getElementById("rolePage")
+        .classList.remove("hidden");
+
+    selectedRole = null;
+
+}
 
 
-    if (!response.ok) {
+/* =====================================================
+   REGISTER PAGE
+===================================================== */
 
-      throw new Error(
-        data.detail || "Job match failed"
-      );
+function showRegisterPage() {
+
+    hideAllPages();
+
+    document
+        .getElementById("registerPage")
+        .classList.remove("hidden");
+
+}
+
+
+/* =====================================================
+   LOGIN PAGE
+===================================================== */
+
+function showLoginPage() {
+
+    hideAllPages();
+
+    document
+        .getElementById("loginPage")
+        .classList.remove("hidden");
+
+
+    if (selectedRole === "career_seeker") {
+
+        document
+            .getElementById("loginTitle")
+            .textContent =
+            "Career Seeker Login";
+
+        document
+            .getElementById("loginDescription")
+            .textContent =
+            "Login to access your career dashboard.";
+
+    }
+
+    else {
+
+        document
+            .getElementById("loginTitle")
+            .textContent =
+            "Recruiter Login";
+
+        document
+            .getElementById("loginDescription")
+            .textContent =
+            "Login to access your recruiter dashboard.";
+
+    }
+
+}
+
+
+/* =====================================================
+   REGISTER
+===================================================== */
+
+async function registerAccount(event) {
+
+    event.preventDefault();
+
+
+    if (!selectedRole) {
+
+        alert("Please select an account type.");
+
+        return;
 
     }
 
 
-    result.innerHTML = `
-
-      <div class="result">
-
-        <h3>Job Match Result</h3>
-
-        <p>
-          <strong>Match Score:</strong>
-
-          <span class="score">
-            ${data.match_score}%
-          </span>
-        </p>
-
-        <p>
-          <strong>Matching Skills:</strong>
-          ${
-            data.matching_skills.length
-              ? data.matching_skills.join(", ")
-              : "None"
-          }
-        </p>
-
-        <p>
-          <strong>Missing Skills:</strong>
-          ${
-            data.missing_skills.length
-              ? data.missing_skills.join(", ")
-              : "None"
-          }
-        </p>
-
-        <p>
-          <strong>Recommendation:</strong>
-          ${data.recommendation}
-        </p>
-
-      </div>
-
-    `;
+    const username =
+        document
+            .getElementById("registerUsername")
+            .value
+            .trim();
 
 
-  } catch (error) {
+    const name =
+        document
+            .getElementById("registerName")
+            .value
+            .trim();
 
-    result.innerHTML =
-      `<p class="message error">Error: ${error.message}</p>`;
 
-  }
+    const email =
+        document
+            .getElementById("registerEmail")
+            .value
+            .trim();
+
+
+    const password =
+        document
+            .getElementById("registerPassword")
+            .value;
+
+
+    const message =
+        document
+            .getElementById("registerMessage");
+
+
+    message.className = "message success";
+    message.textContent =
+        "Creating account...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/v1/auth/register",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        username:
+                            username,
+
+                        name:
+                            name,
+
+                        email:
+                            email,
+
+                        password:
+                            password,
+
+                        role:
+                            selectedRole
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Account creation failed."
+            );
+
+        }
+
+
+        message.className =
+            "message success";
+
+        message.textContent =
+            "Account created successfully! Please login.";
+
+
+        document
+            .getElementById("registerPassword")
+            .value = "";
+
+
+        setTimeout(
+            showLoginPage,
+            1000
+        );
+
+
+    }
+
+    catch (error) {
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            error.message;
+
+    }
 
 }
 
 
-/* ==================================
-   RECRUITER JOB POST
-================================== */
+/* =====================================================
+   LOGIN
+===================================================== */
 
-function postJob() {
+async function loginAccount(event) {
 
-  const title =
-    document.getElementById("jobTitle")
-      .value.trim();
-
-  const description =
-    document.getElementById("recruiterJobDescription")
-      .value.trim();
-
-  const message =
-    document.getElementById("recruiterMessage");
+    event.preventDefault();
 
 
-  if (!title || !description) {
+    if (!selectedRole) {
+
+        alert(
+            "Please select Career Seeker or Recruiter first."
+        );
+
+        return;
+
+    }
+
+
+    const username =
+        document
+            .getElementById("loginUsername")
+            .value
+            .trim();
+
+
+    const password =
+        document
+            .getElementById("loginPassword")
+            .value;
+
+
+    const message =
+        document
+            .getElementById("loginMessage");
+
 
     message.className =
-      "message error";
+        "message success";
 
     message.textContent =
-      "Please enter the job title and description.";
-
-    return;
-
-  }
+        "Logging in...";
 
 
-  message.className =
-    "message success";
+    try {
 
-  message.textContent =
-    "Job posting feature is ready for backend integration.";
+        const response =
+            await fetch(
+                API_URL +
+                "/api/v1/auth/login",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        username:
+                            username,
+
+                        password:
+                            password,
+
+                        role:
+                            selectedRole
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Invalid username or password."
+            );
+
+        }
+
+
+        if (!data.user) {
+
+            throw new Error(
+                "Login succeeded but no user information was returned."
+            );
+
+        }
+
+
+        currentUser =
+            data.user;
+
+
+        openDashboard(data);
+
+    }
+
+    catch (error) {
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            error.message;
+
+    }
 
 }
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+function openDashboard(data) {
+
+    hideAllPages();
+
+
+    const user =
+        data.user;
+
+
+    if (!user) {
+
+        showLoginPage();
+
+        const message =
+            document
+                .getElementById("loginMessage");
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            "User information was not returned.";
+
+        return;
+
+    }
+
+
+    currentUser =
+        user;
+
+
+    if (
+        user.role ===
+        "career_seeker"
+    ) {
+
+        document
+            .getElementById(
+                "careerDashboard"
+            )
+            .classList
+            .remove("hidden");
+
+
+        document
+            .getElementById(
+                "careerUsername"
+            )
+            .textContent =
+            user.username ||
+            user.name ||
+            "";
+
+    }
+
+
+    else if (
+        user.role ===
+        "recruiter"
+    ) {
+
+        document
+            .getElementById(
+                "recruiterDashboard"
+            )
+            .classList
+            .remove("hidden");
+
+
+        document
+            .getElementById(
+                "recruiterUsername"
+            )
+            .textContent =
+            user.username ||
+            user.name ||
+            "";
+
+
+        loadJobs();
+
+    }
+
+
+    else {
+
+        showRolePage();
+
+        alert(
+            "Unknown account role."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    currentUser = null;
+
+    selectedRole = null;
+
+    hideAllPages();
+
+    document
+        .getElementById("rolePage")
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* =====================================================
+   RESUME ANALYSIS
+===================================================== */
+
+async function analyzeResume() {
+
+    const resume =
+        document
+            .getElementById(
+                "resumeText"
+            )
+            .value
+            .trim();
+
+
+    const result =
+        document
+            .getElementById(
+                "analysisResult"
+            );
+
+
+    const button =
+        document
+            .getElementById(
+                "analyzeButton"
+            );
+
+
+    if (!resume) {
+
+        result.innerHTML =
+            '<p class="message error">Please paste your resume first.</p>';
+
+        return;
+
+    }
+
+
+    button.disabled = true;
+
+    result.innerHTML =
+        '<p class="loading">Analyzing resume...</p>';
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/v1/resume-analyze",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        resume_text:
+                            resume
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Resume analysis failed."
+            );
+
+        }
+
+
+        const skills =
+            data.skills_detected &&
+            data.skills_detected.length
+                ? data.skills_detected.join(", ")
+                : "No skills detected";
+
+
+        const recommendations =
+            data.recommendations || [];
+
+
+        result.innerHTML = `
+
+            <div class="result">
+
+                <h3>
+                    Analysis Result
+                </h3>
+
+                <p>
+
+                    <strong>
+                        Skill Score:
+                    </strong>
+
+                    <span class="score">
+                        ${data.skill_score}%
+                    </span>
+
+                </p>
+
+                <p>
+
+                    <strong>
+                        Skills detected:
+                    </strong>
+
+                    ${skills}
+
+                </p>
+
+                <p>
+
+                    <strong>
+                        Total skills:
+                    </strong>
+
+                    ${data.total_skills_detected || 0}
+
+                </p>
+
+                <h4>
+                    Recommendations
+                </h4>
+
+                <ul>
+
+                    ${
+                        recommendations
+                            .map(
+                                item =>
+                                `<li>${item}</li>`
+                            )
+                            .join("")
+                    }
+
+                </ul>
+
+            </div>
+
+        `;
+
+    }
+
+    catch (error) {
+
+        result.innerHTML =
+            `<p class="message error">${error.message}</p>`;
+
+    }
+
+    finally {
+
+        button.disabled = false;
+
+    }
+
+}
+
+
+/* =====================================================
+   JOB RECOMMENDATIONS
+===================================================== */
+
+async function getRecommendations() {
+
+    const resume =
+        document
+            .getElementById(
+                "resumeText"
+            )
+            .value
+            .trim();
+
+
+    const result =
+        document
+            .getElementById(
+                "jobResult"
+            );
+
+
+    const button =
+        document
+            .getElementById(
+                "recommendButton"
+            );
+
+
+    if (!resume) {
+
+        result.innerHTML =
+            '<p class="message error">Please paste your resume first.</p>';
+
+        return;
+
+    }
+
+
+    button.disabled = true;
+
+    result.innerHTML =
+        '<p class="loading">Finding suitable jobs...</p>';
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/v1/job-recommendations",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        resume_text:
+                            resume
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Job recommendation failed."
+            );
+
+        }
+
+
+        const jobs =
+            data.recommended_jobs || [];
+
+
+        let html = `
+
+            <div class="result">
+
+                <h3>
+                    Recommended Jobs
+                </h3>
+
+        `;
+
+
+        jobs.forEach(job => {
+
+            html += `
+
+                <div class="job">
+
+                    <h3>
+                        ${job.job_title}
+                    </h3>
+
+                    <p>
+
+                        <strong>
+                            Match Score:
+                        </strong>
+
+                        <span class="score">
+                            ${job.match_score}%
+                        </span>
+
+                    </p>
+
+                    <p>
+
+                        <strong>
+                            Matching Skills:
+                        </strong>
+
+                        ${
+                            job.matching_skills &&
+                            job.matching_skills.length
+                                ? job.matching_skills.join(", ")
+                                : "None"
+                        }
+
+                    </p>
+
+                    <p>
+
+                        <strong>
+                            Missing Skills:
+                        </strong>
+
+                        ${
+                            job.missing_skills &&
+                            job.missing_skills.length
+                                ? job.missing_skills.join(", ")
+                                : "None"
+                        }
+
+                    </p>
+
+                </div>
+
+            `;
+
+        });
+
+
+        html += `
+            </div>
+        `;
+
+
+        result.innerHTML =
+            html;
+
+    }
+
+    catch (error) {
+
+        result.innerHTML =
+            `<p class="message error">${error.message}</p>`;
+
+    }
+
+    finally {
+
+        button.disabled = false;
+
+    }
+
+}
+
+
+/* =====================================================
+   JOB MATCH
+===================================================== */
+
+async function checkJobMatch() {
+
+    const resume =
+        document
+            .getElementById(
+                "resumeText"
+            )
+            .value
+            .trim();
+
+
+    const description =
+        document
+            .getElementById(
+                "jobDescription"
+            )
+            .value
+            .trim();
+
+
+    const result =
+        document
+            .getElementById(
+                "matchResult"
+            );
+
+
+    if (!resume || !description) {
+
+        result.innerHTML =
+            '<p class="message error">Please enter both your resume and job description.</p>';
+
+        return;
+
+    }
+
+
+    result.innerHTML =
+        '<p class="loading">Checking job match...</p>';
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/v1/job-match",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        resume_text:
+                            resume,
+
+                        job_description:
+                            description
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Job match failed."
+            );
+
+        }
+
+
+        result.innerHTML = `
+
+            <div class="result">
+
+                <h3>
+                    Job Match Result
+                </h3>
+
+                <p>
+
+                    <strong>
+                        Match Score:
+                    </strong>
+
+                    <span class="score">
+                        ${data.match_score}%
+                    </span>
+
+                </p>
+
+                <p>
+
+                    <strong>
+                        Matching Skills:
+                    </strong>
+
+                    ${
+                        data.matching_skills &&
+                        data.matching_skills.length
+                            ? data.matching_skills.join(", ")
+                            : "None"
+                    }
+
+                </p>
+
+                <p>
+
+                    <strong>
+                        Missing Skills:
+                    </strong>
+
+                    ${
+                        data.missing_skills &&
+                        data.missing_skills.length
+                            ? data.missing_skills.join(", ")
+                            : "None"
+                    }
+
+                </p>
+
+                <p>
+
+                    <strong>
+                        Recommendation:
+                    </strong>
+
+                    ${data.recommendation}
+
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+    catch (error) {
+
+        result.innerHTML =
+            `<p class="message error">${error.message}</p>`;
+
+    }
+
+}
+
+
+/* =====================================================
+   POST JOB
+===================================================== */
+
+async function postJob() {
+
+    if (!currentUser) {
+
+        alert(
+            "Please login first."
+        );
+
+        return;
+
+    }
+
+
+    const title =
+        document
+            .getElementById(
+                "jobTitle"
+            )
+            .value
+            .trim();
+
+
+    const description =
+        document
+            .getElementById(
+                "recruiterJobDescription"
+            )
+            .value
+            .trim();
+
+
+    const message =
+        document
+            .getElementById(
+                "recruiterMessage"
+            );
+
+
+    if (!title || !description) {
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            "Please enter the job title and description.";
+
+        return;
+
+    }
+
+
+    message.className =
+        "message success";
+
+    message.textContent =
+        "Posting job...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/v1/jobs",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        recruiter_id:
+                            currentUser.id,
+
+                        title:
+                            title,
+
+                        description:
+                            description
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Could not post job."
+            );
+
+        }
+
+
+        message.className =
+            "message success";
+
+        message.textContent =
+            "Job posted successfully!";
+
+
+        document
+            .getElementById(
+                "jobTitle"
+            )
+            .value = "";
+
+
+        document
+            .getElementById(
+                "recruiterJobDescription"
+            )
+            .value = "";
+
+
+        loadJobs();
+
+    }
+
+    catch (error) {
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            error.message;
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD JOBS
+===================================================== */
+
+async function loadJobs() {
+
+    const container =
+        document
+            .getElementById(
+                "recruiterJobs"
+            );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML =
+        '<p class="loading">Loading jobs...</p>';
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/v1/jobs"
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Could not load jobs."
+            );
+
+        }
+
+
+        const jobs =
+            data.jobs || [];
+
+
+        if (!jobs.length) {
+
+            container.innerHTML =
+                "<p>No jobs have been posted yet.</p>";
+
+            return;
+
+        }
+
+
+        container.innerHTML =
+            jobs
+                .map(
+                    job => `
+
+                        <div class="job">
+
+                            <h3>
+                                ${job.title}
+                            </h3>
+
+                            <p>
+                                ${job.description}
+                            </p>
+
+                            <small>
+                                Posted by:
+                                ${job.recruiter_username || "Recruiter"}
+                            </small>
+
+                        </div>
+
+                    `
+                )
+                .join("");
+
+    }
+
+    catch (error) {
+
+        container.innerHTML =
+            `<p class="message error">${error.message}</p>`;
+
+    }
+
+}
+
+
+/* =====================================================
+   START PAGE
+===================================================== */
+
+hideAllPages();
+
+document
+    .getElementById("rolePage")
+    .classList
+    .remove("hidden");
 
 </script>
 
