@@ -16,7 +16,7 @@ from psycopg2.extras import RealDictCursor
 app = FastAPI(
     title="Placement AI Platform",
     description="AI-powered placement and job readiness platform",
-    version="3.0.0"
+    version="4.0.0"
 )
 
 
@@ -59,6 +59,7 @@ def init_db():
     conn = get_db()
 
     try:
+
         with conn.cursor() as cursor:
 
             # -------------------------------------------------
@@ -171,6 +172,7 @@ def init_db():
         conn.commit()
 
     finally:
+
         conn.close()
 
 
@@ -224,6 +226,7 @@ def verify_password(
         )
 
     except Exception:
+
         return False
 
 
@@ -237,7 +240,7 @@ def home():
     return {
         "message": "Placement AI Platform API is running",
         "status": "success",
-        "version": "3.0.0"
+        "version": "4.0.0"
     }
 
 
@@ -353,10 +356,6 @@ def register(request: RegisterRequest):
     role = request.role.strip().lower()
 
 
-    # -----------------------------------------------------
-    # VALIDATION
-    # -----------------------------------------------------
-
     if not name:
 
         raise HTTPException(
@@ -380,10 +379,7 @@ def register(request: RegisterRequest):
 
         raise HTTPException(
             status_code=400,
-            detail=(
-                "Password must contain at least "
-                "6 characters."
-            )
+            detail="Password must contain at least 6 characters."
         )
 
 
@@ -406,17 +402,12 @@ def register(request: RegisterRequest):
         )
 
 
-    # -----------------------------------------------------
-    # DATABASE
-    # -----------------------------------------------------
-
     conn = get_db()
 
     try:
 
         with conn.cursor() as cursor:
 
-            # Check username
             cursor.execute(
                 """
                 SELECT id
@@ -432,14 +423,10 @@ def register(request: RegisterRequest):
 
                 raise HTTPException(
                     status_code=409,
-                    detail=(
-                        "Username already taken. "
-                        "Please choose another username."
-                    )
+                    detail="Username already taken."
                 )
 
 
-            # Check email
             cursor.execute(
                 """
                 SELECT id
@@ -455,20 +442,15 @@ def register(request: RegisterRequest):
 
                 raise HTTPException(
                     status_code=409,
-                    detail=(
-                        "An account with this email "
-                        "already exists."
-                    )
+                    detail="An account with this email already exists."
                 )
 
 
-            # Password hashing
             password_hash = hash_password(
                 password
             )
 
 
-            # Create user
             cursor.execute(
                 """
                 INSERT INTO users
@@ -497,19 +479,11 @@ def register(request: RegisterRequest):
         conn.commit()
 
     except HTTPException:
+
         conn.rollback()
         raise
 
-    except psycopg2.errors.UniqueViolation:
-
-        conn.rollback()
-
-        raise HTTPException(
-            status_code=409,
-            detail="Username or email already exists."
-        )
-
-    except Exception as error:
+    except Exception:
 
         conn.rollback()
 
@@ -525,10 +499,7 @@ def register(request: RegisterRequest):
 
     return {
         "success": True,
-        "message": (
-            "Account created successfully. "
-            "You can now log in."
-        ),
+        "message": "Account created successfully.",
         "user": user
     }
 
@@ -601,10 +572,7 @@ def login(request: LoginRequest):
 
         raise HTTPException(
             status_code=401,
-            detail=(
-                "Invalid username or password "
-                "for this account type."
-            )
+            detail="Invalid username or password for this account type."
         )
 
 
@@ -697,6 +665,7 @@ class JobMatchRequest(BaseModel):
 
     resume_text: str
     job_description: str
+    job_title: str = "Selected Job"
 
 
 @app.post("/api/v1/job-match")
@@ -711,15 +680,35 @@ def job_match(request: JobMatchRequest):
     )
 
 
+    if not request.resume_text.strip():
+
+        raise HTTPException(
+            status_code=400,
+            detail="Resume text is required."
+        )
+
+
+    if not request.job_description.strip():
+
+        raise HTTPException(
+            status_code=400,
+            detail="Job description is required."
+        )
+
+
     if not job_skills:
 
         return {
+            "job_title": request.job_title,
             "match_score": 0,
             "matching_skills": [],
             "missing_skills": [],
+            "resume_skills_detected": sorted(resume_skills),
+            "job_skills_detected": [],
             "recommendation": (
-                "The job description does not "
-                "contain recognizable technical skills."
+                "This job description does not contain "
+                "recognizable technical skills. "
+                "Please add more detailed job requirements."
             )
         }
 
@@ -751,42 +740,43 @@ def job_match(request: JobMatchRequest):
     if match_score >= 80:
 
         recommendation = (
-            "Excellent match. You are strongly "
-            "aligned with this job."
+            "Excellent match. Your resume strongly "
+            "matches the requirements of this job. "
+            "You should consider applying."
         )
 
     elif match_score >= 60:
 
         recommendation = (
-            "Good match. Improve the missing "
-            "skills before applying."
+            "Good match. You have several of the "
+            "required skills, but improving the missing "
+            "skills would strengthen your application."
         )
 
     elif match_score >= 40:
 
         recommendation = (
-            "Moderate match. Focus on the "
-            "missing skills."
+            "Moderate match. You meet some requirements, "
+            "but you should focus on developing the "
+            "missing skills before applying."
         )
 
     else:
 
         recommendation = (
-            "Low match. Consider improving "
-            "your technical skill alignment."
+            "Low match. Your current resume has limited "
+            "alignment with this job. Consider improving "
+            "the missing skills or looking for a closer role."
         )
 
 
     return {
+        "job_title": request.job_title,
         "match_score": match_score,
         "matching_skills": matching_skills,
         "missing_skills": missing_skills,
-        "resume_skills_detected": sorted(
-            resume_skills
-        ),
-        "job_skills_detected": sorted(
-            job_skills
-        ),
+        "resume_skills_detected": sorted(resume_skills),
+        "job_skills_detected": sorted(job_skills),
         "recommendation": recommendation
     }
 
@@ -805,9 +795,18 @@ def resume_analyze(
     request: ResumeRequest
 ):
 
+    if not request.resume_text.strip():
+
+        raise HTTPException(
+            status_code=400,
+            detail="Resume text is required."
+        )
+
+
     resume_skills = extract_skills(
         request.resume_text
     )
+
 
     total_skills = len(SKILLS)
 
@@ -876,8 +875,7 @@ def resume_analyze(
     if not recommendations:
 
         recommendations.append(
-            "Your resume contains a strong "
-            "set of technical skills."
+            "Your resume contains a strong set of technical skills."
         )
 
 
@@ -996,20 +994,14 @@ def job_recommendations(
         )
 
 
-        if job_skills:
-
-            match_score = round(
-                (
-                    len(matching_skills)
-                    /
-                    len(job_skills)
-                )
-                * 100
+        match_score = round(
+            (
+                len(matching_skills)
+                /
+                len(job_skills)
             )
-
-        else:
-
-            match_score = 0
+            * 100
+        )
 
 
         recommendations.append({
@@ -1221,7 +1213,6 @@ def apply_for_job(
 
         with conn.cursor() as cursor:
 
-            # Verify candidate
             cursor.execute(
                 """
                 SELECT id
@@ -1239,14 +1230,10 @@ def apply_for_job(
 
                 raise HTTPException(
                     status_code=403,
-                    detail=(
-                        "Only career seekers "
-                        "can apply for jobs."
-                    )
+                    detail="Only career seekers can apply for jobs."
                 )
 
 
-            # Verify job
             cursor.execute(
                 """
                 SELECT id
@@ -1267,7 +1254,6 @@ def apply_for_job(
                 )
 
 
-            # Prevent duplicate application
             cursor.execute(
                 """
                 SELECT id
@@ -1288,10 +1274,7 @@ def apply_for_job(
 
                 raise HTTPException(
                     status_code=409,
-                    detail=(
-                        "You have already "
-                        "applied for this job."
-                    )
+                    detail="You have already applied for this job."
                 )
 
 
@@ -1343,7 +1326,7 @@ def apply_for_job(
 
 
 # =========================================================
-# STARTUP MESSAGE
+# DATABASE TEST
 # =========================================================
 
 @app.get("/api/v1/database-test")
