@@ -83,16 +83,32 @@ def init_db():
                         NOT NULL,
 
                     role VARCHAR(30)
-                        NOT NULL
-                        CHECK (
-                            role IN (
-                                'career_seeker',
-                                'recruiter'
-                            )
-                        ),
+                        NOT NULL,
 
                     created_at TIMESTAMP
                         DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+
+            # Allow 3 roles:
+            # career_seeker
+            # recruiter
+            # owner
+
+            cursor.execute("""
+                ALTER TABLE users
+                DROP CONSTRAINT IF EXISTS users_role_check
+            """)
+
+            cursor.execute("""
+                ALTER TABLE users
+                ADD CONSTRAINT users_role_check
+                CHECK (
+                    role IN (
+                        'career_seeker',
+                        'recruiter',
+                        'owner'
+                    )
                 )
             """)
 
@@ -176,8 +192,134 @@ def init_db():
         conn.close()
 
 
-# Create tables when application starts
+# Create database tables
 init_db()
+
+
+# =========================================================
+# OWNER ACCOUNT
+# =========================================================
+
+def create_owner_account():
+
+    owner_username = os.getenv("OWNER_USERNAME")
+    owner_password = os.getenv("OWNER_PASSWORD")
+    owner_name = os.getenv("OWNER_NAME")
+    owner_email = os.getenv("OWNER_EMAIL")
+
+
+    if not all([
+        owner_username,
+        owner_password,
+        owner_name,
+        owner_email
+    ]):
+        return
+
+
+    owner_username = owner_username.strip().lower()
+    owner_name = owner_name.strip()
+    owner_email = owner_email.strip().lower()
+
+
+    conn = get_db()
+
+    try:
+
+        with conn.cursor() as cursor:
+
+            # Check username
+
+            cursor.execute(
+                """
+                SELECT *
+                FROM users
+                WHERE username = %s
+                """,
+                (owner_username,)
+            )
+
+            existing_user = cursor.fetchone()
+
+
+            if existing_user:
+
+                if existing_user["role"] != "owner":
+
+                    raise RuntimeError(
+                        "OWNER_USERNAME already belongs "
+                        "to a non-owner account."
+                    )
+
+                # Update owner details/password
+                cursor.execute(
+                    """
+                    UPDATE users
+                    SET
+                        name = %s,
+                        email = %s,
+                        password_hash = %s,
+                        role = 'owner'
+                    WHERE username = %s
+                    """,
+                    (
+                        owner_name,
+                        owner_email,
+                        hash_password(owner_password),
+                        owner_username
+                    )
+                )
+
+            else:
+
+                # Check email
+
+                cursor.execute(
+                    """
+                    SELECT id
+                    FROM users
+                    WHERE email = %s
+                    """,
+                    (owner_email,)
+                )
+
+                existing_email = cursor.fetchone()
+
+
+                if existing_email:
+
+                    raise RuntimeError(
+                        "OWNER_EMAIL is already being "
+                        "used by another account."
+                    )
+
+
+                cursor.execute(
+                    """
+                    INSERT INTO users
+                    (
+                        username,
+                        name,
+                        email,
+                        password_hash,
+                        role
+                    )
+                    VALUES (%s, %s, %s, %s, 'owner')
+                    """,
+                    (
+                        owner_username,
+                        owner_name,
+                        owner_email,
+                        hash_password(owner_password)
+                    )
+                )
+
+
+        conn.commit()
+
+    finally:
+
+        conn.close()
 
 
 # =========================================================
@@ -230,6 +372,10 @@ def verify_password(
         return False
 
 
+# Create owner account after password functions exist
+create_owner_account()
+
+
 # =========================================================
 # BASIC ENDPOINTS
 # =========================================================
@@ -252,7 +398,9 @@ def health():
         conn = get_db()
 
         with conn.cursor() as cursor:
+
             cursor.execute("SELECT 1")
+
 
         conn.close()
 
@@ -278,12 +426,14 @@ def validate_username(username: str):
 
     username = username.strip().lower()
 
+
     if not username:
 
         raise HTTPException(
             status_code=400,
             detail="Username is required."
         )
+
 
     if len(username) < 3:
 
@@ -292,12 +442,14 @@ def validate_username(username: str):
             detail="Username must contain at least 3 characters."
         )
 
+
     if len(username) > 30:
 
         raise HTTPException(
             status_code=400,
             detail="Username cannot exceed 30 characters."
         )
+
 
     if not re.match(
         r"^[a-z0-9_]+$",
@@ -311,6 +463,7 @@ def validate_username(username: str):
                 "letters, numbers and underscores."
             )
         )
+
 
     return username
 
@@ -354,6 +507,19 @@ def register(request: RegisterRequest):
     password = request.password
 
     role = request.role.strip().lower()
+
+
+    # Owner CANNOT register through website
+
+    if role == "owner":
+
+        raise HTTPException(
+            status_code=403,
+            detail=(
+                "Owner accounts cannot be created "
+                "through public registration."
+            )
+        )
 
 
     if not name:
@@ -408,6 +574,8 @@ def register(request: RegisterRequest):
 
         with conn.cursor() as cursor:
 
+            # Check username
+
             cursor.execute(
                 """
                 SELECT id
@@ -417,15 +585,15 @@ def register(request: RegisterRequest):
                 (username,)
             )
 
-            existing_username = cursor.fetchone()
-
-            if existing_username:
+            if cursor.fetchone():
 
                 raise HTTPException(
                     status_code=409,
                     detail="Username already taken."
                 )
 
+
+            # Check email
 
             cursor.execute(
                 """
@@ -436,9 +604,7 @@ def register(request: RegisterRequest):
                 (email,)
             )
 
-            existing_email = cursor.fetchone()
-
-            if existing_email:
+            if cursor.fetchone():
 
                 raise HTTPException(
                     status_code=409,
@@ -446,9 +612,7 @@ def register(request: RegisterRequest):
                 )
 
 
-            password_hash = hash_password(
-                password
-            )
+            password_hash = hash_password(password)
 
 
             cursor.execute(
@@ -462,7 +626,12 @@ def register(request: RegisterRequest):
                     role
                 )
                 VALUES (%s, %s, %s, %s, %s)
-                RETURNING id, username, name, email, role
+                RETURNING
+                    id,
+                    username,
+                    name,
+                    email,
+                    role
                 """,
                 (
                     username,
@@ -478,10 +647,12 @@ def register(request: RegisterRequest):
 
         conn.commit()
 
+
     except HTTPException:
 
         conn.rollback()
         raise
+
 
     except Exception:
 
@@ -491,6 +662,7 @@ def register(request: RegisterRequest):
             status_code=500,
             detail="Could not create account."
         )
+
 
     finally:
 
@@ -523,7 +695,8 @@ def login(request: LoginRequest):
 
     if role not in [
         "career_seeker",
-        "recruiter"
+        "recruiter",
+        "owner"
     ]:
 
         raise HTTPException(
@@ -572,7 +745,7 @@ def login(request: LoginRequest):
 
         raise HTTPException(
             status_code=401,
-            detail="Invalid username or password for this account type."
+            detail="Invalid username or password."
         )
 
 
@@ -665,7 +838,6 @@ class JobMatchRequest(BaseModel):
 
     resume_text: str
     job_description: str
-    job_title: str = "Selected Job"
 
 
 @app.post("/api/v1/job-match")
@@ -680,35 +852,15 @@ def job_match(request: JobMatchRequest):
     )
 
 
-    if not request.resume_text.strip():
-
-        raise HTTPException(
-            status_code=400,
-            detail="Resume text is required."
-        )
-
-
-    if not request.job_description.strip():
-
-        raise HTTPException(
-            status_code=400,
-            detail="Job description is required."
-        )
-
-
     if not job_skills:
 
         return {
-            "job_title": request.job_title,
             "match_score": 0,
             "matching_skills": [],
             "missing_skills": [],
-            "resume_skills_detected": sorted(resume_skills),
-            "job_skills_detected": [],
             "recommendation": (
-                "This job description does not contain "
-                "recognizable technical skills. "
-                "Please add more detailed job requirements."
+                "The job description does not contain "
+                "recognizable technical skills."
             )
         }
 
@@ -740,38 +892,29 @@ def job_match(request: JobMatchRequest):
     if match_score >= 80:
 
         recommendation = (
-            "Excellent match. Your resume strongly "
-            "matches the requirements of this job. "
-            "You should consider applying."
+            "Excellent match. You are strongly aligned with this job."
         )
 
     elif match_score >= 60:
 
         recommendation = (
-            "Good match. You have several of the "
-            "required skills, but improving the missing "
-            "skills would strengthen your application."
+            "Good match. Improve the missing skills before applying."
         )
 
     elif match_score >= 40:
 
         recommendation = (
-            "Moderate match. You meet some requirements, "
-            "but you should focus on developing the "
-            "missing skills before applying."
+            "Moderate match. Focus on the missing skills."
         )
 
     else:
 
         recommendation = (
-            "Low match. Your current resume has limited "
-            "alignment with this job. Consider improving "
-            "the missing skills or looking for a closer role."
+            "Low match. Consider improving your technical skill alignment."
         )
 
 
     return {
-        "job_title": request.job_title,
         "match_score": match_score,
         "matching_skills": matching_skills,
         "missing_skills": missing_skills,
@@ -791,22 +934,11 @@ class ResumeRequest(BaseModel):
 
 
 @app.post("/api/v1/resume-analyze")
-def resume_analyze(
-    request: ResumeRequest
-):
-
-    if not request.resume_text.strip():
-
-        raise HTTPException(
-            status_code=400,
-            detail="Resume text is required."
-        )
-
+def resume_analyze(request: ResumeRequest):
 
     resume_skills = extract_skills(
         request.resume_text
     )
-
 
     total_skills = len(SKILLS)
 
@@ -857,7 +989,8 @@ def resume_analyze(
 
     if (
         "rest api" not in resume_skills
-        and "api" not in resume_skills
+        and
+        "api" not in resume_skills
     ):
 
         recommendations.append(
@@ -882,9 +1015,7 @@ def resume_analyze(
     return {
         "skill_score": skill_score,
         "skills_detected": detected_skills,
-        "total_skills_detected": len(
-            detected_skills
-        ),
+        "total_skills_detected": len(detected_skills),
         "recommendations": recommendations
     }
 
@@ -901,6 +1032,7 @@ class JobRecommendationRequest(BaseModel):
 JOB_PROFILES = {
 
     "Python Backend Developer": {
+
         "skills": [
             "python",
             "fastapi",
@@ -910,9 +1042,11 @@ JOB_PROFILES = {
             "rest api",
             "docker"
         ]
+
     },
 
     "Data Analyst": {
+
         "skills": [
             "python",
             "sql",
@@ -921,9 +1055,11 @@ JOB_PROFILES = {
             "data analysis",
             "excel"
         ]
+
     },
 
     "Frontend Developer": {
+
         "skills": [
             "html",
             "css",
@@ -932,9 +1068,11 @@ JOB_PROFILES = {
             "react",
             "git"
         ]
+
     },
 
     "Full Stack Developer": {
+
         "skills": [
             "html",
             "css",
@@ -945,9 +1083,11 @@ JOB_PROFILES = {
             "git",
             "docker"
         ]
+
     },
 
     "Machine Learning Engineer": {
+
         "skills": [
             "python",
             "machine learning",
@@ -957,7 +1097,9 @@ JOB_PROFILES = {
             "pandas",
             "numpy"
         ]
+
     }
+
 }
 
 
@@ -1010,11 +1152,10 @@ def job_recommendations(
 
             "match_score": match_score,
 
-            "matching_skills":
-                matching_skills,
+            "matching_skills": matching_skills,
 
-            "missing_skills":
-                missing_skills
+            "missing_skills": missing_skills
+
         })
 
 
@@ -1025,11 +1166,13 @@ def job_recommendations(
 
 
     return {
+
         "resume_skills_detected":
             sorted(resume_skills),
 
         "recommended_jobs":
             recommendations
+
     }
 
 
@@ -1125,10 +1268,12 @@ def create_job(
 
         conn.commit()
 
+
     except HTTPException:
 
         conn.rollback()
         raise
+
 
     except Exception:
 
@@ -1139,15 +1284,20 @@ def create_job(
             detail="Could not create job."
         )
 
+
     finally:
 
         conn.close()
 
 
     return {
+
         "success": True,
+
         "message": "Job posted successfully.",
+
         "job": job
+
     }
 
 
@@ -1187,8 +1337,11 @@ def get_jobs():
 
 
     return {
+
         "success": True,
+
         "jobs": jobs
+
     }
 
 
@@ -1213,6 +1366,8 @@ def apply_for_job(
 
         with conn.cursor() as cursor:
 
+            # Verify candidate
+
             cursor.execute(
                 """
                 SELECT id
@@ -1234,6 +1389,8 @@ def apply_for_job(
                 )
 
 
+            # Verify job
+
             cursor.execute(
                 """
                 SELECT id
@@ -1253,6 +1410,8 @@ def apply_for_job(
                     detail="Job not found."
                 )
 
+
+            # Duplicate application check
 
             cursor.execute(
                 """
@@ -1299,10 +1458,12 @@ def apply_for_job(
 
         conn.commit()
 
+
     except HTTPException:
 
         conn.rollback()
         raise
+
 
     except Exception:
 
@@ -1313,15 +1474,196 @@ def apply_for_job(
             detail="Could not submit application."
         )
 
+
     finally:
 
         conn.close()
 
 
     return {
+
         "success": True,
+
         "message": "Application submitted successfully.",
+
         "application": application
+
+    }
+
+
+# =========================================================
+# OWNER - DASHBOARD DATA
+# =========================================================
+
+@app.get("/api/v1/owner/dashboard")
+def owner_dashboard(owner_id: int):
+
+    conn = get_db()
+
+    try:
+
+        with conn.cursor() as cursor:
+
+            # Verify owner
+
+            cursor.execute(
+                """
+                SELECT
+                    id,
+                    username,
+                    name,
+                    email,
+                    role
+                FROM users
+                WHERE id = %s
+                AND role = 'owner'
+                """,
+                (owner_id,)
+            )
+
+            owner = cursor.fetchone()
+
+
+            if not owner:
+
+                raise HTTPException(
+                    status_code=403,
+                    detail="Owner access required."
+                )
+
+
+            # Total users
+
+            cursor.execute(
+                """
+                SELECT COUNT(*) AS total_users
+                FROM users
+                """
+            )
+
+            total_users = cursor.fetchone()["total_users"]
+
+
+            # Career seekers
+
+            cursor.execute(
+                """
+                SELECT COUNT(*) AS count
+                FROM users
+                WHERE role = 'career_seeker'
+                """
+            )
+
+            career_seekers = cursor.fetchone()["count"]
+
+
+            # Recruiters
+
+            cursor.execute(
+                """
+                SELECT COUNT(*) AS count
+                FROM users
+                WHERE role = 'recruiter'
+                """
+            )
+
+            recruiters = cursor.fetchone()["count"]
+
+
+            # Jobs
+
+            cursor.execute(
+                """
+                SELECT COUNT(*) AS count
+                FROM jobs
+                """
+            )
+
+            jobs = cursor.fetchone()["count"]
+
+
+            # Applications
+
+            cursor.execute(
+                """
+                SELECT COUNT(*) AS count
+                FROM applications
+                """
+            )
+
+            applications = cursor.fetchone()["count"]
+
+
+            # Recent users
+
+            cursor.execute(
+                """
+                SELECT
+                    id,
+                    username,
+                    name,
+                    email,
+                    role,
+                    created_at
+                FROM users
+                ORDER BY created_at DESC
+                LIMIT 20
+                """
+            )
+
+            recent_users = cursor.fetchall()
+
+
+            # Recent jobs
+
+            cursor.execute(
+                """
+                SELECT
+                    jobs.id,
+                    jobs.title,
+                    jobs.description,
+                    jobs.created_at,
+                    users.username AS recruiter_username
+                FROM jobs
+                JOIN users
+                    ON users.id = jobs.recruiter_id
+                ORDER BY jobs.created_at DESC
+                LIMIT 20
+                """
+            )
+
+            recent_jobs = cursor.fetchall()
+
+
+    finally:
+
+        conn.close()
+
+
+    return {
+
+        "success": True,
+
+        "owner": owner,
+
+        "statistics": {
+
+            "total_users": total_users,
+
+            "career_seekers": career_seekers,
+
+            "recruiters": recruiters,
+
+            "jobs": jobs,
+
+            "applications": applications
+
+        },
+
+        "recent_users": recent_users,
+
+        "recent_jobs": recent_jobs
+
     }
 
 
@@ -1350,7 +1692,11 @@ def database_test():
 
 
     return {
+
         "success": True,
+
         "database": "PostgreSQL",
+
         "users": result["user_count"]
+
     }
