@@ -106,8 +106,8 @@ def init_db():
                 CHECK (
                     role IN (
                         'career_seeker',
-                        'recruiter',
-                        'owner'
+                        'recruiter'
+                        
                     )
                 )
             """)
