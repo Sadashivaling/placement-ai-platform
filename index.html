@@ -1830,7 +1830,472 @@ function openDashboard(data) {
 
 }
 
+/* =====================================================
+OWNER LOGIN
+===================================================== */
 
+function showOwnerLogin() {
+
+    hideAllPages();
+
+    document
+        .getElementById("ownerLoginPage")
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* =====================================================
+OWNER LOGIN PROCESS
+===================================================== */
+
+async function ownerLogin(event) {
+
+    event.preventDefault();
+
+
+    const username =
+        document
+            .getElementById("ownerUsername")
+            .value
+            .trim();
+
+    const password =
+        document
+            .getElementById("ownerPassword")
+            .value;
+
+
+    const message =
+        document
+            .getElementById(
+                "ownerLoginMessage"
+            );
+
+
+    message.className =
+        "message success";
+
+    message.textContent =
+        "Logging in...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/v1/auth/login",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        username:
+                            username,
+
+                        password:
+                            password,
+
+                        role:
+                            "owner"
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Invalid owner username or password."
+            );
+
+        }
+
+
+        if (
+            !data.user ||
+            data.user.role !== "owner"
+        ) {
+
+            throw new Error(
+                "Owner access denied."
+            );
+
+        }
+
+
+        currentUser =
+            data.user;
+
+
+        await loadOwnerDashboard();
+
+    }
+
+    catch (error) {
+
+        message.className =
+            "message error";
+
+        message.textContent =
+            error.message;
+
+    }
+
+}
+
+
+/* =====================================================
+LOAD OWNER DASHBOARD
+===================================================== */
+
+async function loadOwnerDashboard() {
+
+    hideAllPages();
+
+
+    document
+        .getElementById(
+            "ownerDashboard"
+        )
+        .classList
+        .remove("hidden");
+
+
+    document
+        .getElementById(
+            "ownerDisplayName"
+        )
+        .textContent =
+        currentUser.name ||
+        currentUser.username ||
+        "Owner";
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/v1/owner/dashboard?owner_id=" +
+                encodeURIComponent(
+                    currentUser.id
+                )
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Could not load owner dashboard."
+            );
+
+        }
+
+
+        /* ---------------------------------------------
+        STATISTICS
+        --------------------------------------------- */
+
+        document
+            .getElementById(
+                "ownerTotalUsers"
+            )
+            .textContent =
+            data.statistics.total_users;
+
+
+        document
+            .getElementById(
+                "ownerCareerSeekers"
+            )
+            .textContent =
+            data.statistics.career_seekers;
+
+
+        document
+            .getElementById(
+                "ownerRecruiters"
+            )
+            .textContent =
+            data.statistics.recruiters;
+
+
+        document
+            .getElementById(
+                "ownerJobs"
+            )
+            .textContent =
+            data.statistics.jobs;
+
+
+        document
+            .getElementById(
+                "ownerApplications"
+            )
+            .textContent =
+            data.statistics.applications;
+
+
+        /* ---------------------------------------------
+        RECENT USERS
+        --------------------------------------------- */
+
+        const users =
+            data.recent_users || [];
+
+
+        const usersContainer =
+            document
+                .getElementById(
+                    "ownerUsersResult"
+                );
+
+
+        if (!users.length) {
+
+            usersContainer.innerHTML =
+                "<p>No users found.</p>";
+
+        }
+
+        else {
+
+            usersContainer.innerHTML = `
+
+                <table class="owner-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Username
+                            </th>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Role
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        ${
+                            users
+                                .map(
+                                    user => `
+
+                                        <tr>
+
+                                            <td>
+                                                ${escapeHtml(
+                                                    user.username
+                                                )}
+                                            </td>
+
+                                            <td>
+                                                ${escapeHtml(
+                                                    user.name
+                                                )}
+                                            </td>
+
+                                            <td>
+                                                ${escapeHtml(
+                                                    user.email
+                                                )}
+                                            </td>
+
+                                            <td>
+                                                <span class="owner-badge">
+                                                    ${escapeHtml(
+                                                        user.role
+                                                    )}
+                                                </span>
+                                            </td>
+
+                                        </tr>
+
+                                    `
+                                )
+                                .join("")
+                        }
+
+                    </tbody>
+
+                </table>
+
+            `;
+
+        }
+
+
+        /* ---------------------------------------------
+        RECENT JOBS
+        --------------------------------------------- */
+
+        const jobs =
+            data.recent_jobs || [];
+
+
+        const jobsContainer =
+            document
+                .getElementById(
+                    "ownerJobsResult"
+                );
+
+
+        if (!jobs.length) {
+
+            jobsContainer.innerHTML =
+                "<p>No jobs found.</p>";
+
+        }
+
+        else {
+
+            jobsContainer.innerHTML =
+
+                jobs
+                    .map(
+                        job => `
+
+                            <div class="job">
+
+                                <h3>
+                                    ${escapeHtml(
+                                        job.title
+                                    )}
+                                </h3>
+
+                                <p>
+                                    ${escapeHtml(
+                                        job.description
+                                    )}
+                                </p>
+
+                                <small>
+                                    Posted by:
+                                    ${escapeHtml(
+                                        job.recruiter_username ||
+                                        "Recruiter"
+                                    )}
+                                </small>
+
+                            </div>
+
+                        `
+                    )
+                    .join("");
+
+        }
+
+    }
+
+    catch (error) {
+
+        document
+            .getElementById(
+                "ownerUsersResult"
+            )
+            .innerHTML = `
+
+                <p class="message error">
+                    ${escapeHtml(
+                        error.message
+                    )}
+                </p>
+
+            `;
+
+    }
+
+}
+
+
+/* =====================================================
+OWNER LOGOUT
+===================================================== */
+
+function ownerLogout() {
+
+    currentUser = null;
+
+    selectedRole = null;
+
+    selectedJob = null;
+
+    availableJobs = [];
+
+
+    window.location.hash = "";
+
+
+    hideAllPages();
+
+
+    document
+        .getElementById("rolePage")
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* =====================================================
+HIDDEN OWNER ROUTE
+===================================================== */
+
+function checkOwnerRoute() {
+
+    if (
+        window.location.hash ===
+        "#/owner"
+    ) {
+
+        showOwnerLogin();
+
+    }
+
+}
+
+
+/* Allow browser back/forward navigation */
+
+window.addEventListener(
+    "hashchange",
+    checkOwnerRoute
+);
 /* =====================================================
 LOGOUT
 ===================================================== */
