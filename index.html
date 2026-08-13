@@ -397,13 +397,128 @@ button:disabled {
 
 }
 /* =====================================================
-OWNER DASHBOARD
+   OWNER DASHBOARD - SIDEBAR LAYOUT
 ===================================================== */
 
 .owner-dashboard {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
 }
+
+.owner-layout {
+    display: flex;
+    min-height: 650px;
+    gap: 0;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* SIDEBAR */
+
+.owner-sidebar {
+    width: 220px;
+    background: #0f172a;
+    color: white;
+    padding: 20px 12px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.owner-sidebar-title {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 12px 20px;
+    border-bottom: 1px solid #334155;
+    margin-bottom: 15px;
+}
+
+.owner-sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.owner-nav-button {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: #cbd5e1;
+    text-align: left;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.owner-nav-button:hover {
+    background: #1e293b;
+    color: white;
+}
+
+.owner-nav-button.active {
+    background: #2563eb;
+    color: white;
+}
+
+.owner-sidebar-bottom {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #334155;
+}
+
+.owner-logout-button {
+    width: 100%;
+    border: none;
+    background: #dc2626;
+    color: white;
+    padding: 11px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.owner-logout-button:hover {
+    background: #b91c1c;
+}
+
+/* MAIN CONTENT */
+
+.owner-main {
+    flex: 1;
+    padding: 25px;
+    background: #f8fafc;
+    min-width: 0;
+}
+
+.owner-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.owner-topbar h2 {
+    margin: 0;
+}
+
+.owner-topbar p {
+    margin: 5px 0 0;
+}
+
+/* SECTIONS */
+
+.owner-section {
+    display: none;
+}
+
+.owner-section.active {
+    display: block;
+}
+
+/* STATISTICS */
 
 .owner-stats {
     display: grid;
@@ -413,7 +528,7 @@ OWNER DASHBOARD
 }
 
 .owner-stat {
-    background: #f8fafc;
+    background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 10px;
     padding: 20px;
@@ -432,10 +547,13 @@ OWNER DASHBOARD
     color: #2563eb;
 }
 
+/* TABLE */
+
 .owner-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
+    background: white;
 }
 
 .owner-table th,
@@ -449,6 +567,8 @@ OWNER DASHBOARD
     background: #f8fafc;
 }
 
+/* ROLE BADGE */
+
 .owner-badge {
     display: inline-block;
     padding: 4px 8px;
@@ -456,6 +576,32 @@ OWNER DASHBOARD
     background: #e0e7ff;
     font-size: 12px;
     font-weight: bold;
+}
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+
+    .owner-layout {
+        flex-direction: column;
+    }
+
+    .owner-sidebar {
+        width: auto;
+    }
+
+    .owner-sidebar-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .owner-nav-button {
+        width: auto;
+    }
+
+    .owner-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 </style>
 
@@ -1160,6 +1306,7 @@ Access using: #/owner
 
 <!-- =====================================================
 OWNER DASHBOARD
+SIDEWAYS / SIDEBAR LAYOUT
 ===================================================== -->
 
 <div
@@ -1167,171 +1314,496 @@ OWNER DASHBOARD
     class="hidden owner-dashboard"
 >
 
-    <div class="card">
+    <!-- OWNER SIDEBAR -->
+    <aside class="owner-sidebar">
 
-        <div class="dashboard-header">
+        <div class="owner-sidebar-header">
+
+            <div class="owner-logo">
+                🛡️
+            </div>
 
             <div>
+                <h2>Owner</h2>
+                <p>Placement AI</p>
+            </div>
 
-                <h2>
+        </div>
+
+
+        <!-- OWNER PROFILE -->
+        <div class="owner-profile">
+
+            <div class="owner-avatar">
+                👤
+            </div>
+
+            <div>
+                <strong id="ownerDisplayName">
+                    Owner
+                </strong>
+
+                <small>
+                    Administrator
+                </small>
+            </div>
+
+        </div>
+
+
+        <!-- SIDEBAR MENU -->
+        <nav class="owner-menu">
+
+            <button
+                type="button"
+                onclick="document.getElementById('ownerOverview').scrollIntoView({behavior:'smooth'})"
+            >
+                📊 Overview
+            </button>
+
+            <button
+                type="button"
+                onclick="document.getElementById('ownerUsersSection').scrollIntoView({behavior:'smooth'})"
+            >
+                👥 Users
+            </button>
+
+            <button
+                type="button"
+                onclick="document.getElementById('ownerJobsSection').scrollIntoView({behavior:'smooth'})"
+            >
+                💼 Jobs
+            </button>
+
+            <button
+                type="button"
+                onclick="document.getElementById('ownerActivitySection').scrollIntoView({behavior:'smooth'})"
+            >
+                🕒 Activity
+            </button>
+
+        </nav>
+
+
+        <!-- SESSION INFORMATION -->
+        <div class="owner-session">
+
+            <div>
+                <span>Login time</span>
+
+                <strong id="ownerLoginTime">
+                    Session active
+                </strong>
+            </div>
+
+            <div>
+                <span>Logout time</span>
+
+                <strong id="ownerLogoutTime">
+                    Not logged out
+                </strong>
+            </div>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+        <button
+            type="button"
+            class="owner-logout"
+            onclick="ownerLogout()"
+        >
+            🚪 Logout
+        </button>
+
+    </aside>
+
+
+    <!-- OWNER MAIN CONTENT -->
+    <main class="owner-main">
+
+
+        <!-- TOP BAR -->
+        <section class="owner-topbar">
+
+            <div>
+                <h1>
                     Owner Dashboard
-                </h2>
+                </h1>
 
                 <p>
                     Welcome,
                     <span
-                        id="ownerDisplayName"
+                        id="ownerDashboardWelcome"
                         class="username"
-                    ></span>
+                    >Owner</span>
+                </p>
+            </div>
+
+
+            <div class="owner-status">
+
+                <span class="owner-status-dot">
+                    ●
+                </span>
+
+                System Online
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+        OVERVIEW
+        ================================================= -->
+
+        <section
+            id="ownerOverview"
+            class="owner-section"
+        >
+
+            <div class="owner-section-title">
+
+                <div>
+                    <h2>
+                        Platform Overview
+                    </h2>
+
+                    <p>
+                        Monitor your Placement AI Platform.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+            <div class="owner-stats">
+
+
+                <!-- TOTAL USERS -->
+                <div class="owner-stat">
+
+                    <div class="owner-stat-icon">
+                        👥
+                    </div>
+
+                    <div>
+                        <h3>
+                            Total Users
+                        </h3>
+
+                        <div
+                            id="ownerTotalUsers"
+                            class="number"
+                        >
+                            0
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- CAREER SEEKERS -->
+                <div class="owner-stat">
+
+                    <div class="owner-stat-icon">
+                        🎓
+                    </div>
+
+                    <div>
+                        <h3>
+                            Career Seekers
+                        </h3>
+
+                        <div
+                            id="ownerCareerSeekers"
+                            class="number"
+                        >
+                            0
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- RECRUITERS -->
+                <div class="owner-stat">
+
+                    <div class="owner-stat-icon">
+                        🏢
+                    </div>
+
+                    <div>
+                        <h3>
+                            Recruiters
+                        </h3>
+
+                        <div
+                            id="ownerRecruiters"
+                            class="number"
+                        >
+                            0
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- JOBS -->
+                <div class="owner-stat">
+
+                    <div class="owner-stat-icon">
+                        💼
+                    </div>
+
+                    <div>
+                        <h3>
+                            Jobs
+                        </h3>
+
+                        <div
+                            id="ownerJobs"
+                            class="number"
+                        >
+                            0
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- APPLICATIONS -->
+                <div class="owner-stat">
+
+                    <div class="owner-stat-icon">
+                        📄
+                    </div>
+
+                    <div>
+                        <h3>
+                            Applications
+                        </h3>
+
+                        <div
+                            id="ownerApplications"
+                            class="number"
+                        >
+                            0
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+        USERS
+        ================================================= -->
+
+        <section
+            id="ownerUsersSection"
+            class="owner-section"
+        >
+
+            <div class="owner-section-title">
+
+                <div>
+                    <h2>
+                        Recent Users
+                    </h2>
+
+                    <p>
+                        Recently registered platform users.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div
+                id="ownerUsersResult"
+                class="owner-data-box"
+            >
+
+                <p class="loading">
+                    Loading users...
                 </p>
 
             </div>
 
-
-            <button
-                onclick="ownerLogout()"
-            >
-                Logout
-            </button>
-
-        </div>
-
-    </div>
+        </section>
 
 
-    <!-- STATISTICS -->
 
-    <div class="card">
+        <!-- =================================================
+        JOBS
+        ================================================= -->
 
-        <h2>
-            Platform Statistics
-        </h2>
+        <section
+            id="ownerJobsSection"
+            class="owner-section"
+        >
 
-        <div class="owner-stats">
+            <div class="owner-section-title">
 
-            <div class="owner-stat">
+                <div>
+                    <h2>
+                        Recent Jobs
+                    </h2>
 
-                <h3>
-                    Total Users
-                </h3>
-
-                <div
-                    id="ownerTotalUsers"
-                    class="number"
-                >
-                    0
+                    <p>
+                        Jobs posted by recruiters.
+                    </p>
                 </div>
 
             </div>
 
-
-            <div class="owner-stat">
-
-                <h3>
-                    Career Seekers
-                </h3>
-
-                <div
-                    id="ownerCareerSeekers"
-                    class="number"
-                >
-                    0
-                </div>
-
-            </div>
-
-
-            <div class="owner-stat">
-
-                <h3>
-                    Recruiters
-                </h3>
-
-                <div
-                    id="ownerRecruiters"
-                    class="number"
-                >
-                    0
-                </div>
-
-            </div>
-
-
-            <div class="owner-stat">
-
-                <h3>
-                    Jobs
-                </h3>
-
-                <div
-                    id="ownerJobs"
-                    class="number"
-                >
-                    0
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="owner-stat" style="margin-top:15px;">
-
-            <h3>
-                Applications
-            </h3>
 
             <div
-                id="ownerApplications"
-                class="number"
+                id="ownerJobsResult"
+                class="owner-data-box"
             >
-                0
+
+                <p class="loading">
+                    Loading jobs...
+                </p>
+
             </div>
 
-        </div>
-
-    </div>
+        </section>
 
 
-    <!-- RECENT USERS -->
 
-    <div class="card">
+        <!-- =================================================
+        ACTIVITY
+        ================================================= -->
 
-        <h2>
-            Recent Users
-        </h2>
+        <section
+            id="ownerActivitySection"
+            class="owner-section"
+        >
 
-        <div id="ownerUsersResult">
+            <div class="owner-section-title">
 
-            <p class="loading">
-                Loading users...
-            </p>
+                <div>
+                    <h2>
+                        Owner Activity
+                    </h2>
 
-        </div>
+                    <p>
+                        Current administrator session.
+                    </p>
+                </div>
 
-    </div>
+            </div>
 
 
-    <!-- RECENT JOBS -->
+            <div class="owner-activity-grid">
 
-    <div class="card">
 
-        <h2>
-            Recent Jobs
-        </h2>
+                <div class="owner-activity-card">
 
-        <div id="ownerJobsResult">
+                    <span class="activity-icon">
+                        🟢
+                    </span>
 
-            <p class="loading">
-                Loading jobs...
-            </p>
+                    <div>
+                        <strong>
+                            Current Status
+                        </strong>
 
-        </div>
+                        <p>
+                            Owner account is active.
+                        </p>
+                    </div>
 
-    </div>
+                </div>
+
+
+                <div class="owner-activity-card">
+
+                    <span class="activity-icon">
+                        🔐
+                    </span>
+
+                    <div>
+                        <strong>
+                            Access Level
+                        </strong>
+
+                        <p>
+                            Owner / Administrator
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="owner-activity-card">
+
+                    <span class="activity-icon">
+                        🕒
+                    </span>
+
+                    <div>
+                        <strong>
+                            Login Time
+                        </strong>
+
+                        <p id="ownerActivityLoginTime">
+                            Current session
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="owner-activity-card">
+
+                    <span class="activity-icon">
+                        🚪
+                    </span>
+
+                    <div>
+                        <strong>
+                            Logout Time
+                        </strong>
+
+                        <p id="ownerActivityLogoutTime">
+                            Not logged out
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="owner-footer">
+
+            <span>
+                Placement AI Platform
+            </span>
+
+            <span>
+                Owner Control Panel
+            </span>
+
+        </footer>
+
+
+    </main>
 
 </div>
-
 <!-- =====================================================
 PDF/DOCX LIBRARIES
 ===================================================== -->
