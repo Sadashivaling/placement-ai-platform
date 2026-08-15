@@ -46,19 +46,8 @@ header p {
 }
 
 
-.container {
-    max-width: 900px;
-    margin: 30px auto;
-    padding: 20px;
-}
-
-
-.card {
-    background: white;
-    padding: 25px;
-    margin-bottom: 20px;
-    border-radius: 12px;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+main {
+    padding: 30px;
 }
 
 
@@ -67,117 +56,51 @@ header p {
 }
 
 
-.role-container {
-    display: flex;
-    gap: 20px;
-    margin-top: 25px;
-}
-
-
-.role-card {
-    flex: 1;
-    padding: 30px 20px;
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    text-align: center;
+button {
     cursor: pointer;
+}
+
+
+.card {
     background: white;
-    transition: 0.2s;
-}
-
-
-.role-card:hover {
-    border-color: #2563eb;
-    transform: translateY(-2px);
-}
-
-
-.role-icon {
-    font-size: 42px;
-    margin-bottom: 10px;
-}
-
-
-.role-card h3 {
-    color: #1e3a8a;
-}
-
-
-.role-card p {
-    font-size: 14px;
-    color: #64748b;
-    line-height: 1.5;
-}
-
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 7px;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
 
 input,
-textarea,
-select {
-
+select,
+textarea {
     width: 100%;
-
     padding: 12px;
-
+    margin-top: 6px;
+    margin-bottom: 16px;
     border: 1px solid #cbd5e1;
-
     border-radius: 7px;
-
-    font-size: 15px;
-
-    background: white;
+    font-size: 14px;
 }
 
 
 textarea {
-    min-height: 180px;
+    min-height: 120px;
     resize: vertical;
 }
 
 
-input:focus,
-textarea:focus,
-select:focus {
-
-    outline: none;
-
-    border-color: #2563eb;
-}
-
-
 button {
-
-    margin-top: 10px;
-
-    padding: 12px 22px;
-
     border: none;
-
-    border-radius: 8px;
-
+    border-radius: 7px;
+    padding: 11px 18px;
     background: #2563eb;
-
     color: white;
-
-    font-size: 15px;
-
-    cursor: pointer;
+    font-weight: bold;
 }
 
 
 button:hover {
-    background: #1d4ed8;
+    opacity: 0.9;
 }
 
 
@@ -186,408 +109,491 @@ button.secondary {
 }
 
 
-button.secondary:hover {
-    background: #475569;
+button.danger {
+    background: #dc2626;
 }
 
 
-button:disabled {
-
-    opacity: 0.6;
-
-    cursor: not-allowed;
+button.success {
+    background: #16a34a;
 }
 
 
 .message {
-
-    margin-top: 15px;
-
-    padding: 12px;
-
+    padding: 10px;
     border-radius: 7px;
-
-    display: none;
-}
-
-
-.message.error {
-
-    display: block;
-
-    background: #fee2e2;
-
-    color: #b91c1c;
+    margin-top: 10px;
 }
 
 
 .message.success {
-
-    display: block;
-
     background: #dcfce7;
-
     color: #166534;
 }
 
 
-.link {
-
-    color: #2563eb;
-
-    cursor: pointer;
-
-    font-weight: bold;
+.message.error {
+    background: #fee2e2;
+    color: #991b1b;
 }
 
 
-.link:hover {
-    text-decoration: underline;
+/* =========================================================
+   LANDING
+   ========================================================= */
+
+.landing-grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
 
-.dashboard-header {
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    gap: 15px;
-}
-
-
-.username {
-
-    color: #2563eb;
-
-    font-weight: bold;
-}
-
-
-.result {
-
-    margin-top: 20px;
-
-    padding: 18px;
-
-    background: #f8fafc;
-
-    border-radius: 8px;
-}
-
-
-.job {
-
-    border: 1px solid #e2e8f0;
-
-    padding: 15px;
-
-    margin-top: 12px;
-
-    border-radius: 8px;
-
+.role-card {
     background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
 
-.score {
-
-    font-size: 24px;
-
-    font-weight: bold;
-
-    color: #2563eb;
-}
-
-
-.loading {
-    color: #475569;
-}
-
-
-.upload-box {
-
-    border: 2px dashed #cbd5e1;
-
-    padding: 20px;
-
-    text-align: center;
-
-    border-radius: 10px;
-
-    margin-bottom: 15px;
-
-    background: #f8fafc;
-}
-
-
-.upload-box input {
-    border: none;
-    padding: 10px;
-}
-
-
-.job-description-box {
-
-    margin-top: 15px;
-
-    padding: 18px;
-
-    border-radius: 10px;
-
-    background: #eff6ff;
-
-    border: 1px solid #bfdbfe;
-}
-
-
-.job-description-box h3 {
+.role-card h2 {
     margin-top: 0;
 }
 
 
-.skill-tag {
+/* =========================================================
+   AUTH
+   ========================================================= */
 
-    display: inline-block;
-
-    padding: 5px 9px;
-
-    margin: 4px;
-
-    background: #dbeafe;
-
-    color: #1e40af;
-
-    border-radius: 15px;
-
-    font-size: 13px;
+.auth-container {
+    max-width: 520px;
+    margin: 30px auto;
 }
 
 
-.match-good {
-    color: #15803d;
+.auth-title {
+    margin-top: 0;
 }
 
 
-.match-medium {
-    color: #ca8a04;
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
 }
 
 
-.match-low {
-    color: #dc2626;
-}
+/* =========================================================
+   DASHBOARD COMMON
+   ========================================================= */
 
-
-@media (max-width: 700px) {
-
-    .role-container {
-        flex-direction: column;
-    }
-
-
-    .dashboard-header {
-
-        flex-direction: column;
-
-        align-items: flex-start;
-    }
-
-}
-/* =====================================================
-   OWNER DASHBOARD - SIDEBAR LAYOUT
-===================================================== */
-
-.owner-dashboard {
+.dashboard-shell {
     max-width: 1200px;
     margin: 0 auto;
 }
 
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.dashboard-header h2 {
+    margin: 0;
+}
+
+
+.dashboard-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   CAREER SEEKER
+   ========================================================= */
+
+.job-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+
+.job-card {
+    background: white;
+    border: 1px solid #dbe3ef;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+
+.job-card h3 {
+    margin-top: 0;
+}
+
+
+.job-meta {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+
+.job-card p {
+    line-height: 1.5;
+}
+
+
+.job-actions {
+    margin-top: 15px;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+th,
+td {
+    border: 1px solid #dbe3ef;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+
+th {
+    background: #f8fafc;
+}
+
+
+.badge {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: #dbeafe;
+    color: #1e40af;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   OWNER DASHBOARD - SIDEBAR LAYOUT
+   ========================================================= */
+
+.owner-dashboard {
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+
 .owner-layout {
     display: flex;
-    min-height: 650px;
-    gap: 0;
+    min-height: 700px;
     background: #ffffff;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
+
 
 /* SIDEBAR */
 
 .owner-sidebar {
-    width: 220px;
+    width: 235px;
     background: #0f172a;
     color: white;
-    padding: 20px 12px;
+    padding: 20px 14px;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
 }
 
-.owner-sidebar-title {
-    font-size: 18px;
-    font-weight: bold;
-    padding: 10px 12px 20px;
-    border-bottom: 1px solid #334155;
+
+.owner-sidebar-header {
+    padding: 8px 10px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
     margin-bottom: 15px;
 }
+
+
+.owner-logo {
+    width: 42px;
+    height: 42px;
+    background: #2563eb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+
+.owner-sidebar-header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+
+.owner-sidebar-header p {
+    margin: 5px 0 0;
+    color: #94a3b8;
+    font-size: 13px;
+}
+
 
 .owner-sidebar-menu {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 7px;
 }
+
 
 .owner-nav-button {
     width: 100%;
-    border: none;
+    text-align: left;
     background: transparent;
     color: #cbd5e1;
-    text-align: left;
     padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 14px;
+    border-radius: 7px;
 }
 
-.owner-nav-button:hover {
-    background: #1e293b;
-    color: white;
-}
 
+.owner-nav-button:hover,
 .owner-nav-button.active {
-    background: #2563eb;
+    background: #1d4ed8;
     color: white;
 }
+
 
 .owner-sidebar-bottom {
     margin-top: auto;
     padding-top: 20px;
-    border-top: 1px solid #334155;
 }
 
-.owner-logout-button {
+
+.owner-sidebar-bottom button {
     width: 100%;
-    border: none;
-    background: #dc2626;
-    color: white;
-    padding: 11px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
 }
 
-.owner-logout-button:hover {
-    background: #b91c1c;
-}
 
-/* MAIN CONTENT */
+/* OWNER CONTENT */
 
-.owner-main {
+.owner-content {
     flex: 1;
-    padding: 25px;
-    background: #f8fafc;
     min-width: 0;
+    background: #f8fafc;
+    padding: 25px;
+    overflow-x: hidden;
 }
+
 
 .owner-topbar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
 }
+
 
 .owner-topbar h2 {
     margin: 0;
 }
 
+
 .owner-topbar p {
     margin: 5px 0 0;
+    color: #64748b;
 }
 
-/* SECTIONS */
+
+.owner-time-box {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+
+.owner-time-item {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    min-width: 145px;
+}
+
+
+.owner-time-item span {
+    display: block;
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+
+.owner-time-item strong {
+    font-size: 13px;
+}
+
+
+/* OWNER SECTIONS */
 
 .owner-section {
     display: none;
 }
 
+
 .owner-section.active {
     display: block;
 }
 
-/* STATISTICS */
+
+.owner-section-title {
+    margin-top: 0;
+}
+
+
+/* OWNER STATS */
 
 .owner-stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
-    margin-top: 20px;
+    margin-bottom: 15px;
 }
 
-.owner-stat {
-    background: #ffffff;
+
+.owner-stat-card {
+    background: white;
     border: 1px solid #e2e8f0;
     border-radius: 10px;
     padding: 20px;
-    text-align: center;
 }
 
-.owner-stat h3 {
-    margin: 0 0 10px;
-    color: #475569;
-    font-size: 14px;
+
+.owner-stat-label {
+    color: #64748b;
+    font-size: 13px;
 }
 
-.owner-stat .number {
+
+.owner-stat-number {
     font-size: 30px;
     font-weight: bold;
     color: #2563eb;
+    margin-top: 8px;
 }
 
-/* TABLE */
 
-.owner-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
+.owner-stat-card-wide {
+    grid-column: span 2;
+}
+
+
+/* OWNER OVERVIEW GRID */
+
+.owner-overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+
+.owner-panel {
     background: white;
-}
-
-.owner-table th,
-.owner-table td {
     border: 1px solid #e2e8f0;
-    padding: 10px;
-    text-align: left;
+    border-radius: 10px;
+    padding: 20px;
 }
 
-.owner-table th {
+
+.owner-panel h3 {
+    margin-top: 0;
+}
+
+
+/* OWNER USER/JOB CARDS */
+
+.owner-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.owner-list-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px;
     background: #f8fafc;
 }
 
-/* ROLE BADGE */
 
-.owner-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 6px;
-    background: #e0e7ff;
-    font-size: 12px;
-    font-weight: bold;
+.owner-list-item strong {
+    display: block;
+    margin-bottom: 4px;
 }
 
-/* MOBILE */
 
-@media (max-width: 800px) {
+.owner-list-item small {
+    color: #64748b;
+}
+
+
+/* OWNER FOOTER */
+
+.owner-footer {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .landing-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .job-grid {
+        grid-template-columns: 1fr;
+    }
 
     .owner-layout {
         flex-direction: column;
     }
 
     .owner-sidebar {
-        width: auto;
+        width: 100%;
     }
 
     .owner-sidebar-menu {
@@ -602,7 +608,49 @@ button:disabled {
     .owner-stats {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .owner-overview-grid {
+        grid-template-columns: 1fr;
+    }
 }
+
+
+@media (max-width: 600px) {
+
+    main {
+        padding: 15px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .owner-content {
+        padding: 15px;
+    }
+
+    .owner-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .owner-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .owner-stat-card-wide {
+        grid-column: span 1;
+    }
+
+    .owner-time-box {
+        width: 100%;
+    }
+
+    .owner-time-item {
+        flex: 1;
+    }
+}
+
 </style>
 
 </head>
@@ -613,1438 +661,1452 @@ button:disabled {
 
 <header>
 
-    <h1>
-        Placement AI Platform
-    </h1>
+<h1>Placement AI Platform</h1>
 
-    <p>
-        AI-powered placement and job readiness platform
-    </p>
+<p>
+AI-powered placement and job readiness platform
+</p>
 
 </header>
 
 
-<div class="container">
+<main>
 
 
 <!-- =====================================================
-ROLE PAGE
-===================================================== -->
+     LANDING PAGE
+     ===================================================== -->
 
-<div
-    id="rolePage"
-    class="card"
+<section
+    id="homePage"
+    class="dashboard-shell"
 >
 
-    <h2>
-        Welcome to Placement AI Platform
-    </h2>
+<div class="card">
 
-    <p>
-        Choose how you would like to continue.
-    </p>
+<h2>Welcome</h2>
 
-
-    <div class="role-container">
-
-
-        <div
-            class="role-card"
-            onclick="selectRole('career_seeker')"
-        >
-
-            <div class="role-icon">
-                👨‍💼
-            </div>
-
-            <h3>
-                Career Seeker
-            </h3>
-
-            <p>
-                Discover career opportunities,
-                analyze your resume and find jobs
-                that match your skills.
-            </p>
-
-        </div>
-
-
-        <div
-            class="role-card"
-            onclick="selectRole('recruiter')"
-        >
-
-            <div class="role-icon">
-                🏢
-            </div>
-
-            <h3>
-                Recruiter
-            </h3>
-
-            <p>
-                Post job opportunities and
-                find qualified candidates.
-            </p>
-
-        </div>
-
-
-    </div>
+<p>
+Choose your role to continue.
+</p>
 
 </div>
 
 
-<!-- =====================================================
-REGISTER
-===================================================== -->
+<div class="landing-grid">
 
-<div
-    id="registerPage"
-    class="card hidden"
+
+<div class="role-card">
+
+<h2>Career Seeker</h2>
+
+<p>
+Find jobs, apply for opportunities and manage your resume.
+</p>
+
+<button
+    onclick="showPage('careerLoginPage')"
+>
+Career Seeker Login
+</button>
+
+<button
+    class="secondary"
+    onclick="showPage('careerRegisterPage')"
+>
+Create Career Seeker Account
+</button>
+
+</div>
+
+
+<div class="role-card">
+
+<h2>Recruiter</h2>
+
+<p>
+Create jobs and manage candidates.
+</p>
+
+<button
+    onclick="showPage('recruiterLoginPage')"
+>
+Recruiter Login
+</button>
+
+<button
+    class="secondary"
+    onclick="showPage('recruiterRegisterPage')"
+>
+Create Recruiter Account
+</button>
+
+</div>
+
+
+<div class="role-card">
+
+<h2>Owner</h2>
+
+<p>
+Restricted platform administration dashboard.
+</p>
+
+<button
+    onclick="showPage('ownerLoginPage')"
+>
+Owner Login
+</button>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     CAREER SEEKER LOGIN
+     ===================================================== -->
+
+<section
+    id="careerLoginPage"
+    class="auth-container hidden"
 >
 
-    <h2 id="registerTitle">
-        Create Your Account
-    </h2>
+<div class="card">
 
-    <p id="registerDescription">
-        Create your account to continue.
-    </p>
+<h2 class="auth-title">
+Career Seeker Login
+</h2>
 
+<form onsubmit="careerLogin(event)">
 
-    <form onsubmit="registerAccount(event)">
+<label>
+Username
+</label>
 
-
-        <div class="form-group">
-
-            <label>
-                Username
-            </label>
-
-            <input
-                id="registerUsername"
-                type="text"
-                placeholder="Choose a unique username"
-                required
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                Full Name
-            </label>
-
-            <input
-                id="registerName"
-                type="text"
-                placeholder="Enter your full name"
-                required
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                Email
-            </label>
-
-            <input
-                id="registerEmail"
-                type="email"
-                placeholder="Enter your email"
-                required
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                Password
-            </label>
-
-            <input
-                id="registerPassword"
-                type="password"
-                minlength="6"
-                placeholder="Create a password"
-                required
-            >
-
-        </div>
-
-
-        <button type="submit">
-            Create Account
-        </button>
-
-
-        <button
-            type="button"
-            class="secondary"
-            onclick="showRolePage()"
-        >
-            Back
-        </button>
-
-
-    </form>
-
-
-    <div
-        id="registerMessage"
-        class="message"
-    ></div>
-
-
-    <p>
-
-        Already have an account?
-
-        <span
-            class="link"
-            onclick="showLoginPage()"
-        >
-            Login here
-        </span>
-
-    </p>
-
-</div>
-
-
-<!-- =====================================================
-LOGIN
-===================================================== -->
-
-<div
-    id="loginPage"
-    class="card hidden"
+<input
+    id="careerLoginUsername"
+    required
+    placeholder="Enter username"
 >
 
-    <h2 id="loginTitle">
-        Login
-    </h2>
+<label>
+Password
+</label>
 
-    <p id="loginDescription">
-        Login to continue.
-    </p>
-
-
-    <form onsubmit="loginAccount(event)">
-
-
-        <div class="form-group">
-
-            <label>
-                Username
-            </label>
-
-            <input
-                id="loginUsername"
-                type="text"
-                placeholder="Enter your username"
-                required
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                Password
-            </label>
-
-            <input
-                id="loginPassword"
-                type="password"
-                placeholder="Enter your password"
-                required
-            >
-
-        </div>
-
-
-        <button type="submit">
-            Login
-        </button>
-
-
-        <button
-            type="button"
-            class="secondary"
-            onclick="showRegisterPage()"
-        >
-            Create Account
-        </button>
-
-
-    </form>
-
-
-    <div
-        id="loginMessage"
-        class="message"
-    ></div>
-
-
-    <p>
-
-        <span
-            class="link"
-            onclick="showRolePage()"
-        >
-            Back to account type
-        </span>
-
-    </p>
-
-</div>
-
-
-<!-- =====================================================
-CAREER SEEKER DASHBOARD
-===================================================== -->
-
-<div
-    id="careerDashboard"
-    class="hidden"
+<input
+    id="careerLoginPassword"
+    type="password"
+    required
+    placeholder="Enter password"
 >
 
-
-    <div class="card">
-
-        <div class="dashboard-header">
-
-            <div>
-
-                <h2>
-                    Career Seeker Dashboard
-                </h2>
-
-                <p>
-
-                    Welcome,
-
-                    <span
-                        id="careerUsername"
-                        class="username"
-                    ></span>
-
-                </p>
-
-            </div>
-
-
-            <button onclick="logout()">
-                Logout
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- =================================================
-    RESUME
-    ================================================= -->
-
-    <div class="card">
-
-        <h2>
-            Resume Analysis
-        </h2>
-
-        <p>
-            Upload your resume or paste the resume text.
-        </p>
-
-
-        <div class="upload-box">
-
-            <strong>
-                Upload Resume
-            </strong>
-
-            <p>
-                Supported formats: TXT, PDF, DOCX
-            </p>
-
-            <input
-                type="file"
-                id="resumeFile"
-                accept=".txt,.pdf,.docx"
-                onchange="handleResumeUpload(event)"
-            >
-
-        </div>
-
-
-        <label>
-            Resume Text
-        </label>
-
-
-        <textarea
-            id="resumeText"
-            placeholder="Your resume text will appear here..."
-        ></textarea>
-
-
-        <button
-            id="analyzeButton"
-            onclick="analyzeResume()"
-        >
-            Analyze Resume
-        </button>
-
-
-        <div id="analysisResult"></div>
-
-    </div>
-
-
-    <!-- =================================================
-    JOB RECOMMENDATIONS
-    ================================================= -->
-
-    <div class="card">
-
-        <h2>
-            Job Recommendations
-        </h2>
-
-        <p>
-            Find jobs that match your resume skills.
-        </p>
-
-
-        <button
-            id="recommendButton"
-            onclick="getRecommendations()"
-        >
-            Find Suitable Jobs
-        </button>
-
-
-        <div id="jobResult"></div>
-
-    </div>
-
-
-    <!-- =================================================
-    JOB MATCH ANALYZER
-    ================================================= -->
-
-    <div class="card">
-
-        <h2>
-            Job Match Analyzer
-        </h2>
-
-        <p>
-            Select a specific job to see how well your resume
-            matches its requirements.
-        </p>
-
-
-        <div class="form-group">
-
-            <label>
-                Select Job
-            </label>
-
-
-            <select
-                id="jobSelector"
-                onchange="showSelectedJob()"
-            >
-
-                <option value="">
-                    Loading jobs...
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <div
-            id="selectedJobDetails"
-            class="job-description-box hidden"
-        >
-
-            <h3 id="selectedJobTitle">
-                Job Title
-            </h3>
-
-
-            <p>
-                <strong>
-                    Job Description
-                </strong>
-            </p>
-
-
-            <p id="selectedJobDescription"></p>
-
-        </div>
-
-
-        <button
-            id="matchButton"
-            onclick="checkSelectedJobMatch()"
-        >
-            Analyze Match
-        </button>
-
-
-        <div id="matchResult"></div>
-
-
-    </div>
-
+<button type="submit">
+Login
+</button>
+
+<button
+    type="button"
+    class="secondary"
+    onclick="showPage('homePage')"
+>
+Back
+</button>
+
+</form>
+
+<div
+    id="careerLoginMessage"
+></div>
 
 </div>
 
+</section>
+
 
 <!-- =====================================================
-RECRUITER DASHBOARD
-===================================================== -->
+     CAREER SEEKER REGISTER
+     ===================================================== -->
 
-<div
-    id="recruiterDashboard"
-    class="hidden"
+<section
+    id="careerRegisterPage"
+    class="auth-container hidden"
 >
 
+<div class="card">
 
-    <div class="card">
+<h2 class="auth-title">
+Create Career Seeker Account
+</h2>
 
-        <div class="dashboard-header">
+<form onsubmit="careerRegister(event)">
 
-            <div>
+<label>
+Username
+</label>
 
-                <h2>
-                    Recruiter Dashboard
-                </h2>
+<input
+    id="careerRegisterUsername"
+    required
+    placeholder="Choose username"
+>
 
-                <p>
+<label>
+Full Name
+</label>
 
-                    Welcome,
+<input
+    id="careerRegisterName"
+    required
+    placeholder="Enter your name"
+>
 
-                    <span
-                        id="recruiterUsername"
-                        class="username"
-                    ></span>
+<label>
+Email
+</label>
 
-                </p>
+<input
+    id="careerRegisterEmail"
+    type="email"
+    required
+    placeholder="Enter email"
+>
 
-            </div>
+<label>
+Password
+</label>
 
+<input
+    id="careerRegisterPassword"
+    type="password"
+    required
+    placeholder="Minimum 6 characters"
+>
 
-            <button onclick="logout()">
-                Logout
-            </button>
+<button type="submit">
+Create Account
+</button>
 
-        </div>
+<button
+    type="button"
+    class="secondary"
+    onclick="showPage('homePage')"
+>
+Back
+</button>
 
-    </div>
-
-
-    <!-- POST JOB -->
-
-    <div class="card">
-
-        <h2>
-            Post a Job
-        </h2>
-
-
-        <div class="form-group">
-
-            <label>
-                Job Title
-            </label>
-
-            <input
-                id="jobTitle"
-                type="text"
-                placeholder="Example: Python Backend Developer"
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                Job Description
-            </label>
-
-            <textarea
-                id="recruiterJobDescription"
-                placeholder="Enter the job requirements and skills..."
-            ></textarea>
-
-        </div>
-
-
-        <button onclick="postJob()">
-            Post Job
-        </button>
-
-
-        <div
-            id="recruiterMessage"
-            class="message"
-        ></div>
-
-    </div>
-
-
-    <!-- AVAILABLE JOBS -->
-
-    <div class="card">
-
-        <h2>
-            Posted Jobs
-        </h2>
-
-
-        <button onclick="loadJobs()">
-            Refresh Jobs
-        </button>
-
-
-        <div id="recruiterJobs"></div>
-
-    </div>
-
-
-</div>
-
-
-</div>
-<!-- =====================================================
-OWNER LOGIN
-HIDDEN FROM PUBLIC USERS
-Access using: #/owner
-===================================================== -->
+</form>
 
 <div
+    id="careerRegisterMessage"
+></div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     RECRUITER LOGIN
+     ===================================================== -->
+
+<section
+    id="recruiterLoginPage"
+    class="auth-container hidden"
+>
+
+<div class="card">
+
+<h2 class="auth-title">
+Recruiter Login
+</h2>
+
+<form onsubmit="recruiterLogin(event)">
+
+<label>
+Username
+</label>
+
+<input
+    id="recruiterLoginUsername"
+    required
+    placeholder="Enter username"
+>
+
+<label>
+Password
+</label>
+
+<input
+    id="recruiterLoginPassword"
+    type="password"
+    required
+    placeholder="Enter password"
+>
+
+<button type="submit">
+Login
+</button>
+
+<button
+    type="button"
+    class="secondary"
+    onclick="showPage('homePage')"
+>
+Back
+</button>
+
+</form>
+
+<div
+    id="recruiterLoginMessage"
+></div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     RECRUITER REGISTER
+     ===================================================== -->
+
+<section
+    id="recruiterRegisterPage"
+    class="auth-container hidden"
+>
+
+<div class="card">
+
+<h2 class="auth-title">
+Create Recruiter Account
+</h2>
+
+<form onsubmit="recruiterRegister(event)">
+
+<label>
+Username
+</label>
+
+<input
+    id="recruiterRegisterUsername"
+    required
+    placeholder="Choose username"
+>
+
+<label>
+Company / Recruiter Name
+</label>
+
+<input
+    id="recruiterRegisterName"
+    required
+    placeholder="Enter recruiter name"
+>
+
+<label>
+Email
+</label>
+
+<input
+    id="recruiterRegisterEmail"
+    type="email"
+    required
+    placeholder="Enter email"
+>
+
+<label>
+Password
+</label>
+
+<input
+    id="recruiterRegisterPassword"
+    type="password"
+    required
+    placeholder="Minimum 6 characters"
+>
+
+<button type="submit">
+Create Account
+</button>
+
+<button
+    type="button"
+    class="secondary"
+    onclick="showPage('homePage')"
+>
+Back
+</button>
+
+</form>
+
+<div
+    id="recruiterRegisterMessage"
+></div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     OWNER LOGIN
+     ===================================================== -->
+
+<section
     id="ownerLoginPage"
-    class="card hidden"
+    class="auth-container hidden"
 >
 
-    <h2>
-        Owner Login
-    </h2>
+<div class="card">
 
-    <p>
-        Restricted access.
-    </p>
+<h2 class="auth-title">
+Owner Login
+</h2>
 
-    <form onsubmit="ownerLogin(event)">
+<p>
+Restricted access.
+</p>
 
-        <div class="form-group">
+<form onsubmit="ownerLogin(event)">
 
-            <label>
-                Owner Username
-            </label>
+<label>
+Owner Username
+</label>
 
-            <input
-                id="ownerUsername"
-                type="text"
-                placeholder="Enter owner username"
-                autocomplete="username"
-                required
-            >
+<input
+    id="ownerLoginUsername"
+    required
+    placeholder="Enter owner username"
+>
 
-        </div>
+<label>
+Owner Password
+</label>
+
+<input
+    id="ownerLoginPassword"
+    type="password"
+    required
+    placeholder="Enter owner password"
+>
+
+<button type="submit">
+Owner Login
+</button>
+
+<button
+    type="button"
+    class="secondary"
+    onclick="showPage('homePage')"
+>
+Back
+</button>
+
+</form>
+
+<div
+    id="ownerLoginMessage"
+></div>
+
+</div>
+
+</section>
 
 
-        <div class="form-group">
+<!-- =====================================================
+     CAREER SEEKER DASHBOARD
+     ===================================================== -->
 
-            <label>
-                Owner Password
-            </label>
+<section
+    id="careerDashboard"
+    class="dashboard-shell hidden"
+>
 
-            <input
-                id="ownerPassword"
-                type="password"
-                placeholder="Enter owner password"
-                autocomplete="current-password"
-                required
-            >
+<div class="card dashboard-header">
 
-        </div>
+<div>
 
+<h2>
+Career Seeker Dashboard
+</h2>
 
-        <button type="submit">
-            Owner Login
-        </button>
+<p id="careerWelcome">
+Welcome
+</p>
 
-    </form>
+</div>
 
+<div class="dashboard-actions">
 
-    <div
-        id="ownerLoginMessage"
-        class="message"
-    ></div>
+<button
+    onclick="loadJobs()"
+>
+Refresh Jobs
+</button>
+
+<button
+    class="danger"
+    onclick="careerLogout()"
+>
+Logout
+</button>
+
+</div>
 
 </div>
 
 
-<!-- =====================================================
-OWNER DASHBOARD
-SIDEWAYS / SIDEBAR LAYOUT
-===================================================== -->
+<div class="card">
+
+<h2>
+Available Jobs
+</h2>
 
 <div
+    id="jobGrid"
+    class="job-grid"
+></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+My Resume
+</h2>
+
+<form onsubmit="saveResume(event)">
+
+<label>
+Filename
+</label>
+
+<input
+    id="resumeFilename"
+    placeholder="resume.txt"
+    required
+>
+
+<label>
+Resume Text
+</label>
+
+<textarea
+    id="resumeText"
+    placeholder="Paste your resume text here..."
+    required
+></textarea>
+
+<button type="submit">
+Save Resume
+</button>
+
+</form>
+
+<div id="resumeMessage"></div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     RECRUITER DASHBOARD
+     ===================================================== -->
+
+<section
+    id="recruiterDashboard"
+    class="dashboard-shell hidden"
+>
+
+<div class="card dashboard-header">
+
+<div>
+
+<h2>
+Recruiter Dashboard
+</h2>
+
+<p id="recruiterWelcome">
+Welcome
+</p>
+
+</div>
+
+<div class="dashboard-actions">
+
+<button
+    onclick="loadRecruiterJobs()"
+>
+Refresh
+</button>
+
+<button
+    class="danger"
+    onclick="recruiterLogout()"
+>
+Logout
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Create Job
+</h2>
+
+<form onsubmit="createJob(event)">
+
+<label>
+Job Title
+</label>
+
+<input
+    id="jobTitle"
+    required
+    placeholder="Software Developer"
+>
+
+<label>
+Description
+</label>
+
+<textarea
+    id="jobDescription"
+    required
+    placeholder="Describe the job..."
+></textarea>
+
+<div class="form-row">
+
+<div>
+
+<label>
+Skills
+</label>
+
+<input
+    id="jobSkills"
+    placeholder="Python, SQL, React"
+>
+
+</div>
+
+<div>
+
+<label>
+Location
+</label>
+
+<input
+    id="jobLocation"
+    placeholder="Bangalore"
+>
+
+</div>
+
+</div>
+
+<label>
+Salary
+</label>
+
+<input
+    id="jobSalary"
+    placeholder="5-8 LPA"
+>
+
+<button type="submit">
+Publish Job
+</button>
+
+</form>
+
+<div id="jobMessage"></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+My Jobs
+</h2>
+
+<div
+    id="recruiterJobs"
+></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Applications
+</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Candidate
+</th>
+
+<th>
+Job
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Applied
+</th>
+
+</tr>
+
+</thead>
+
+<tbody
+    id="recruiterApplications"
+></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     OWNER DASHBOARD
+     ===================================================== -->
+
+<section
     id="ownerDashboard"
     class="hidden owner-dashboard"
 >
 
-    <!-- OWNER SIDEBAR -->
-    <aside class="owner-sidebar">
 
-        <div class="owner-sidebar-header">
+<div class="owner-layout">
 
-            <div class="owner-logo">
-                🛡️
-            </div>
 
-            <div>
-                <h2>Owner</h2>
-                <p>Placement AI</p>
-            </div>
+<!-- =====================================================
+     OWNER SIDEBAR
+     ===================================================== -->
 
-        </div>
+<aside class="owner-sidebar">
 
 
-        <!-- OWNER PROFILE -->
-        <div class="owner-profile">
+<div class="owner-sidebar-header">
 
-            <div class="owner-avatar">
-                👤
-            </div>
+<div class="owner-logo">
+PA
+</div>
 
-            <div>
-                <strong id="ownerDisplayName">
-                    Owner
-                </strong>
+<h2>
+Owner
+</h2>
 
-                <small>
-                    Administrator
-                </small>
-            </div>
-
-        </div>
-
-
-        <!-- SIDEBAR MENU -->
-        <nav class="owner-menu">
-
-            <button
-                type="button"
-                onclick="document.getElementById('ownerOverview').scrollIntoView({behavior:'smooth'})"
-            >
-                📊 Overview
-            </button>
-
-            <button
-                type="button"
-                onclick="document.getElementById('ownerUsersSection').scrollIntoView({behavior:'smooth'})"
-            >
-                👥 Users
-            </button>
-
-            <button
-                type="button"
-                onclick="document.getElementById('ownerJobsSection').scrollIntoView({behavior:'smooth'})"
-            >
-                💼 Jobs
-            </button>
-
-            <button
-                type="button"
-                onclick="document.getElementById('ownerActivitySection').scrollIntoView({behavior:'smooth'})"
-            >
-                🕒 Activity
-            </button>
-
-        </nav>
-
-
-        <!-- SESSION INFORMATION -->
-        <div class="owner-session">
-
-            <div>
-                <span>Login time</span>
-
-                <strong id="ownerLoginTime">
-                    Session active
-                </strong>
-            </div>
-
-            <div>
-                <span>Logout time</span>
-
-                <strong id="ownerLogoutTime">
-                    Not logged out
-                </strong>
-            </div>
-
-        </div>
-
-
-        <!-- LOGOUT -->
-        <button
-            type="button"
-            class="owner-logout"
-            onclick="ownerLogout()"
-        >
-            🚪 Logout
-        </button>
-
-    </aside>
-
-
-    <!-- OWNER MAIN CONTENT -->
-    <main class="owner-main">
-
-
-        <!-- TOP BAR -->
-        <section class="owner-topbar">
-
-            <div>
-                <h1>
-                    Owner Dashboard
-                </h1>
-
-                <p>
-                    Welcome,
-                    <span
-                        id="ownerDashboardWelcome"
-                        class="username"
-                    >Owner</span>
-                </p>
-            </div>
-
-
-            <div class="owner-status">
-
-                <span class="owner-status-dot">
-                    ●
-                </span>
-
-                System Online
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-        OVERVIEW
-        ================================================= -->
-
-        <section
-            id="ownerOverview"
-            class="owner-section"
-        >
-
-            <div class="owner-section-title">
-
-                <div>
-                    <h2>
-                        Platform Overview
-                    </h2>
-
-                    <p>
-                        Monitor your Placement AI Platform.
-                    </p>
-                </div>
-
-            </div>
-
-
-            <!-- STATISTICS -->
-            <div class="owner-stats">
-
-
-                <!-- TOTAL USERS -->
-                <div class="owner-stat">
-
-                    <div class="owner-stat-icon">
-                        👥
-                    </div>
-
-                    <div>
-                        <h3>
-                            Total Users
-                        </h3>
-
-                        <div
-                            id="ownerTotalUsers"
-                            class="number"
-                        >
-                            0
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <!-- CAREER SEEKERS -->
-                <div class="owner-stat">
-
-                    <div class="owner-stat-icon">
-                        🎓
-                    </div>
-
-                    <div>
-                        <h3>
-                            Career Seekers
-                        </h3>
-
-                        <div
-                            id="ownerCareerSeekers"
-                            class="number"
-                        >
-                            0
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <!-- RECRUITERS -->
-                <div class="owner-stat">
-
-                    <div class="owner-stat-icon">
-                        🏢
-                    </div>
-
-                    <div>
-                        <h3>
-                            Recruiters
-                        </h3>
-
-                        <div
-                            id="ownerRecruiters"
-                            class="number"
-                        >
-                            0
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <!-- JOBS -->
-                <div class="owner-stat">
-
-                    <div class="owner-stat-icon">
-                        💼
-                    </div>
-
-                    <div>
-                        <h3>
-                            Jobs
-                        </h3>
-
-                        <div
-                            id="ownerJobs"
-                            class="number"
-                        >
-                            0
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <!-- APPLICATIONS -->
-                <div class="owner-stat">
-
-                    <div class="owner-stat-icon">
-                        📄
-                    </div>
-
-                    <div>
-                        <h3>
-                            Applications
-                        </h3>
-
-                        <div
-                            id="ownerApplications"
-                            class="number"
-                        >
-                            0
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-        USERS
-        ================================================= -->
-
-        <section
-            id="ownerUsersSection"
-            class="owner-section"
-        >
-
-            <div class="owner-section-title">
-
-                <div>
-                    <h2>
-                        Recent Users
-                    </h2>
-
-                    <p>
-                        Recently registered platform users.
-                    </p>
-                </div>
-
-            </div>
-
-
-            <div
-                id="ownerUsersResult"
-                class="owner-data-box"
-            >
-
-                <p class="loading">
-                    Loading users...
-                </p>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-        JOBS
-        ================================================= -->
-
-        <section
-            id="ownerJobsSection"
-            class="owner-section"
-        >
-
-            <div class="owner-section-title">
-
-                <div>
-                    <h2>
-                        Recent Jobs
-                    </h2>
-
-                    <p>
-                        Jobs posted by recruiters.
-                    </p>
-                </div>
-
-            </div>
-
-
-            <div
-                id="ownerJobsResult"
-                class="owner-data-box"
-            >
-
-                <p class="loading">
-                    Loading jobs...
-                </p>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
-        ACTIVITY
-        ================================================= -->
-
-        <section
-            id="ownerActivitySection"
-            class="owner-section"
-        >
-
-            <div class="owner-section-title">
-
-                <div>
-                    <h2>
-                        Owner Activity
-                    </h2>
-
-                    <p>
-                        Current administrator session.
-                    </p>
-                </div>
-
-            </div>
-
-
-            <div class="owner-activity-grid">
-
-
-                <div class="owner-activity-card">
-
-                    <span class="activity-icon">
-                        🟢
-                    </span>
-
-                    <div>
-                        <strong>
-                            Current Status
-                        </strong>
-
-                        <p>
-                            Owner account is active.
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="owner-activity-card">
-
-                    <span class="activity-icon">
-                        🔐
-                    </span>
-
-                    <div>
-                        <strong>
-                            Access Level
-                        </strong>
-
-                        <p>
-                            Owner / Administrator
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="owner-activity-card">
-
-                    <span class="activity-icon">
-                        🕒
-                    </span>
-
-                    <div>
-                        <strong>
-                            Login Time
-                        </strong>
-
-                        <p id="ownerActivityLoginTime">
-                            Current session
-                        </p>
-                    </div>
-
-                </div>
-
-
-                <div class="owner-activity-card">
-
-                    <span class="activity-icon">
-                        🚪
-                    </span>
-
-                    <div>
-                        <strong>
-                            Logout Time
-                        </strong>
-
-                        <p id="ownerActivityLogoutTime">
-                            Not logged out
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- FOOTER -->
-        <footer class="owner-footer">
-
-            <span>
-                Placement AI Platform
-            </span>
-
-            <span>
-                Owner Control Panel
-            </span>
-
-        </footer>
-
-
-    </main>
+<p>
+Placement AI
+</p>
 
 </div>
+
+
+<div class="owner-sidebar-menu">
+
+
+<button
+    class="owner-nav-button active"
+    onclick="showOwnerSection('ownerOverview', this)"
+>
+Overview
+</button>
+
+
+<button
+    class="owner-nav-button"
+    onclick="showOwnerSection('ownerUsers', this)"
+>
+Users
+</button>
+
+
+<button
+    class="owner-nav-button"
+    onclick="showOwnerSection('ownerJobs', this)"
+>
+Jobs
+</button>
+
+
+<button
+    class="owner-nav-button"
+    onclick="showOwnerSection('ownerApplications', this)"
+>
+Applications
+</button>
+
+
+<button
+    class="owner-nav-button"
+    onclick="showOwnerSection('ownerSessions', this)"
+>
+Login Activity
+</button>
+
+
+</div>
+
+
+<div class="owner-sidebar-bottom">
+
+<button
+    class="danger"
+    onclick="ownerLogout()"
+>
+Logout
+</button>
+
+</div>
+
+
+</aside>
+
+
 <!-- =====================================================
-PDF/DOCX LIBRARIES
-===================================================== -->
+     OWNER CONTENT
+     ===================================================== -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<div class="owner-content">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+
+<div class="owner-topbar">
+
+<div>
+
+<h2>
+Owner Dashboard
+</h2>
+
+<p id="ownerDashboardWelcome">
+Welcome, Owner
+</p>
+
+</div>
+
+
+<div class="owner-time-box">
+
+
+<div class="owner-time-item">
+
+<span>
+Login Time
+</span>
+
+<strong id="ownerLoginTime">
+-
+</strong>
+
+</div>
+
+
+<div class="owner-time-item">
+
+<span>
+Logout Time
+</span>
+
+<strong id="ownerLogoutTime">
+Active
+</strong>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     OVERVIEW
+     ===================================================== -->
+
+<section
+    id="ownerOverview"
+    class="owner-section active"
+>
+
+<h2 class="owner-section-title">
+Platform Overview
+</h2>
+
+
+<div class="owner-stats">
+
+
+<div class="owner-stat-card">
+
+<div class="owner-stat-label">
+Total Users
+</div>
+
+<div
+    class="owner-stat-number"
+    id="ownerTotalUsers"
+>
+0
+</div>
+
+</div>
+
+
+<div class="owner-stat-card">
+
+<div class="owner-stat-label">
+Career Seekers
+</div>
+
+<div
+    class="owner-stat-number"
+    id="ownerCareerSeekers"
+>
+0
+</div>
+
+</div>
+
+
+<div class="owner-stat-card">
+
+<div class="owner-stat-label">
+Recruiters
+</div>
+
+<div
+    class="owner-stat-number"
+    id="ownerRecruiters"
+>
+0
+</div>
+
+</div>
+
+
+<div class="owner-stat-card">
+
+<div class="owner-stat-label">
+Jobs
+</div>
+
+<div
+    class="owner-stat-number"
+    id="ownerJobs"
+>
+0
+</div>
+
+</div>
+
+
+<div class="owner-stat-card owner-stat-card-wide">
+
+<div class="owner-stat-label">
+Applications
+</div>
+
+<div
+    class="owner-stat-number"
+    id="ownerApplications"
+>
+0
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="owner-overview-grid">
+
+
+<div class="owner-panel">
+
+<h3>
+Recent Users
+</h3>
+
+<div
+    id="ownerRecentUsers"
+    class="owner-list"
+>
+</div>
+
+</div>
+
+
+<div class="owner-panel">
+
+<h3>
+Recent Jobs
+</h3>
+
+<div
+    id="ownerRecentJobs"
+    class="owner-list"
+>
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     USERS
+     ===================================================== -->
+
+<section
+    id="ownerUsers"
+    class="owner-section"
+>
+
+<div class="owner-panel">
+
+<h2>
+All Users
+</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Username
+</th>
+
+<th>
+Name
+</th>
+
+<th>
+Email
+</th>
+
+<th>
+Role
+</th>
+
+<th>
+Created
+</th>
+
+</tr>
+
+</thead>
+
+<tbody
+    id="ownerUsersTable"
+></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     JOBS
+     ===================================================== -->
+
+<section
+    id="ownerJobs"
+    class="owner-section"
+>
+
+<div class="owner-panel">
+
+<h2>
+Recent Jobs
+</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Title
+</th>
+
+<th>
+Recruiter
+</th>
+
+<th>
+Description
+</th>
+
+<th>
+Created
+</th>
+
+</tr>
+
+</thead>
+
+<tbody
+    id="ownerJobsTable"
+></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     APPLICATIONS
+     ===================================================== -->
+
+<section
+    id="ownerApplications"
+    class="owner-section"
+>
+
+<div class="owner-panel">
+
+<h2>
+Recent Applications
+</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Candidate
+</th>
+
+<th>
+Job
+</th>
+
+<th>
+Status
+</th>
+
+<th>
+Applied
+</th>
+
+</tr>
+
+</thead>
+
+<tbody
+    id="ownerApplicationsTable"
+></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     LOGIN ACTIVITY
+     ===================================================== -->
+
+<section
+    id="ownerSessions"
+    class="owner-section"
+>
+
+<div class="owner-panel">
+
+<h2>
+Owner Login Activity
+</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Login Time
+</th>
+
+<th>
+Logout Time
+</th>
+
+<th>
+Status
+</th>
+
+</tr>
+
+</thead>
+
+<tbody
+    id="ownerSessionsTable"
+></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<div class="owner-footer">
+
+<span>
+Placement AI Platform
+</span>
+
+<span>
+Owner Control Panel
+</span>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
 
 
 <script>
 
 
-/* =====================================================
-API
-===================================================== */
+// =========================================================
+// API
+// =========================================================
 
-const API_URL =
+const API_BASE =
     "https://placement-ai-platform.onrender.com";
 
 
-let selectedRole = null;
+// =========================================================
+// PAGE HELPERS
+// =========================================================
 
-let currentUser = null;
+const allPages = [
+    "homePage",
+    "careerLoginPage",
+    "careerRegisterPage",
+    "recruiterLoginPage",
+    "recruiterRegisterPage",
+    "ownerLoginPage",
+    "careerDashboard",
+    "recruiterDashboard",
+    "ownerDashboard"
+];
 
-let availableJobs = [];
-
-let selectedJob = null;
-
-
-/* =====================================================
-HELPERS
-===================================================== */
 
 function hideAllPages() {
 
-    document
-        .getElementById("rolePage")
-        .classList.add("hidden");
+    allPages.forEach(
+        function(id) {
 
-    document
-        .getElementById("registerPage")
-        .classList.add("hidden");
+            const element =
+                document.getElementById(id);
 
-    document
-        .getElementById("loginPage")
-        .classList.add("hidden");
+            if (element) {
 
-    document
-        .getElementById("careerDashboard")
-        .classList.add("hidden");
+                element.classList.add("hidden");
 
-    document
-        .getElementById("recruiterDashboard")
-        .classList.add("hidden");
+            }
 
-    document
-        .getElementById("ownerLoginPage")
-        .classList.add("hidden");
-
-    document
-        .getElementById("ownerDashboard")
-        .classList.add("hidden");
+        }
+    );
 
 }
 
 
-/* =====================================================
-ROLE
-===================================================== */
-
-function selectRole(role) {
-
-    selectedRole = role;
+function showPage(id) {
 
     hideAllPages();
 
-    document
-        .getElementById("registerPage")
-        .classList.remove("hidden");
+    const page =
+        document.getElementById(id);
 
+    if (page) {
 
-    if (role === "career_seeker") {
-
-        document
-            .getElementById("registerTitle")
-            .textContent =
-            "Create Your Career Seeker Account";
-
-        document
-            .getElementById("registerDescription")
-            .textContent =
-            "Create your account to discover career opportunities.";
+        page.classList.remove("hidden");
 
     }
 
-    else {
+    window.scrollTo(
+        0,
+        0
+    );
 
-        document
-            .getElementById("registerTitle")
-            .textContent =
-            "Create Your Recruiter Account";
+}
 
-        document
-            .getElementById("registerDescription")
-            .textContent =
-            "Create your recruiter account to find qualified candidates.";
 
+// =========================================================
+// MESSAGE
+// =========================================================
+
+function showMessage(
+    elementId,
+    message,
+    type = "success"
+) {
+
+    const element =
+        document.getElementById(elementId);
+
+    if (!element) {
+        return;
     }
 
-}
+    element.className =
+        "message " + type;
 
-
-function showRolePage() {
-
-    hideAllPages();
-
-    document
-        .getElementById("rolePage")
-        .classList.remove("hidden");
-
-    selectedRole = null;
+    element.textContent =
+        message;
 
 }
 
 
-function showRegisterPage() {
+// =========================================================
+// DATE FORMAT
+// =========================================================
 
-    hideAllPages();
+function formatDate(value) {
 
-    document
-        .getElementById("registerPage")
-        .classList.remove("hidden");
-
-}
-
-
-function showLoginPage() {
-
-    hideAllPages();
-
-    document
-        .getElementById("loginPage")
-        .classList.remove("hidden");
-
-
-    if (selectedRole === "career_seeker") {
-
-        document
-            .getElementById("loginTitle")
-            .textContent =
-            "Career Seeker Login";
-
-        document
-            .getElementById("loginDescription")
-            .textContent =
-            "Login to access your career dashboard.";
-
+    if (!value) {
+        return "-";
     }
 
-    else {
+    try {
 
-        document
-            .getElementById("loginTitle")
-            .textContent =
-            "Recruiter Login";
+        return new Date(value).toLocaleString();
 
-        document
-            .getElementById("loginDescription")
-            .textContent =
-            "Login to access your recruiter dashboard.";
+    } catch (error) {
+
+        return value;
 
     }
 
 }
 
 
-/* =====================================================
-REGISTER
-===================================================== */
+// =========================================================
+// CAREER REGISTER
+// =========================================================
 
-async function registerAccount(event) {
+async function careerRegister(event) {
 
     event.preventDefault();
 
+    const payload = {
 
-    if (!selectedRole) {
+        username:
+            document
+                .getElementById(
+                    "careerRegisterUsername"
+                )
+                .value
+                .trim(),
 
-        alert("Please select an account type.");
+        name:
+            document
+                .getElementById(
+                    "careerRegisterName"
+                )
+                .value
+                .trim(),
 
-        return;
+        email:
+            document
+                .getElementById(
+                    "careerRegisterEmail"
+                )
+                .value
+                .trim(),
 
-    }
+        password:
+            document
+                .getElementById(
+                    "careerRegisterPassword"
+                )
+                .value,
 
+        role:
+            "career_seeker"
 
-    const username =
-        document
-            .getElementById("registerUsername")
-            .value
-            .trim();
-
-
-    const name =
-        document
-            .getElementById("registerName")
-            .value
-            .trim();
-
-
-    const email =
-        document
-            .getElementById("registerEmail")
-            .value
-            .trim();
-
-
-    const password =
-        document
-            .getElementById("registerPassword")
-            .value;
-
-
-    const message =
-        document
-            .getElementById("registerMessage");
-
-
-    message.className =
-        "message success";
-
-    message.textContent =
-        "Creating account...";
+    };
 
 
     try {
 
         const response =
             await fetch(
-                API_URL +
+                API_BASE +
                 "/api/v1/auth/register",
                 {
-
                     method: "POST",
 
                     headers: {
@@ -2052,16 +2114,8 @@ async function registerAccount(event) {
                             "application/json"
                     },
 
-                    body: JSON.stringify({
-
-                        username,
-                        name,
-                        email,
-                        password,
-                        role: selectedRole
-
-                    })
-
+                    body:
+                        JSON.stringify(payload)
                 }
             );
 
@@ -2074,97 +2128,125 @@ async function registerAccount(event) {
 
             throw new Error(
                 data.detail ||
-                "Account creation failed."
+                "Registration failed."
             );
 
         }
 
 
-        message.className =
-            "message success";
-
-        message.textContent =
-            "Account created successfully! Please login.";
+        showMessage(
+            "careerRegisterMessage",
+            "Account created successfully."
+        );
 
 
         document
-            .getElementById("registerPassword")
+            .getElementById(
+                "careerRegisterUsername"
+            )
+            .value = "";
+
+
+        document
+            .getElementById(
+                "careerRegisterName"
+            )
+            .value = "";
+
+
+        document
+            .getElementById(
+                "careerRegisterEmail"
+            )
+            .value = "";
+
+
+        document
+            .getElementById(
+                "careerRegisterPassword"
+            )
             .value = "";
 
 
         setTimeout(
-            showLoginPage,
-            1000
+            function() {
+
+                showPage(
+                    "careerLoginPage"
+                );
+
+            },
+            700
         );
 
-    }
 
-    catch (error) {
+    } catch (error) {
 
-        message.className =
-            "message error";
-
-        message.textContent =
-            error.message;
+        showMessage(
+            "careerRegisterMessage",
+            error.message,
+            "error"
+        );
 
     }
 
 }
 
 
-/* =====================================================
-LOGIN
-===================================================== */
+// =========================================================
+// RECRUITER REGISTER
+// =========================================================
 
-async function loginAccount(event) {
+async function recruiterRegister(event) {
 
     event.preventDefault();
 
+    const payload = {
 
-    if (!selectedRole) {
+        username:
+            document
+                .getElementById(
+                    "recruiterRegisterUsername"
+                )
+                .value
+                .trim(),
 
-        alert(
-            "Please select Career Seeker or Recruiter first."
-        );
+        name:
+            document
+                .getElementById(
+                    "recruiterRegisterName"
+                )
+                .value
+                .trim(),
 
-        return;
+        email:
+            document
+                .getElementById(
+                    "recruiterRegisterEmail"
+                )
+                .value
+                .trim(),
 
-    }
+        password:
+            document
+                .getElementById(
+                    "recruiterRegisterPassword"
+                )
+                .value,
 
+        role:
+            "recruiter"
 
-    const username =
-        document
-            .getElementById("loginUsername")
-            .value
-            .trim();
-
-
-    const password =
-        document
-            .getElementById("loginPassword")
-            .value;
-
-
-    const message =
-        document
-            .getElementById("loginMessage");
-
-
-    message.className =
-        "message success";
-
-    message.textContent =
-        "Logging in...";
+    };
 
 
     try {
 
         const response =
             await fetch(
-                API_URL +
-                "/api/v1/auth/login",
+                API_BASE +
+                "/api/v1/auth/register",
                 {
-
                     method: "POST",
 
                     headers: {
@@ -2172,14 +2254,8 @@ async function loginAccount(event) {
                             "application/json"
                     },
 
-                    body: JSON.stringify({
-
-                        username,
-                        password,
-                        role: selectedRole
-
-                    })
-
+                    body:
+                        JSON.stringify(payload)
                 }
             );
 
@@ -2192,175 +2268,78 @@ async function loginAccount(event) {
 
             throw new Error(
                 data.detail ||
-                "Invalid username or password."
+                "Registration failed."
             );
 
         }
 
 
-        if (!data.user) {
-
-            throw new Error(
-                "No user information was returned."
-            );
-
-        }
+        showMessage(
+            "recruiterRegisterMessage",
+            "Account created successfully."
+        );
 
 
-        currentUser =
-            data.user;
+        setTimeout(
+            function() {
+
+                showPage(
+                    "recruiterLoginPage"
+                );
+
+            },
+            700
+        );
 
 
-        openDashboard(data);
+    } catch (error) {
 
-    }
-
-    catch (error) {
-
-        message.className =
-            "message error";
-
-        message.textContent =
-            error.message;
-
-    }
-
-}
-
-
-/* =====================================================
-DASHBOARD
-===================================================== */
-
-function openDashboard(data) {
-
-    hideAllPages();
-
-
-    const user =
-        data.user;
-
-
-    currentUser =
-        user;
-
-
-    if (
-        user.role ===
-        "career_seeker"
-    ) {
-
-        document
-            .getElementById(
-                "careerDashboard"
-            )
-            .classList
-            .remove("hidden");
-
-
-        document
-            .getElementById(
-                "careerUsername"
-            )
-            .textContent =
-            user.username ||
-            user.name ||
-            "";
-
-
-        loadJobsForMatcher();
-
-    }
-
-
-    else if (
-        user.role ===
-        "recruiter"
-    ) {
-
-        document
-            .getElementById(
-                "recruiterDashboard"
-            )
-            .classList
-            .remove("hidden");
-
-
-        document
-            .getElementById(
-                "recruiterUsername"
-            )
-            .textContent =
-            user.username ||
-            user.name ||
-            "";
-
-
-        loadJobs();
+        showMessage(
+            "recruiterRegisterMessage",
+            error.message,
+            "error"
+        );
 
     }
 
 }
 
-/* =====================================================
-OWNER LOGIN
-===================================================== */
 
-function showOwnerLogin() {
+// =========================================================
+// CAREER LOGIN
+// =========================================================
 
-    hideAllPages();
-
-    document
-        .getElementById("ownerLoginPage")
-        .classList
-        .remove("hidden");
-
-}
-
-
-/* =====================================================
-OWNER LOGIN PROCESS
-===================================================== */
-
-async function ownerLogin(event) {
+async function careerLogin(event) {
 
     event.preventDefault();
 
+    const payload = {
 
-    const username =
-        document
-            .getElementById("ownerUsername")
-            .value
-            .trim();
+        username:
+            document
+                .getElementById(
+                    "careerLoginUsername"
+                )
+                .value
+                .trim(),
 
-    const password =
-        document
-            .getElementById("ownerPassword")
-            .value;
+        password:
+            document
+                .getElementById(
+                    "careerLoginPassword"
+                )
+                .value
 
-
-    const message =
-        document
-            .getElementById(
-                "ownerLoginMessage"
-            );
-
-
-    message.className =
-        "message success";
-
-    message.textContent =
-        "Logging in...";
+    };
 
 
     try {
 
         const response =
             await fetch(
-                API_URL +
+                API_BASE +
                 "/api/v1/auth/login",
                 {
-
                     method: "POST",
 
                     headers: {
@@ -2368,19 +2347,8 @@ async function ownerLogin(event) {
                             "application/json"
                     },
 
-                    body: JSON.stringify({
-
-                        username:
-                            username,
-
-                        password:
-                            password,
-
-                        role:
-                            "owner"
-
-                    })
-
+                    body:
+                        JSON.stringify(payload)
                 }
             );
 
@@ -2393,80 +2361,454 @@ async function ownerLogin(event) {
 
             throw new Error(
                 data.detail ||
-                "Invalid owner username or password."
+                "Login failed."
             );
 
         }
 
 
         if (
-            !data.user ||
-            data.user.role !== "owner"
+            data.user.role !==
+            "career_seeker"
         ) {
 
             throw new Error(
-                "Owner access denied."
+                "This account is not a career seeker account."
             );
 
         }
 
 
-        currentUser =
-            data.user;
+        localStorage.setItem(
+            "careerUser",
+            JSON.stringify(data.user)
+        );
 
 
-        await loadOwnerDashboard();
+        document
+            .getElementById(
+                "careerWelcome"
+            )
+            .textContent =
+                "Welcome, " +
+                data.user.name;
 
-    }
 
-    catch (error) {
+        showPage(
+            "careerDashboard"
+        );
 
-        message.className =
-            "message error";
 
-        message.textContent =
-            error.message;
+        loadJobs();
+
+
+    } catch (error) {
+
+        showMessage(
+            "careerLoginMessage",
+            error.message,
+            "error"
+        );
 
     }
 
 }
 
 
-/* =====================================================
-LOAD OWNER DASHBOARD
-===================================================== */
+// =========================================================
+// RECRUITER LOGIN
+// =========================================================
 
-async function loadOwnerDashboard() {
+async function recruiterLogin(event) {
 
-    hideAllPages();
+    event.preventDefault();
 
+    const payload = {
 
-    document
-        .getElementById(
-            "ownerDashboard"
-        )
-        .classList
-        .remove("hidden");
+        username:
+            document
+                .getElementById(
+                    "recruiterLoginUsername"
+                )
+                .value
+                .trim(),
 
+        password:
+            document
+                .getElementById(
+                    "recruiterLoginPassword"
+                )
+                .value
 
-    document
-        .getElementById(
-            "ownerDisplayName"
-        )
-        .textContent =
-        currentUser.name ||
-        currentUser.username ||
-        "Owner";
+    };
 
 
     try {
 
         const response =
             await fetch(
-                API_URL +
+                API_BASE +
+                "/api/v1/auth/login",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(payload)
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Login failed."
+            );
+
+        }
+
+
+        if (
+            data.user.role !==
+            "recruiter"
+        ) {
+
+            throw new Error(
+                "This account is not a recruiter account."
+            );
+
+        }
+
+
+        localStorage.setItem(
+            "recruiterUser",
+            JSON.stringify(data.user)
+        );
+
+
+        document
+            .getElementById(
+                "recruiterWelcome"
+            )
+            .textContent =
+                "Welcome, " +
+                data.user.name;
+
+
+        showPage(
+            "recruiterDashboard"
+        );
+
+
+        loadRecruiterJobs();
+
+
+    } catch (error) {
+
+        showMessage(
+            "recruiterLoginMessage",
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+// =========================================================
+// OWNER LOGIN
+// =========================================================
+
+async function ownerLogin(event) {
+
+    event.preventDefault();
+
+    const username =
+        document
+            .getElementById(
+                "ownerLoginUsername"
+            )
+            .value
+            .trim();
+
+
+    const password =
+        document
+            .getElementById(
+                "ownerLoginPassword"
+            )
+            .value;
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_BASE +
+                "/api/v1/owner/login",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            username,
+                            password
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Owner login failed."
+            );
+
+        }
+
+
+        localStorage.setItem(
+            "ownerUser",
+            JSON.stringify(data.owner)
+        );
+
+
+        localStorage.setItem(
+            "ownerSession",
+            JSON.stringify(data.session)
+        );
+
+
+        localStorage.setItem(
+            "ownerLoginTime",
+            data.session.login_time
+        );
+
+
+        localStorage.removeItem(
+            "ownerLogoutTime"
+        );
+
+
+        showPage(
+            "ownerDashboard"
+        );
+
+
+        updateOwnerTimes(
+            data.session.login_time,
+            null
+        );
+
+
+        loadOwnerDashboard();
+
+
+    } catch (error) {
+
+        showMessage(
+            "ownerLoginMessage",
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+// =========================================================
+// OWNER DASHBOARD NAVIGATION
+// =========================================================
+
+function showOwnerSection(
+    sectionId,
+    button
+) {
+
+    const sections =
+        document.querySelectorAll(
+            ".owner-section"
+        );
+
+
+    sections.forEach(
+        function(section) {
+
+            section.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    const selected =
+        document.getElementById(
+            sectionId
+        );
+
+
+    if (selected) {
+
+        selected.classList.add(
+            "active"
+        );
+
+    }
+
+
+    const buttons =
+        document.querySelectorAll(
+            ".owner-nav-button"
+        );
+
+
+    buttons.forEach(
+        function(navButton) {
+
+            navButton.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+
+    if (button) {
+
+        button.classList.add(
+            "active"
+        );
+
+    }
+
+}
+
+
+// =========================================================
+// OWNER TIME
+// =========================================================
+
+function updateOwnerTimes(
+    loginTime,
+    logoutTime
+) {
+
+    const loginElement =
+        document.getElementById(
+            "ownerLoginTime"
+        );
+
+
+    const logoutElement =
+        document.getElementById(
+            "ownerLogoutTime"
+        );
+
+
+    if (loginElement) {
+
+        loginElement.textContent =
+            formatDate(loginTime);
+
+    }
+
+
+    if (logoutElement) {
+
+        logoutElement.textContent =
+            logoutTime
+                ? formatDate(logoutTime)
+                : "Active";
+
+    }
+
+}
+
+
+// =========================================================
+// LOAD OWNER DASHBOARD
+// =========================================================
+
+async function loadOwnerDashboard() {
+
+    const ownerRaw =
+        localStorage.getItem(
+            "ownerUser"
+        );
+
+
+    if (!ownerRaw) {
+
+        showPage(
+            "ownerLoginPage"
+        );
+
+        return;
+
+    }
+
+
+    const owner =
+        JSON.parse(ownerRaw);
+
+
+    const loginTime =
+        localStorage.getItem(
+            "ownerLoginTime"
+        );
+
+
+    const logoutTime =
+        localStorage.getItem(
+            "ownerLogoutTime"
+        );
+
+
+    document
+        .getElementById(
+            "ownerDashboardWelcome"
+        )
+        .textContent =
+            "Welcome, " +
+            owner.name;
+
+
+    updateOwnerTimes(
+        loginTime,
+        logoutTime
+    );
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_BASE +
                 "/api/v1/owner/dashboard?owner_id=" +
                 encodeURIComponent(
-                    currentUser.id
+                    owner.id
                 )
             );
 
@@ -2485,475 +2827,16 @@ async function loadOwnerDashboard() {
         }
 
 
-        /* ---------------------------------------------
-        STATISTICS
-        --------------------------------------------- */
-
-        document
-            .getElementById(
-                "ownerTotalUsers"
-            )
-            .textContent =
-            data.statistics.total_users;
-
-
-        document
-            .getElementById(
-                "ownerCareerSeekers"
-            )
-            .textContent =
-            data.statistics.career_seekers;
-
-
-        document
-            .getElementById(
-                "ownerRecruiters"
-            )
-            .textContent =
-            data.statistics.recruiters;
-
-
-        document
-            .getElementById(
-                "ownerJobs"
-            )
-            .textContent =
-            data.statistics.jobs;
-
-
-        document
-            .getElementById(
-                "ownerApplications"
-            )
-            .textContent =
-            data.statistics.applications;
-
-
-        /* ---------------------------------------------
-        RECENT USERS
-        --------------------------------------------- */
-
-        const users =
-            data.recent_users || [];
-
-
-        const usersContainer =
-            document
-                .getElementById(
-                    "ownerUsersResult"
-                );
-
-
-        if (!users.length) {
-
-            usersContainer.innerHTML =
-                "<p>No users found.</p>";
-
-        }
-
-        else {
-
-            usersContainer.innerHTML = `
-
-                <table class="owner-table">
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Username
-                            </th>
-
-                            <th>
-                                Name
-                            </th>
-
-                            <th>
-                                Email
-                            </th>
-
-                            <th>
-                                Role
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        ${
-                            users
-                                .map(
-                                    user => `
-
-                                        <tr>
-
-                                            <td>
-                                                ${escapeHtml(
-                                                    user.username
-                                                )}
-                                            </td>
-
-                                            <td>
-                                                ${escapeHtml(
-                                                    user.name
-                                                )}
-                                            </td>
-
-                                            <td>
-                                                ${escapeHtml(
-                                                    user.email
-                                                )}
-                                            </td>
-
-                                            <td>
-                                                <span class="owner-badge">
-                                                    ${escapeHtml(
-                                                        user.role
-                                                    )}
-                                                </span>
-                                            </td>
-
-                                        </tr>
-
-                                    `
-                                )
-                                .join("")
-                        }
-
-                    </tbody>
-
-                </table>
-
-            `;
-
-        }
-
-
-        /* ---------------------------------------------
-        RECENT JOBS
-        --------------------------------------------- */
-
-        const jobs =
-            data.recent_jobs || [];
-
-
-        const jobsContainer =
-            document
-                .getElementById(
-                    "ownerJobsResult"
-                );
-
-
-        if (!jobs.length) {
-
-            jobsContainer.innerHTML =
-                "<p>No jobs found.</p>";
-
-        }
-
-        else {
-
-            jobsContainer.innerHTML =
-
-                jobs
-                    .map(
-                        job => `
-
-                            <div class="job">
-
-                                <h3>
-                                    ${escapeHtml(
-                                        job.title
-                                    )}
-                                </h3>
-
-                                <p>
-                                    ${escapeHtml(
-                                        job.description
-                                    )}
-                                </p>
-
-                                <small>
-                                    Posted by:
-                                    ${escapeHtml(
-                                        job.recruiter_username ||
-                                        "Recruiter"
-                                    )}
-                                </small>
-
-                            </div>
-
-                        `
-                    )
-                    .join("");
-
-        }
-
-    }
-
-    catch (error) {
-
-        document
-            .getElementById(
-                "ownerUsersResult"
-            )
-            .innerHTML = `
-
-                <p class="message error">
-                    ${escapeHtml(
-                        error.message
-                    )}
-                </p>
-
-            `;
-
-    }
-
-}
-
-
-/* =====================================================
-OWNER LOGOUT
-===================================================== */
-
-function ownerLogout() {
-
-    currentUser = null;
-
-    selectedRole = null;
-
-    selectedJob = null;
-
-    availableJobs = [];
-
-
-    window.location.hash = "";
-
-
-    hideAllPages();
-
-
-    document
-        .getElementById("rolePage")
-        .classList
-        .remove("hidden");
-
-}
-
-
-/* =====================================================
-HIDDEN OWNER ROUTE
-===================================================== */
-
-function checkOwnerRoute() {
-
-    if (
-        window.location.hash ===
-        "#/owner"
-    ) {
-
-        showOwnerLogin();
-
-    }
-
-}
-
-
-/* Allow browser back/forward navigation */
-
-window.addEventListener(
-    "hashchange",
-    checkOwnerRoute
-);
-/* =====================================================
-LOGOUT
-===================================================== */
-
-function logout() {
-
-    currentUser = null;
-
-    selectedRole = null;
-
-    selectedJob = null;
-
-    availableJobs = [];
-
-    hideAllPages();
-
-    document
-        .getElementById("rolePage")
-        .classList
-        .remove("hidden");
-
-}
-
-
-/* =====================================================
-RESUME UPLOAD
-===================================================== */
-
-async function handleResumeUpload(event) {
-
-    const file =
-        event.target.files[0];
-
-
-    if (!file) {
-        return;
-    }
-
-
-    const resumeText =
-        document.getElementById(
-            "resumeText"
+        renderOwnerDashboard(
+            data
         );
 
 
-    resumeText.value =
-        "Reading resume file...";
+    } catch (error) {
 
-
-    try {
-
-        const fileName =
-            file.name.toLowerCase();
-
-
-        /* ---------------------------------------------
-           TXT
-        --------------------------------------------- */
-
-        if (
-            fileName.endsWith(".txt") ||
-            fileName.endsWith(".md")
-        ) {
-
-            const text =
-                await file.text();
-
-            resumeText.value =
-                text;
-
-            return;
-
-        }
-
-
-        /* ---------------------------------------------
-           PDF
-        --------------------------------------------- */
-
-        if (fileName.endsWith(".pdf")) {
-
-            const arrayBuffer =
-                await file.arrayBuffer();
-
-
-            const pdf =
-                await pdfjsLib
-                    .getDocument({
-                        data: arrayBuffer
-                    })
-                    .promise;
-
-
-            let fullText = "";
-
-
-            for (
-                let pageNumber = 1;
-                pageNumber <= pdf.numPages;
-                pageNumber++
-            ) {
-
-                const page =
-                    await pdf.getPage(
-                        pageNumber
-                    );
-
-
-                const content =
-                    await page.getTextContent();
-
-
-                const pageText =
-                    content.items
-                        .map(
-                            item => item.str
-                        )
-                        .join(" ");
-
-
-                fullText +=
-                    pageText +
-                    "\n\n";
-
-            }
-
-
-            resumeText.value =
-                fullText.trim();
-
-
-            if (!fullText.trim()) {
-
-                resumeText.value = "";
-
-                alert(
-                    "The PDF does not contain selectable text. Please paste the resume text manually."
-                );
-
-            }
-
-
-            return;
-
-        }
-
-
-        /* ---------------------------------------------
-           DOCX
-        --------------------------------------------- */
-
-        if (fileName.endsWith(".docx")) {
-
-            const arrayBuffer =
-                await file.arrayBuffer();
-
-
-            const result =
-                await mammoth.extractRawText({
-                    arrayBuffer:
-                        arrayBuffer
-                });
-
-
-            resumeText.value =
-                result.value.trim();
-
-
-            return;
-
-        }
-
-
-        throw new Error(
-            "Unsupported file format."
-        );
-
-    }
-
-    catch (error) {
-
-        resumeText.value = "";
-
-        alert(
-            "Could not read the resume: " +
-            error.message
+        console.error(
+            "Owner dashboard error:",
+            error
         );
 
     }
@@ -2961,1029 +2844,633 @@ async function handleResumeUpload(event) {
 }
 
 
-/* =====================================================
-RESUME ANALYSIS
-===================================================== */
-
-async function analyzeResume() {
-
-    const resume =
-        document
-            .getElementById("resumeText")
-            .value
-            .trim();
-
-
-    const result =
-        document
-            .getElementById("analysisResult");
-
-
-    const button =
-        document
-            .getElementById("analyzeButton");
-
-
-    if (!resume) {
-
-        result.innerHTML =
-            '<p class="message error">Please upload or enter your resume first.</p>';
-
-        return;
-
-    }
-
-
-    button.disabled = true;
-
-    result.innerHTML =
-        '<p class="loading">Analyzing resume...</p>';
-
-
-    try {
-
-        const response =
-            await fetch(
-                API_URL +
-                "/api/v1/resume-analyze",
-                {
-
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-
-                        resume_text:
-                            resume
-
-                    })
-
-                }
-            );
-
-
-        const data =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.detail ||
-                "Resume analysis failed."
-            );
-
-        }
-
-
-        const skills =
-            data.skills_detected &&
-            data.skills_detected.length
-                ? data.skills_detected.join(", ")
-                : "No skills detected";
-
-
-        const recommendations =
-            data.recommendations || [];
-
-
-        result.innerHTML = `
-
-            <div class="result">
-
-                <h3>
-                    Resume Analysis Result
-                </h3>
-
-                <p>
-
-                    <strong>
-                        Skill Score:
-                    </strong>
-
-                    <span class="score">
-                        ${data.skill_score}%
-                    </span>
-
-                </p>
-
-                <p>
-
-                    <strong>
-                        Skills Detected:
-                    </strong>
-
-                    ${skills}
-
-                </p>
-
-                <p>
-
-                    <strong>
-                        Total Skills:
-                    </strong>
-
-                    ${data.total_skills_detected || 0}
-
-                </p>
-
-                <h4>
-                    Recommendations
-                </h4>
-
-                <ul>
-
-                    ${
-                        recommendations
-                            .map(
-                                item =>
-                                `<li>${item}</li>`
-                            )
-                            .join("")
-                    }
-
-                </ul>
-
-            </div>
-
-        `;
-
-    }
-
-    catch (error) {
-
-        result.innerHTML =
-            `<p class="message error">${error.message}</p>`;
-
-    }
-
-    finally {
-
-        button.disabled = false;
-
-    }
-
-}
-
-
-/* =====================================================
-JOB RECOMMENDATIONS
-===================================================== */
-
-async function getRecommendations() {
-
-    const resume =
-        document
-            .getElementById("resumeText")
-            .value
-            .trim();
-
-
-    const result =
-        document
-            .getElementById("jobResult");
-
-
-    const button =
-        document
-            .getElementById("recommendButton");
-
-
-    if (!resume) {
-
-        result.innerHTML =
-            '<p class="message error">Please upload or enter your resume first.</p>';
-
-        return;
-
-    }
-
-
-    button.disabled = true;
-
-    result.innerHTML =
-        '<p class="loading">Finding suitable jobs...</p>';
-
-
-    try {
-
-        const response =
-            await fetch(
-                API_URL +
-                "/api/v1/job-recommendations",
-                {
-
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-
-                        resume_text:
-                            resume
-
-                    })
-
-                }
-            );
-
-
-        const data =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.detail ||
-                "Job recommendation failed."
-            );
-
-        }
-
-
-        const jobs =
-            data.recommended_jobs || [];
-
-
-        let html = `
-
-            <div class="result">
-
-                <h3>
-                    Recommended Jobs
-                </h3>
-
-        `;
-
-
-        jobs.forEach(job => {
-
-            html += `
-
-                <div class="job">
-
-                    <h3>
-                        ${job.job_title}
-                    </h3>
-
-                    <p>
-
-                        <strong>
-                            Match Score:
-                        </strong>
-
-                        <span class="score">
-                            ${job.match_score}%
-                        </span>
-
-                    </p>
-
-                    <p>
-
-                        <strong>
-                            Matching Skills:
-                        </strong>
-
-                        ${
-                            job.matching_skills &&
-                            job.matching_skills.length
-                                ? job.matching_skills.join(", ")
-                                : "None"
-                        }
-
-                    </p>
-
-                    <p>
-
-                        <strong>
-                            Missing Skills:
-                        </strong>
-
-                        ${
-                            job.missing_skills &&
-                            job.missing_skills.length
-                                ? job.missing_skills.join(", ")
-                                : "None"
-                        }
-
-                    </p>
-
-                </div>
-
-            `;
-
-        });
-
-
-        html += `
-            </div>
-        `;
-
-
-        result.innerHTML =
-            html;
-
-    }
-
-    catch (error) {
-
-        result.innerHTML =
-            `<p class="message error">${error.message}</p>`;
-
-    }
-
-    finally {
-
-        button.disabled = false;
-
-    }
-
-}
-
-
-/* =====================================================
-LOAD JOBS FOR CAREER SEEKER
-===================================================== */
-
-async function loadJobsForMatcher() {
-
-    const selector =
-        document.getElementById(
-            "jobSelector"
-        );
-
-
-    selector.innerHTML =
-        "<option value=''>Loading jobs...</option>";
-
-
-    try {
-
-        const response =
-            await fetch(
-                API_URL +
-                "/api/v1/jobs"
-            );
-
-
-        const data =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.detail ||
-                "Could not load jobs."
-            );
-
-        }
-
-
-        availableJobs =
-            data.jobs || [];
-
-
-        if (!availableJobs.length) {
-
-            selector.innerHTML =
-                "<option value=''>No jobs posted yet</option>";
-
-            return;
-
-        }
-
-
-        selector.innerHTML =
-            `
-                <option value="">
-                    -- Select a job --
-                </option>
-            `;
-
-
-        availableJobs.forEach(job => {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                job.id;
-
-
-            option.textContent =
-                job.title;
-
-
-            selector.appendChild(
-                option
-            );
-
-        });
-
-    }
-
-    catch (error) {
-
-        selector.innerHTML =
-            `
-                <option value="">
-                    Could not load jobs
-                </option>
-            `;
-
-        console.error(error);
-
-    }
-
-}
-
-
-/* =====================================================
-SHOW SELECTED JOB
-===================================================== */
-
-function showSelectedJob() {
-
-    const selector =
-        document.getElementById(
-            "jobSelector"
-        );
-
-
-    const jobId =
-        selector.value;
-
-
-    const details =
-        document.getElementById(
-            "selectedJobDetails"
-        );
-
-
-    if (!jobId) {
-
-        details.classList.add(
-            "hidden"
-        );
-
-        selectedJob = null;
-
-        return;
-
-    }
-
-
-    selectedJob =
-        availableJobs.find(
-            job =>
-                String(job.id) ===
-                String(jobId)
-        );
-
-
-    if (!selectedJob) {
-
-        details.classList.add(
-            "hidden"
-        );
-
-        return;
-
-    }
+// =========================================================
+// RENDER OWNER DASHBOARD
+// =========================================================
+
+function renderOwnerDashboard(
+    data
+) {
+
+    const stats =
+        data.statistics ||
+        {};
 
 
     document
         .getElementById(
-            "selectedJobTitle"
+            "ownerTotalUsers"
         )
         .textContent =
-        selectedJob.title;
+            stats.total_users ?? 0;
 
 
     document
         .getElementById(
-            "selectedJobDescription"
+            "ownerCareerSeekers"
         )
         .textContent =
-        selectedJob.description;
+            stats.career_seekers ?? 0;
 
 
-    details.classList.remove(
-        "hidden"
+    document
+        .getElementById(
+            "ownerRecruiters"
+        )
+        .textContent =
+            stats.recruiters ?? 0;
+
+
+    document
+        .getElementById(
+            "ownerJobs"
+        )
+        .textContent =
+            stats.jobs ?? 0;
+
+
+    document
+        .getElementById(
+            "ownerApplications"
+        )
+        .textContent =
+            stats.applications ?? 0;
+
+
+    renderOwnerRecentUsers(
+        data.recent_users || []
+    );
+
+
+    renderOwnerRecentJobs(
+        data.recent_jobs || []
+    );
+
+
+    renderOwnerUsersTable(
+        data.recent_users || []
+    );
+
+
+    renderOwnerJobsTable(
+        data.recent_jobs || []
+    );
+
+
+    renderOwnerApplicationsTable(
+        data.recent_applications || []
+    );
+
+
+    renderOwnerSessionsTable(
+        data.sessions || []
     );
 
 }
 
 
-/* =====================================================
-CHECK SELECTED JOB MATCH
-===================================================== */
-
-async function checkSelectedJobMatch() {
-
-    const resume =
-        document
-            .getElementById(
-                "resumeText"
-            )
-            .value
-            .trim();
-
-
-    const result =
-        document
-            .getElementById(
-                "matchResult"
-            );
-
-
-    const button =
-        document
-            .getElementById(
-                "matchButton"
-            );
-
-
-    if (!resume) {
-
-        result.innerHTML =
-            `
-                <p class="message error">
-                    Please upload or enter your resume first.
-                </p>
-            `;
-
-        return;
-
-    }
-
-
-    if (!selectedJob) {
-
-        result.innerHTML =
-            `
-                <p class="message error">
-                    Please select a job first.
-                </p>
-            `;
-
-        return;
-
-    }
-
-
-    button.disabled = true;
-
-
-    result.innerHTML =
-        `
-            <p class="loading">
-                Comparing your resume with
-                "${selectedJob.title}"...
-            </p>
-        `;
-
-
-    try {
-
-        const response =
-            await fetch(
-                API_URL +
-                "/api/v1/job-match",
-                {
-
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-
-                        resume_text:
-                            resume,
-
-                        job_description:
-                            selectedJob.description,
-
-                        job_title:
-                            selectedJob.title
-
-                    })
-
-                }
-            );
-
-
-        const data =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.detail ||
-                "Job match failed."
-            );
-
-        }
-
-
-        let scoreClass =
-            "match-low";
-
-
-        if (
-            data.match_score >= 80
-        ) {
-
-            scoreClass =
-                "match-good";
-
-        }
-
-        else if (
-            data.match_score >= 50
-        ) {
-
-            scoreClass =
-                "match-medium";
-
-        }
-
-
-        const matchingSkills =
-            data.matching_skills &&
-            data.matching_skills.length
-                ? data.matching_skills
-                : [];
-
-
-        const missingSkills =
-            data.missing_skills &&
-            data.missing_skills.length
-                ? data.missing_skills
-                : [];
-
-
-        const resumeSkills =
-            data.resume_skills_detected &&
-            data.resume_skills_detected.length
-                ? data.resume_skills_detected
-                : [];
-
-
-        const jobSkills =
-            data.job_skills_detected &&
-            data.job_skills_detected.length
-                ? data.job_skills_detected
-                : [];
-
-
-        result.innerHTML = `
-
-            <div class="result">
-
-                <h3>
-                    Job Match Analysis
-                </h3>
-
-
-                <h4>
-                    ${escapeHtml(data.job_title)}
-                </h4>
-
-
-                <p>
-
-                    <strong>
-                        Match Score:
-                    </strong>
-
-                    <span
-                        class="score ${scoreClass}"
-                    >
-                        ${data.match_score}%
-                    </span>
-
-                </p>
-
-
-                <hr>
-
-
-                <h4>
-                    Matching Skills
-                </h4>
-
-
-                ${
-                    matchingSkills.length
-                    ?
-                    matchingSkills
-                        .map(
-                            skill =>
-                            `<span class="skill-tag">${escapeHtml(skill)}</span>`
-                        )
-                        .join("")
-                    :
-                    "<p>No matching skills found.</p>"
-                }
-
-
-                <h4>
-                    Missing Skills
-                </h4>
-
-
-                ${
-                    missingSkills.length
-                    ?
-                    missingSkills
-                        .map(
-                            skill =>
-                            `<span class="skill-tag">${escapeHtml(skill)}</span>`
-                        )
-                        .join("")
-                    :
-                    "<p>Excellent! No missing technical skills detected.</p>"
-                }
-
-
-                <h4>
-                    Skills Detected in Your Resume
-                </h4>
-
-
-                <p>
-                    ${
-                        resumeSkills.length
-                        ?
-                        resumeSkills.join(", ")
-                        :
-                        "None"
-                    }
-                </p>
-
-
-                <h4>
-                    Skills Required by This Job
-                </h4>
-
-
-                <p>
-                    ${
-                        jobSkills.length
-                        ?
-                        jobSkills.join(", ")
-                        :
-                        "No recognizable technical skills"
-                    }
-                </p>
-
-
-                <h4>
-                    Detailed Recommendation
-                </h4>
-
-
-                <p>
-                    ${escapeHtml(data.recommendation)}
-                </p>
-
-            </div>
-
-        `;
-
-    }
-
-    catch (error) {
-
-        result.innerHTML =
-            `
-                <p class="message error">
-                    ${escapeHtml(error.message)}
-                </p>
-            `;
-
-    }
-
-    finally {
-
-        button.disabled = false;
-
-    }
-
-}
-
-
-/* =====================================================
-ESCAPE HTML
-===================================================== */
-
-function escapeHtml(text) {
-
-    if (text === null || text === undefined) {
-        return "";
-    }
-
-
-    return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
-
-/* =====================================================
-POST JOB
-===================================================== */
-
-async function postJob() {
-
-    if (!currentUser) {
-
-        alert(
-            "Please login first."
-        );
-
-        return;
-
-    }
-
-
-    const title =
-        document
-            .getElementById(
-                "jobTitle"
-            )
-            .value
-            .trim();
-
-
-    const description =
-        document
-            .getElementById(
-                "recruiterJobDescription"
-            )
-            .value
-            .trim();
-
-
-    const message =
-        document
-            .getElementById(
-                "recruiterMessage"
-            );
-
-
-    if (!title || !description) {
-
-        message.className =
-            "message error";
-
-        message.textContent =
-            "Please enter the job title and description.";
-
-        return;
-
-    }
-
-
-    message.className =
-        "message success";
-
-    message.textContent =
-        "Posting job...";
-
-
-    try {
-
-        const response =
-            await fetch(
-                API_URL +
-                "/api/v1/jobs",
-                {
-
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-
-                        recruiter_id:
-                            currentUser.id,
-
-                        title:
-                            title,
-
-                        description:
-                            description
-
-                    })
-
-                }
-            );
-
-
-        const data =
-            await response.json();
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                data.detail ||
-                "Could not post job."
-            );
-
-        }
-
-
-        message.className =
-            "message success";
-
-        message.textContent =
-            "Job posted successfully!";
-
-
-        document
-            .getElementById(
-                "jobTitle"
-            )
-            .value = "";
-
-
-        document
-            .getElementById(
-                "recruiterJobDescription"
-            )
-            .value = "";
-
-
-        loadJobs();
-
-    }
-
-    catch (error) {
-
-        message.className =
-            "message error";
-
-        message.textContent =
-            error.message;
-
-    }
-
-}
-
-
-/* =====================================================
-LOAD JOBS FOR RECRUITER
-===================================================== */
-
-async function loadJobs() {
+// =========================================================
+// OWNER RECENT USERS
+// =========================================================
+
+function renderOwnerRecentUsers(
+    users
+) {
 
     const container =
-        document
-            .getElementById(
-                "recruiterJobs"
-            );
+        document.getElementById(
+            "ownerRecentUsers"
+        );
 
 
-    if (!container) {
+    if (!users.length) {
+
+        container.innerHTML =
+            "<p>No users found.</p>";
+
         return;
+
     }
 
 
     container.innerHTML =
-        '<p class="loading">Loading jobs...</p>';
+        users
+            .slice(0, 8)
+            .map(
+                function(user) {
+
+                    return `
+                        <div class="owner-list-item">
+
+                            <strong>
+                                ${escapeHtml(user.name)}
+                            </strong>
+
+                            <small>
+                                @${escapeHtml(user.username)}
+                                ·
+                                ${escapeHtml(user.role)}
+                            </small>
+
+                        </div>
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+// =========================================================
+// OWNER RECENT JOBS
+// =========================================================
+
+function renderOwnerRecentJobs(
+    jobs
+) {
+
+    const container =
+        document.getElementById(
+            "ownerRecentJobs"
+        );
+
+
+    if (!jobs.length) {
+
+        container.innerHTML =
+            "<p>No jobs found.</p>";
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        jobs
+            .slice(0, 8)
+            .map(
+                function(job) {
+
+                    return `
+                        <div class="owner-list-item">
+
+                            <strong>
+                                ${escapeHtml(job.title)}
+                            </strong>
+
+                            <small>
+                                Recruiter:
+                                ${escapeHtml(
+                                    job.recruiter_username ||
+                                    "-"
+                                )}
+                            </small>
+
+                        </div>
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+// =========================================================
+// OWNER USERS TABLE
+// =========================================================
+
+function renderOwnerUsersTable(
+    users
+) {
+
+    const tbody =
+        document.getElementById(
+            "ownerUsersTable"
+        );
+
+
+    if (!users.length) {
+
+        tbody.innerHTML =
+            `
+            <tr>
+                <td colspan="5">
+                    No users found.
+                </td>
+            </tr>
+            `;
+
+        return;
+
+    }
+
+
+    tbody.innerHTML =
+        users
+            .map(
+                function(user) {
+
+                    return `
+                        <tr>
+
+                            <td>
+                                ${escapeHtml(
+                                    user.username
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    user.name
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    user.email
+                                )}
+                            </td>
+
+                            <td>
+                                <span class="badge">
+                                    ${escapeHtml(
+                                        user.role
+                                    )}
+                                </span>
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    formatDate(
+                                        user.created_at
+                                    )
+                                )}
+                            </td>
+
+                        </tr>
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+// =========================================================
+// OWNER JOBS TABLE
+// =========================================================
+
+function renderOwnerJobsTable(
+    jobs
+) {
+
+    const tbody =
+        document.getElementById(
+            "ownerJobsTable"
+        );
+
+
+    if (!jobs.length) {
+
+        tbody.innerHTML =
+            `
+            <tr>
+                <td colspan="4">
+                    No jobs found.
+                </td>
+            </tr>
+            `;
+
+        return;
+
+    }
+
+
+    tbody.innerHTML =
+        jobs
+            .map(
+                function(job) {
+
+                    return `
+                        <tr>
+
+                            <td>
+                                ${escapeHtml(
+                                    job.title
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    job.recruiter_username ||
+                                    "-"
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    job.description
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    formatDate(
+                                        job.created_at
+                                    )
+                                )}
+                            </td>
+
+                        </tr>
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+// =========================================================
+// OWNER APPLICATIONS TABLE
+// =========================================================
+
+function renderOwnerApplicationsTable(
+    applications
+) {
+
+    const tbody =
+        document.getElementById(
+            "ownerApplicationsTable"
+        );
+
+
+    if (!applications.length) {
+
+        tbody.innerHTML =
+            `
+            <tr>
+                <td colspan="4">
+                    No applications found.
+                </td>
+            </tr>
+            `;
+
+        return;
+
+    }
+
+
+    tbody.innerHTML =
+        applications
+            .map(
+                function(application) {
+
+                    return `
+                        <tr>
+
+                            <td>
+                                ${escapeHtml(
+                                    application.candidate_name ||
+                                    application.candidate_username ||
+                                    "-"
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    application.job_title
+                                )}
+                            </td>
+
+                            <td>
+                                <span class="badge">
+                                    ${escapeHtml(
+                                        application.status
+                                    )}
+                                </span>
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    formatDate(
+                                        application.applied_at
+                                    )
+                                )}
+                            </td>
+
+                        </tr>
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+// =========================================================
+// OWNER SESSIONS TABLE
+// =========================================================
+
+function renderOwnerSessionsTable(
+    sessions
+) {
+
+    const tbody =
+        document.getElementById(
+            "ownerSessionsTable"
+        );
+
+
+    if (!sessions.length) {
+
+        tbody.innerHTML =
+            `
+            <tr>
+                <td colspan="3">
+                    No login activity found.
+                </td>
+            </tr>
+            `;
+
+        return;
+
+    }
+
+
+    tbody.innerHTML =
+        sessions
+            .map(
+                function(session) {
+
+                    return `
+                        <tr>
+
+                            <td>
+                                ${escapeHtml(
+                                    formatDate(
+                                        session.login_time
+                                    )
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    session.logout_time
+                                        ? formatDate(
+                                            session.logout_time
+                                        )
+                                        : "Active"
+                                )}
+                            </td>
+
+                            <td>
+
+                                <span class="badge">
+                                    ${
+                                        session.logout_time
+                                            ? "Logged out"
+                                            : "Active"
+                                    }
+                                </span>
+
+                            </td>
+
+                        </tr>
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+// =========================================================
+// OWNER LOGOUT
+// =========================================================
+
+async function ownerLogout() {
+
+    const sessionRaw =
+        localStorage.getItem(
+            "ownerSession"
+        );
+
+
+    let logoutTime =
+        new Date().toISOString();
+
+
+    if (sessionRaw) {
+
+        try {
+
+            const session =
+                JSON.parse(sessionRaw);
+
+
+            const response =
+                await fetch(
+                    API_BASE +
+                    "/api/v1/owner/logout",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                session_id:
+                                    session.id
+                            })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                response.ok &&
+                data.session &&
+                data.session.logout_time
+            ) {
+
+                logoutTime =
+                    data.session.logout_time;
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Logout recording failed:",
+                error
+            );
+
+        }
+
+    }
+
+
+    localStorage.setItem(
+        "ownerLogoutTime",
+        logoutTime
+    );
+
+
+    localStorage.removeItem(
+        "ownerUser"
+    );
+
+
+    localStorage.removeItem(
+        "ownerSession"
+    );
+
+
+    localStorage.removeItem(
+        "ownerLoginTime"
+    );
+
+
+    showPage(
+        "ownerLoginPage"
+    );
+
+}
+
+
+// =========================================================
+// LOAD JOBS
+// =========================================================
+
+async function loadJobs() {
+
+    const container =
+        document.getElementById(
+            "jobGrid"
+        );
+
+
+    container.innerHTML =
+        "<p>Loading jobs...</p>";
 
 
     try {
 
         const response =
             await fetch(
-                API_URL +
+                API_BASE +
                 "/api/v1/jobs"
             );
 
@@ -4009,7 +3496,7 @@ async function loadJobs() {
         if (!jobs.length) {
 
             container.innerHTML =
-                "<p>No jobs have been posted yet.</p>";
+                "<p>No jobs found.</p>";
 
             return;
 
@@ -4019,41 +3506,87 @@ async function loadJobs() {
         container.innerHTML =
             jobs
                 .map(
-                    job => `
+                    function(job) {
 
-                        <div class="job">
+                        return `
+                            <div class="job-card">
 
-                            <h3>
-                                ${escapeHtml(job.title)}
-                            </h3>
+                                <h3>
+                                    ${escapeHtml(
+                                        job.title
+                                    )}
+                                </h3>
 
-                            <p>
-                                ${escapeHtml(job.description)}
-                            </p>
+                                <div class="job-meta">
 
-                            <small>
-                                Posted by:
-                                ${escapeHtml(
-                                    job.recruiter_username ||
-                                    "Recruiter"
-                                )}
-                            </small>
+                                    Recruiter:
+                                    ${escapeHtml(
+                                        job.recruiter_name ||
+                                        job.recruiter_username ||
+                                        "-"
+                                    )}
 
-                        </div>
+                                    <br>
 
-                    `
+                                    Location:
+                                    ${escapeHtml(
+                                        job.location ||
+                                        "Not specified"
+                                    )}
+
+                                    <br>
+
+                                    Salary:
+                                    ${escapeHtml(
+                                        job.salary ||
+                                        "Not specified"
+                                    )}
+
+                                </div>
+
+                                <p>
+                                    ${escapeHtml(
+                                        job.description
+                                    )}
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Skills:
+                                    </strong>
+
+                                    ${escapeHtml(
+                                        job.skills ||
+                                        "Not specified"
+                                    )}
+                                </p>
+
+                                <div class="job-actions">
+
+                                    <button
+                                        onclick="applyForJob(${job.id})"
+                                    >
+                                        Apply
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        `;
+
+                    }
                 )
                 .join("");
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         container.innerHTML =
             `
-                <p class="message error">
-                    ${escapeHtml(error.message)}
-                </p>
+            <div class="message error">
+                ${escapeHtml(
+                    error.message
+                )}
+            </div>
             `;
 
     }
@@ -4061,25 +3594,854 @@ async function loadJobs() {
 }
 
 
-/* =====================================================
-START PAGE
-===================================================== */
+// =========================================================
+// APPLY
+// =========================================================
 
-checkOwnerRoute();
-
-if (
-    window.location.hash !==
-    "#/owner"
+async function applyForJob(
+    jobId
 ) {
 
-    hideAllPages();
+    const userRaw =
+        localStorage.getItem(
+            "careerUser"
+        );
 
-    document
-        .getElementById("rolePage")
-        .classList
-        .remove("hidden");
+
+    if (!userRaw) {
+
+        showPage(
+            "careerLoginPage"
+        );
+
+        return;
+
+    }
+
+
+    const user =
+        JSON.parse(userRaw);
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_BASE +
+                "/api/v1/applications",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            job_id:
+                                jobId,
+
+                            candidate_id:
+                                user.id
+                        })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Application failed."
+            );
+
+        }
+
+
+        alert(
+            "Application submitted successfully."
+        );
+
+
+    } catch (error) {
+
+        alert(
+            error.message
+        );
+
+    }
 
 }
+
+
+// =========================================================
+// SAVE RESUME
+// =========================================================
+
+async function saveResume(
+    event
+) {
+
+    event.preventDefault();
+
+
+    const userRaw =
+        localStorage.getItem(
+            "careerUser"
+        );
+
+
+    if (!userRaw) {
+
+        return;
+
+    }
+
+
+    const user =
+        JSON.parse(userRaw);
+
+
+    const payload = {
+
+        user_id:
+            user.id,
+
+        filename:
+            document
+                .getElementById(
+                    "resumeFilename"
+                )
+                .value
+                .trim(),
+
+        resume_text:
+            document
+                .getElementById(
+                    "resumeText"
+                )
+                .value
+
+    };
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_BASE +
+                "/api/v1/resumes",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(payload)
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Could not save resume."
+            );
+
+        }
+
+
+        showMessage(
+            "resumeMessage",
+            "Resume saved successfully."
+        );
+
+
+    } catch (error) {
+
+        showMessage(
+            "resumeMessage",
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+// =========================================================
+// CREATE JOB
+// =========================================================
+
+async function createJob(
+    event
+) {
+
+    event.preventDefault();
+
+
+    const userRaw =
+        localStorage.getItem(
+            "recruiterUser"
+        );
+
+
+    if (!userRaw) {
+
+        return;
+
+    }
+
+
+    const user =
+        JSON.parse(userRaw);
+
+
+    const payload = {
+
+        recruiter_id:
+            user.id,
+
+        title:
+            document
+                .getElementById(
+                    "jobTitle"
+                )
+                .value
+                .trim(),
+
+        description:
+            document
+                .getElementById(
+                    "jobDescription"
+                )
+                .value
+                .trim(),
+
+        skills:
+            document
+                .getElementById(
+                    "jobSkills"
+                )
+                .value
+                .trim(),
+
+        location:
+            document
+                .getElementById(
+                    "jobLocation"
+                )
+                .value
+                .trim(),
+
+        salary:
+            document
+                .getElementById(
+                    "jobSalary"
+                )
+                .value
+                .trim()
+
+    };
+
+
+    try {
+
+        const response =
+            await fetch(
+                API_BASE +
+                "/api/v1/jobs",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(payload)
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Could not create job."
+            );
+
+        }
+
+
+        showMessage(
+            "jobMessage",
+            "Job published successfully."
+        );
+
+
+        document
+            .getElementById(
+                "jobTitle"
+            )
+            .value = "";
+
+
+        document
+            .getElementById(
+                "jobDescription"
+            )
+            .value = "";
+
+
+        document
+            .getElementById(
+                "jobSkills"
+            )
+            .value = "";
+
+
+        document
+            .getElementById(
+                "jobLocation"
+            )
+            .value = "";
+
+
+        document
+            .getElementById(
+                "jobSalary"
+            )
+            .value = "";
+
+
+        loadRecruiterJobs();
+
+
+    } catch (error) {
+
+        showMessage(
+            "jobMessage",
+            error.message,
+            "error"
+        );
+
+    }
+
+}
+
+
+// =========================================================
+// LOAD RECRUITER JOBS
+// =========================================================
+
+async function loadRecruiterJobs() {
+
+    const userRaw =
+        localStorage.getItem(
+            "recruiterUser"
+        );
+
+
+    if (!userRaw) {
+
+        return;
+
+    }
+
+
+    const user =
+        JSON.parse(userRaw);
+
+
+    try {
+
+        const jobsResponse =
+            await fetch(
+                API_BASE +
+                "/api/v1/jobs"
+            );
+
+
+        const jobsData =
+            await jobsResponse.json();
+
+
+        if (!jobsResponse.ok) {
+
+            throw new Error(
+                jobsData.detail ||
+                "Could not load jobs."
+            );
+
+        }
+
+
+        const myJobs =
+            (jobsData.jobs || [])
+                .filter(
+                    function(job) {
+
+                        return (
+                            job.recruiter_id ===
+                            user.id
+                        );
+
+                    }
+                );
+
+
+        const container =
+            document.getElementById(
+                "recruiterJobs"
+            );
+
+
+        if (!myJobs.length) {
+
+            container.innerHTML =
+                "<p>No jobs created yet.</p>";
+
+        } else {
+
+            container.innerHTML =
+                myJobs
+                    .map(
+                        function(job) {
+
+                            return `
+                                <div class="owner-list-item">
+
+                                    <strong>
+                                        ${escapeHtml(
+                                            job.title
+                                        )}
+                                    </strong>
+
+                                    <small>
+                                        ${escapeHtml(
+                                            job.location ||
+                                            "Location not specified"
+                                        )}
+                                        ·
+                                        ${escapeHtml(
+                                            formatDate(
+                                                job.created_at
+                                            )
+                                        )}
+                                    </small>
+
+                                </div>
+                            `;
+
+                        }
+                    )
+                    .join("");
+
+        }
+
+
+        await loadRecruiterApplications(
+            user.id
+        );
+
+
+    } catch (error) {
+
+        document
+            .getElementById(
+                "recruiterJobs"
+            )
+            .innerHTML =
+                `
+                <div class="message error">
+                    ${escapeHtml(
+                        error.message
+                    )}
+                </div>
+                `;
+
+    }
+
+}
+
+
+// =========================================================
+// LOAD RECRUITER APPLICATIONS
+// =========================================================
+
+async function loadRecruiterApplications(
+    recruiterId
+) {
+
+    const applicationsResponse =
+        await fetch(
+            API_BASE +
+            "/api/v1/applications"
+        );
+
+
+    const applicationsData =
+        await applicationsResponse.json();
+
+
+    const jobsResponse =
+        await fetch(
+            API_BASE +
+            "/api/v1/jobs"
+        );
+
+
+    const jobsData =
+        await jobsResponse.json();
+
+
+    const recruiterJobIds =
+        (jobsData.jobs || [])
+            .filter(
+                function(job) {
+
+                    return (
+                        job.recruiter_id ===
+                        recruiterId
+                    );
+
+                }
+            )
+            .map(
+                function(job) {
+
+                    return job.id;
+
+                }
+            );
+
+
+    const applications =
+        (applicationsData.applications || [])
+            .filter(
+                function(application) {
+
+                    return recruiterJobIds.includes(
+                        application.job_id
+                    );
+
+                }
+            );
+
+
+    const tbody =
+        document.getElementById(
+            "recruiterApplications"
+        );
+
+
+    if (!applications.length) {
+
+        tbody.innerHTML =
+            `
+            <tr>
+                <td colspan="4">
+                    No applications found.
+                </td>
+            </tr>
+            `;
+
+        return;
+
+    }
+
+
+    tbody.innerHTML =
+        applications
+            .map(
+                function(application) {
+
+                    return `
+                        <tr>
+
+                            <td>
+                                ${escapeHtml(
+                                    application.candidate_name ||
+                                    application.candidate_username ||
+                                    "-"
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    application.job_title
+                                )}
+                            </td>
+
+                            <td>
+                                <span class="badge">
+                                    ${escapeHtml(
+                                        application.status
+                                    )}
+                                </span>
+                            </td>
+
+                            <td>
+                                ${escapeHtml(
+                                    formatDate(
+                                        application.applied_at
+                                    )
+                                )}
+                            </td>
+
+                        </tr>
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+// =========================================================
+// LOGOUT CAREER
+// =========================================================
+
+function careerLogout() {
+
+    localStorage.removeItem(
+        "careerUser"
+    );
+
+    showPage(
+        "homePage"
+    );
+
+}
+
+
+// =========================================================
+// LOGOUT RECRUITER
+// =========================================================
+
+function recruiterLogout() {
+
+    localStorage.removeItem(
+        "recruiterUser"
+    );
+
+    showPage(
+        "homePage"
+    );
+
+}
+
+
+// =========================================================
+// ESCAPE HTML
+// =========================================================
+
+function escapeHtml(
+    value
+) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+// =========================================================
+// INITIAL ROUTING
+// =========================================================
+
+function checkOwnerRoute() {
+
+    const hash =
+        window.location.hash;
+
+
+    if (
+        hash === "#/owner"
+    ) {
+
+        const ownerRaw =
+            localStorage.getItem(
+                "ownerUser"
+            );
+
+
+        if (ownerRaw) {
+
+            showPage(
+                "ownerDashboard"
+            );
+
+            loadOwnerDashboard();
+
+        } else {
+
+            showPage(
+                "ownerLoginPage"
+            );
+
+        }
+
+        return;
+
+    }
+
+
+    const careerRaw =
+        localStorage.getItem(
+            "careerUser"
+        );
+
+
+    if (
+        careerRaw &&
+        hash === "#/career"
+    ) {
+
+        const user =
+            JSON.parse(careerRaw);
+
+
+        document
+            .getElementById(
+                "careerWelcome"
+            )
+            .textContent =
+                "Welcome, " +
+                user.name;
+
+
+        showPage(
+            "careerDashboard"
+        );
+
+
+        loadJobs();
+
+
+        return;
+
+    }
+
+
+    const recruiterRaw =
+        localStorage.getItem(
+            "recruiterUser"
+        );
+
+
+    if (
+        recruiterRaw &&
+        hash === "#/recruiter"
+    ) {
+
+        const user =
+            JSON.parse(
+                recruiterRaw
+            );
+
+
+        document
+            .getElementById(
+                "recruiterWelcome"
+            )
+            .textContent =
+                "Welcome, " +
+                user.name;
+
+
+        showPage(
+            "recruiterDashboard"
+        );
+
+
+        loadRecruiterJobs();
+
+
+        return;
+
+    }
+
+
+    showPage(
+        "homePage"
+    );
+
+}
+
+
+// =========================================================
+// START PAGE
+// =========================================================
+
+window.addEventListener(
+    "load",
+    function() {
+
+        checkOwnerRoute();
+
+    }
+);
+
+
+window.addEventListener(
+    "hashchange",
+    function() {
+
+        checkOwnerRoute();
+
+    }
+);
 
 
 </script>
